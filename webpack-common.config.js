@@ -1,6 +1,6 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = {    
+module.exports = {
   loaders: [
   // image loader - https://www.npmjs.com/package/image-webpack-loader
   {
@@ -35,8 +35,8 @@ module.exports = {
   // https://www.npmjs.com/package/html-webpack-plugin - generate our html file from a template - makes it easier to include custom stuff
   indexPagePlugin: new HtmlWebpackPlugin({
                           inject: true,
-                          title: 'webpack starter template 123',
+                          title: 'MOSS - Massive Online Sleep Scoring',
                           filename: 'index.html',
                           template: './app/index_template.html'
                         })
-}
+};

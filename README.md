@@ -56,7 +56,7 @@ In `App` you'll find the single page reach app. Try opening `Components/Header.j
 
 In `Server` you'll find a minimal express server. Currently it serves content from the build directory and has 1 api call to get the current time.
 
-Try adding a new api endpoint and modify `Components/Content.js` so that it hits your new endpoint.
+Try adding a new api endpoint and modify `Components/Scorer.js` so that it hits your new endpoint.
 
 You should be able to make all these changes without restarting the server manually as it should auto detect the changes and restart/reload as necessary.
 

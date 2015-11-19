@@ -2,7 +2,7 @@ var React = require('react');
 var TestUtils = require('react/lib/ReactTestUtils'); 
 var expect = require('expect');
 
-var Content = require('../app/Components/Content.js');
+var Content = require('../app/Components/Scorer.js');
 
 describe('root', function () {
   it('downloads data from the server when the button is clicked', function() {

@@ -4,6 +4,8 @@ var Header = require('./Components/Header');
 var Content = require('./Components/Content');
 var Favicon = require('react-favicon');
 
+//require('./bootstrap.css');
+
 var faviconUrl = require('./Assets/favicon.ico');
 
 module.exports = React.createClass({
