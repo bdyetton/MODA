@@ -9,10 +9,11 @@ module.exports = React.createClass({
 
     getUser: function() {
         var self = this;
-        $.get('/api/getUser',{user:'Ben'},function(data){
+        var userName = self.refs.User.getDOMNode().value;
+        $.get('/api/getUser',{user:userName},function(data){
             self.setState({ currentRemImage: data.imageURL });
+            self.props.loggedInCallback(userName);
         });
-        self.props.loggedInCallback('Ben');
     },
 
     loggedIn: function(){
@@ -23,7 +24,8 @@ module.exports = React.createClass({
         return (
         <div>
         <div><p>Please Login or Create username</p></div>
-        <input ref='previous' type='button' onClick={this.getUser} value='Login/Create username'></input>
+        <input ref='User' type='text'></input>
+        <input ref='Login' type='button' onClick={this.getUser} value='Login/Create username'></input>
         </div>
         );
     }
