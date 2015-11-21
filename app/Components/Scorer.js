@@ -1,12 +1,12 @@
 var React = require('react');
 var $ = require('jquery');
-var Box = require('./Box');
+var Segment = require('./Segment');
 
 module.exports = React.createClass({
     displayName: 'Scorer',
 
     getInitialState: function() {
-        return { serverData: null, currentRemImage: null, boxes: [] };
+        return { serverData: null, currentRemImage: null, markers: {} , markerIndex: 0};
     },
 
     componentWillMount: function() {
@@ -27,26 +27,41 @@ module.exports = React.createClass({
         });
     },
 
-    onImgClick: function(e) {
+    addMarker: function(e) {
         if (e.button !== 0) return;
-        var imgPos = $(this.refs.sigImg.getDOMNode()).offset();
-        var newBox = <Box initialPos={{x: e.pageX-50, y: e.pageY-50}} className='box' style={{ border: '2px solid #0d0', padding: '10px'}}/>;
+        var scoreImg = $(this.refs.sigImg.getDOMNode());
+        var newMarker = <Segment initialPos={{x: e.pageX, y: 4}}
+                          className='box'
+                          scoreImg={scoreImg}
+                          key={this.state.markerIndex}
+                          index={this.state.markerIndex}
+                          style={{ border: '2px solid #0d0', padding: '10px'}}
+                          removeMarker={this.removeMarker}
+                      />;
+        var markers = this.state.markers;
+        markers[this.state.markerIndex]=newMarker;
         this.setState({
-            boxes: this.state.boxes.concat([newBox])
+            markers: markers,
+            markerIndex: this.state.markerIndex+1
         });
-        console.log(this.state.boxes);
     },
 
-    render: function () {
+    removeMarker: function(index){
+        var markers = this.state.markers;
+        delete markers[index];
+        this.setState({markers:markers});
+    },
+
+    render: function () { //FIXME Print each key of object, NOT the whole object (will get ride of react warning)
         var self = this;
         return (
-            <div><p>Now logged in as {this.props.username}</p>
-            <div style={{position:'reletive'}}>
-                {this.state.boxes.map(function(box){return box})}
-                <img ref='sigImg' src={window.location.href + (this.state.currentRemImage)} alt='remImage' onClick={this.onImgClick}></img>
+            <div><p>Now logged in as {self.props.username}</p>
+            <div style={{position:'relative'}}>
+                {this.state.markers}
+                <img ref='sigImg' src={window.location.href + (self.state.currentRemImage)} alt='remImage' onClick={this.addMarker} pointer-events='none'></img>
             </div>
-            <input ref='previous' type='button' onClick={this.getPreviousRemImage } value='Previous Epoch'></input>
-            <input ref='next' type='button' onClick={this.getNextRemImage} value='Next Epoch'></input>
+            <input ref='previous' type='button' onClick={self.getPreviousRemImage } value='Previous Epoch'></input>
+            <input ref='next' type='button' onClick={self.getNextRemImage} value='Next Epoch'></input>
             </div>
         );
     }

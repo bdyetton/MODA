@@ -2,7 +2,7 @@ var React = require('react');
 var $ = require('jquery');
 //http://stackoverflow.com/questions/20926551/recommended-way-of-making-react-component-div-draggable
 module.exports = React.createClass({
-  displayName: 'Box',
+  displayName: 'Segment',
   getDefaultProps: function () {
     return {
       // allow the initial position to be passed in as a prop
@@ -12,8 +12,8 @@ module.exports = React.createClass({
   getInitialState: function () {
     return {
       currentPos: this.props.initialPos,
-      index: this.props.index;
       dragging: false,
+      index: this.props.index,
       rel: null // position relative to the cursor
     }
   },
@@ -24,7 +24,6 @@ module.exports = React.createClass({
       x: initPos.left - this.props.initialPos.x,
       y: initPos.top - this.props.initialPos.y
     }});
-    this.onMouseDown();
   },
   // we could get away with not having this (and just having the listeners on
   // our div), but then the experience would be possibly be janky. If there's
@@ -42,35 +41,33 @@ module.exports = React.createClass({
 
   // calculate relative position to the mouse and set dragging=true
   onMouseDown: function (e) {
-    //if (e.button == 2){ //Delete box
-    //  e.stopPropagation();
-    //  e.preventDefault();
-    //  this.props.removeMarker(this.props.index);
-    //  return
+    //if (e=undefined){
+    //  e = this.props.masterE;
     //}
-    if (e.button !== 0) return; // only left mouse button
-    var currentPos = $(this.getDOMNode()).offset();
-    this.setState({
-      dragging: true,
-      posOfClick:{
-        x: e.pageX,
-        y: e.pageY
-      },
-      posRel: {
-        x: e.pageX - currentPos.left,
-        y: e.pageY - currentPos.top
-      },
-      posAtClick: {
-        x: currentPos.left,
-        y: currentPos.top
-      }
-    });
-    console.log('pos of click');
-    console.log(this.state.posOfClick);
-    console.log('pos at click');
-    console.log(this.state.posAtClick);
-    e.stopPropagation();
-    e.preventDefault();
+    if (e.button == 0) { // only left mouse button
+      var currentPos = $(this.getDOMNode()).offset();
+      this.setState({
+        dragging: true,
+        posOfClick: {
+          x: e.pageX,
+          y: e.pageY
+        },
+        posRel: {
+          x: e.pageX - currentPos.left,
+          y: e.pageY - currentPos.top
+        },
+        posAtClick: {
+          x: currentPos.left,
+          y: currentPos.top
+        }
+      });
+      e.stopPropagation();
+      e.preventDefault();
+    }
+      if (e.button == 2){ //Delete box
+        this.props.removeMarker(this.state.index);
+      return
+    }
   },
 
   onMouseUp: function (e) {
@@ -96,22 +93,17 @@ module.exports = React.createClass({
       currentPos: currentPos
     });
 
-    console.log(move);
-    console.log(currentPos);
-    console.log(this.state.initial);
     e.stopPropagation();
     e.preventDefault();
   },
   render: function () {
     return <div {...this.props} onMouseDown={this.onMouseDown}
       style={{
-        width:'100px',
-        height:'100px',
+        width:'2px',
+        height:this.props.scoreImg.height(),
         position: 'absolute',
         left: this.state.currentPos.x + 'px',
-        top: this.state.currentPos.y + 'px',
-        border: '2px solid #0d0',
-        padding: '10px'
+        border: '3px solid #0d0',
       }}></div>
   }
 });
