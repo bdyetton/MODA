@@ -17,11 +17,11 @@ module.exports = React.createClass({
         {
             return (<div><Login loggedInCallback={function(userName){
                 self.setState({loggedIn:true});
-                self.setState({userName:userName});
+                self.setState({user:userName});
             }}/></div>)
         } else
         {
-            return (<div><Scorer username={this.state.userName}/></div>)
+            return (<div><Scorer user={this.state.user}/></div>)
         }
 
     }

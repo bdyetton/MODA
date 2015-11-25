@@ -14,8 +14,8 @@ function split(a, n) {
         images.push({
           imgs:a.slice(i, i += n),
           complete:false,
-          idx:0,
-          marks:[]});
+          idx:0
+          });
     }
     return images;
 }
@@ -55,7 +55,9 @@ function imgServer(){
                   folder:folder,
                   start:idx*self.sizeOfImg,
                   end:(idx+1)*self.sizeOfImage-1,
-                  scoredBy:[]
+                  markers:{
+                    seg:[]
+                  }
                 });
             });
             Array.prototype.push.apply(self.batches,split(packedImgs,self.batchSize));
@@ -69,23 +71,41 @@ function imgServer(){
         user.idx = 0;
     };
 
+    self.updateMarkerState = function(user, marker){
+        if(user.batches[user.idx].imgs[user.batches[user.idx].idx].markers[marker.type].length > [marker.index]){
+          user.batches[user.idx].imgs[user.batches[user.idx].idx].markers[marker.type][marker.index] = marker;
+        } else {
+          user.batches[user.idx].imgs[user.batches[user.idx].idx].markers[marker.type].push(marker)
+        }
+    };
+
+    self.getMarkers = function (user){
+      return user.batches[user.idx].imgs[user.batches[user.idx].idx].markers;
+    };
+
+
     self.getImage = function(user,inc) {
         user.batches[user.idx].idx += inc; //TODO fix inc greater than one
         if (user.batches[user.idx].idx >= user.batches[user.idx].imgs.length) { //Need to get another batch
           user.batches[user.idx].idx -= inc; //undo what we did
           user.idx += 1;
+          if (user.idx >= user.batches.length){
+            user.idx=user.batches.length;
+          }
         }
         else if (user.batches[user.idx].idx < 0) { //Need to get another batch
           user.batches[user.idx].idx -= inc; //undo what we did
           user.idx -= 1;
+          if (user.idx < 0){
+            user.idx=0;
+          }
         }
         var folder = self.batches[user.idx].imgs[user.batches[user.idx].idx].folder;
         var fileName = self.batches[user.idx].imgs[user.batches[user.idx].idx].name;
-        console.log('/img/' +folder + '/' + fileName);
         return '/img/' +folder + '/' + fileName;
     };
 
-  
+
 };
 
 module.exports = imgServer;

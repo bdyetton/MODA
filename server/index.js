@@ -7,12 +7,11 @@ var users = new usr;
 var imgServer = require('./imgServer');
 var imServ = new imgServer;
 var Ben = {};
-var currentUser;
+var currentUsers = {};
 
 var app = express();
 var imgNum = 0;
 var static_path = path.join(__dirname, './../build');
-//var img_path = path.join(__dirname, './../app/Assets');
 
 app.enable('trust proxy');
 
@@ -24,20 +23,36 @@ app.get('/api/currentTime', cors(), function(req, res) {
 });
 
 app.get('/api/nextRemImage',cors(),function(req,res){
-    res.send({imageURL: imServ.getImage(currentUser,1)});
+  console.log(req.query.user)
+    console.log(currentUsers[req.query.user]);
+
+    var nextImg = imServ.getImage(currentUsers[req.query.user],1);
+    var nextMarkers = imServ.getMarkers(currentUsers[req.query.user]);
+    res.send({imageURL: nextImg, markers: nextMarkers});
+    users.saveUser(currentUsers[req.query.user]);
 });
 
 app.get('/api/previousRemImage',cors(),function(req,res){
-    res.send({imageURL: imServ.getImage(currentUser,-1)});
+    var nextImg = imServ.getImage(currentUsers[req.query.user],-1);
+    var nextMarkers = imServ.getMarkers(currentUsers[req.query.user]);
+    res.send({imageURL: nextImg, markers: nextMarkers});
+    users.saveUser(currentUsers[req.query.user]);
+});
+
+app.get('/api/updateMarkerState',cors(),function(req,res){ //TODO get very first image working
+    imServ.updateMarkerState(currentUsers[req.query.user], req.query.marker);
+    res.send({success: true});
 });
 
 app.get('/api/getUser',cors(),function(req,res){
     var out = {};
-    if(users.login(req.query.user)){
+    currentUsers[req.query.user] = users.login(req.query.user);
+    if(currentUsers[req.query.user]){
         out.login = true;
         out.createdUser = false;
+      console.log(currentUsers[req.query.user])
     } else {
-        currentUser = users.createUser(req.query.user,imServ);
+        currentUsers[req.query.user] = users.createUser(req.query.user,imServ);
         out.login = true;
         out.createdUser = true;
     }

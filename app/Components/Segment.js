@@ -14,7 +14,10 @@ module.exports = React.createClass({
       currentPos: this.props.initialPos,
       dragging: false,
       index: this.props.index,
-      rel: null // position relative to the cursor
+      rel: null, // position relative to the cursor
+      deleted:false,
+      type:'seg',
+      saved: this.props.saved || false
     }
   },
 
@@ -24,11 +27,12 @@ module.exports = React.createClass({
       x: initPos.left - this.props.initialPos.x,
       y: initPos.top - this.props.initialPos.y
     }});
+    if (!this.state.saved) {
+      this.setState({saved:true});
+      this.props.updateServerState(this.state);
+    }
   },
-  // we could get away with not having this (and just having the listeners on
-  // our div), but then the experience would be possibly be janky. If there's
-  // anything w/ a higher z-index that gets in the way, then you're toast,
-  // etc.
+
   componentDidUpdate: function (props, state) {
     if (this.state.dragging && !state.dragging) {
       document.addEventListener('mousemove', this.onMouseMove);
@@ -65,6 +69,8 @@ module.exports = React.createClass({
       e.preventDefault();
     }
       if (e.button == 2){ //Delete box
+        this.setState({deleted:true});
+        this.prop.updateServerState(this.state);
         this.props.removeMarker(this.state.index);
       return
     }
@@ -72,6 +78,7 @@ module.exports = React.createClass({
 
   onMouseUp: function (e) {
     this.setState({dragging: false});
+    this.props.updateServerState(this.state);
     e.stopPropagation();
     e.preventDefault();
   },
@@ -99,7 +106,7 @@ module.exports = React.createClass({
   render: function () {
     return <div {...this.props} onMouseDown={this.onMouseDown}
       style={{
-        width:'2px',
+        width:'1px',
         height:this.props.scoreImg.height(),
         position: 'absolute',
         left: this.state.currentPos.x + 'px',
