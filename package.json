@@ -32,6 +32,7 @@
     "bootstrap": "^3.3.5",
     "css-loader": "^0.14.5",
     "expect": "^1.6.0",
+    "extend": "^3.0.0",
     "file-loader": "^0.8.4",
     "html-webpack-plugin": "^1.5.2",
     "image-webpack-loader": "^1.6.1",

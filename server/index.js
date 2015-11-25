@@ -24,16 +24,15 @@ app.get('/api/currentTime', cors(), function(req, res) {
 });
 
 app.get('/api/nextRemImage',cors(),function(req,res){
-    res.send({imageURL: imServ.getNextImage(currentUser)});
+    res.send({imageURL: imServ.getImage(currentUser,1)});
 });
 
 app.get('/api/previousRemImage',cors(),function(req,res){
-    res.send({imageURL: imServ.getPreviousImage(currentUser)});
+    res.send({imageURL: imServ.getImage(currentUser,-1)});
 });
 
 app.get('/api/getUser',cors(),function(req,res){
     var out = {};
-    //currentUser = ;
     if(users.login(req.query.user)){
         out.login = true;
         out.createdUser = false;
