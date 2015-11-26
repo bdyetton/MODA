@@ -5,6 +5,7 @@
       <change type="DELETED" beforePath="$PROJECT_DIR$/build/bundle.98415334997043a01ef5.js" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/build/bundle.98415334997043a01ef5.js.map" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/build/fd73a6eb26a08ee46e7fd3cc34e7f6bf.ico" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
     </list>
     <ignored path="simple-webpack-react-starter.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -69,8 +70,8 @@
       <file leaf-file-name="package.json" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.55948555">
-              <caret line="29" column="29" selection-start-line="29" selection-start-column="29" selection-end-line="29" selection-end-column="29" />
+            <state vertical-scroll-proportion="0.71382636">
+              <caret line="49" column="26" selection-start-line="49" selection-start-column="26" selection-end-line="49" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -149,7 +150,6 @@
         <option value="$PROJECT_DIR$/app/Components/rubberBox" />
         <option value="$PROJECT_DIR$/app/Components/rubberBox.js" />
         <option value="$PROJECT_DIR$/server/imgRouter.js" />
-        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/webpack-common.config.js" />
         <option value="$PROJECT_DIR$/app/Components/MarkedFeatures.js" />
         <option value="$PROJECT_DIR$/app/Components/Header.js" />
@@ -163,6 +163,7 @@
         <option value="$PROJECT_DIR$/server/index.js" />
         <option value="$PROJECT_DIR$/app/App.js" />
         <option value="$PROJECT_DIR$/server/imgServer.js" />
+        <option value="$PROJECT_DIR$/package.json" />
       </list>
     </option>
   </component>
@@ -990,8 +991,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.55948555">
-          <caret line="29" column="29" selection-start-line="29" selection-start-column="29" selection-end-line="29" selection-end-column="29" />
+        <state vertical-scroll-proportion="0.71382636">
+          <caret line="49" column="26" selection-start-line="49" selection-start-column="26" selection-end-line="49" selection-end-column="26" />
           <folding />
         </state>
       </provider>
