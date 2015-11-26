@@ -103,7 +103,6 @@ function imgServer(){
 
     self.processMarker = function(marker){ //TODO do y
       marker.xSecs = (marker.relToImg.x-imgConfig.margins.left+imgConfig[marker.type].w)*(imgConfig.secs/imgConfig.img.w);
-      console.log(marker.xSecs);
       return marker
     };
 
