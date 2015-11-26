@@ -6,27 +6,25 @@ module.exports = React.createClass({
     displayName: 'Scorer',
 
     getInitialState: function() {
-        return { serverData: null, currentRemImage: null, markers: {} , markerIndex: 0};
+        return { currentRemImage: this.props.img.url, markers: {} , markerIndex: 0, msg:this.props.img.msg};
     },
 
-    componentDidMount: function() {
-      console.log(this.props.user)
-        this.getNextRemImage()
-    },
+    //componentDidMount: function() {
+    //    this.getNextRemImage()
+    //},
 
     getPreviousRemImage: function() {
         var self = this;
         $.get('/api/previousRemImage', {user: this.props.user}, function(data){
-          self.setState({ currentRemImage: data.imageURL});
+          self.setState({ currentRemImage: data.image.url, msg:data.image.msg});
           self.populateMarkers(data.markers);
         });
     },
 
     getNextRemImage: function() {
         var self = this;
-        console.log(this.props.user)
         $.get('/api/nextRemImage', {user: this.props.user}, function(data){
-          self.setState({ currentRemImage: data.imageURL});
+          self.setState({ currentRemImage: data.image.url, msg:data.image.msg});
           self.populateMarkers(data.markers);
         });
     },
@@ -37,15 +35,18 @@ module.exports = React.createClass({
             if (!data.success){
               console.log('Error saving marker');
             }
+        }).fail(function(xhr, textStatus, errorThrown){
+          alert('Oh Snap! Something went horribly wrong saving the data, please refresh the page');
         });
     },
 
     populateMarkers: function(markers) {
-      console.log(markers);
       var popMarkers = {};
       var self = this;
       var scoreImg = $(this.refs.sigImg.getDOMNode());
       markers.seg.forEach(function(marker){
+        //marker = JSON.parse(marker);
+        if (marker.deleted=='true') {return; };
         var newMarker = <Segment
           initialPos={marker.currentPos}
           className='box'
@@ -53,7 +54,6 @@ module.exports = React.createClass({
           key={marker.index}
           index={marker.index}
           saved={true}
-          style={{ border: '2px solid #0d0', padding: '10px'}}
           removeMarker={self.removeMarker}
           updateServerState={self.updateServerState}
           />;
@@ -68,12 +68,11 @@ module.exports = React.createClass({
       var self = this;
       if (e.button !== 0) return;
       var scoreImg = $(this.refs.sigImg.getDOMNode());
-      var newMarker = <Segment initialPos={{x: e.pageX-12, y: scoreImg.offset().top}} //TODO why 12?
+      var newMarker = <Segment initialPos={{x: e.pageX-scoreImg.offset().left, y: scoreImg.offset().top}}
                         className='box'
                         scoreImg={scoreImg}
                         key={self.state.markerIndex}
                         index={self.state.markerIndex}
-                        style={{ border: '2px solid #0d0', padding: '10px'}}
                         removeMarker={self.removeMarker}
                         updateServerState={self.updateServerState}
                     />;
@@ -94,13 +93,14 @@ module.exports = React.createClass({
     render: function () { //FIXME Print each key of object, NOT the whole object (will get rid of react warning)
         var self = this;
         return (
-            <div><p>Now logged in as {self.props.user}</p>
+            <div><p>Now logged in as {self.props.user}</p><p>Epoch ID: {self.state.currentRemImage}</p>
             <div style={{position:'relative'}}>
                 {this.state.markers}
                 <img ref='sigImg' src={window.location.href + (self.state.currentRemImage)} alt='remImage' onClick={this.addMarker} pointer-events='none'></img>
             </div>
             <input ref='previous' type='button' onClick={self.getPreviousRemImage } value='Previous Epoch'></input>
             <input ref='next' type='button' onClick={self.getNextRemImage} value='Next Epoch'></input>
+            <p>{self.state.msg == 'ok' ? '' : self.state.msg}</p>
             </div>
         );
     }

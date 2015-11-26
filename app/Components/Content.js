@@ -15,13 +15,13 @@ module.exports = React.createClass({
         var self = this;
         if(!self.state.loggedIn)
         {
-            return (<div><Login loggedInCallback={function(userName){
+            return (<div><Login loggedInCallback={function(user,img){
+                self.setState({user:user, img:img});
                 self.setState({loggedIn:true});
-                self.setState({user:userName});
             }}/></div>)
         } else
         {
-            return (<div><Scorer user={this.state.user}/></div>)
+            return (<div><Scorer user={this.state.user} img={this.state.img}/></div>)
         }
 
     }

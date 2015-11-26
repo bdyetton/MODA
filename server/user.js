@@ -2,11 +2,10 @@ var fs = require('fs');
 
 function user(){
     var self = this;
-    self.userList = fs.readdirSync('./server/Data/User/');
-    self.userList = self.userList.filter(function(item){return item.indexOf(".txt") > -1});
 
     self.login = function(userName){
-        console.log(userName);
+        self.userList = fs.readdirSync('./server/Data/User/');
+        self.userList = self.userList.filter(function(item){return item.indexOf(".txt") > -1});
         if (self.userList.some(function(user){
             userParts = user.split('.');
             return userParts[0] === userName; //FIXME some strange, occasional, errors here

@@ -23,13 +23,25 @@ module.exports = React.createClass({
 
   componentDidMount: function(){
     var initPos = $(this.getDOMNode()).offset();
-    this.setState({initial:{
-      x: initPos.left - this.props.initialPos.x,
-      y: initPos.top - this.props.initialPos.y
-    }});
+    this.setState({
+      initial:{
+        x: initPos.left - this.props.initialPos.x,
+        y: initPos.top - this.props.initialPos.y
+      },
+      img:{
+        x:this.props.scoreImg.offset().left,
+        y:this.props.scoreImg.offset().top
+      },
+      relToImg:{
+        x:this.props.initialPos.x,
+        y:this.state.currentPos.y-this.props.scoreImg.offset().top
+      }
+    });
+
     if (!this.state.saved) {
-      this.setState({saved:true});
-      this.props.updateServerState(this.state);
+      this.setState({saved:true},function() {
+        this.props.updateServerState(this.state);
+      });
     }
   },
 
@@ -56,7 +68,7 @@ module.exports = React.createClass({
           x: e.pageX,
           y: e.pageY
         },
-        posRel: {
+        posRelToMarker: {
           x: e.pageX - currentPos.left,
           y: e.pageY - currentPos.top
         },
@@ -68,11 +80,11 @@ module.exports = React.createClass({
       e.stopPropagation();
       e.preventDefault();
     }
-      if (e.button == 2){ //Delete box
-        this.setState({deleted:true});
-        this.prop.updateServerState(this.state);
+    if (e.button == 2){ //Delete box
+      this.setState({deleted:true},function() {
+        this.props.updateServerState(this.state);
         this.props.removeMarker(this.state.index);
-      return
+      });
     }
   },
 
@@ -95,9 +107,15 @@ module.exports = React.createClass({
         y: this.state.posAtClick.y + move.y-this.state.initial.y
       };
 
+    var relToImg ={
+      x: e.pageX - this.state.img.x,
+      y: e.pageY - this.state.img.y,
+    };
+
     this.setState({
       move: move,
-      currentPos: currentPos
+      currentPos: currentPos,
+      relToImg: relToImg
     });
 
     e.stopPropagation();
@@ -106,10 +124,10 @@ module.exports = React.createClass({
   render: function () {
     return <div {...this.props} onMouseDown={this.onMouseDown}
       style={{
-        width:'1px',
+        width:'2px',
         height:this.props.scoreImg.height(),
         position: 'absolute',
-        left: this.state.currentPos.x + 'px',
+        left: this.state.currentPos.x - 3 + 'px', //-3 because we want segment at middle of click.
         border: '3px solid #0d0',
       }}></div>
   }

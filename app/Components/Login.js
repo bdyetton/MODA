@@ -11,8 +11,7 @@ module.exports = React.createClass({
         var self = this;
         var userName = self.refs.User.getDOMNode().value;
         $.get('/api/getUser',{user:userName},function(data){
-            self.setState({ currentRemImage: data.imageURL });
-            self.props.loggedInCallback(userName);
+            self.props.loggedInCallback(data.userName,data.img);
         });
     },
 
