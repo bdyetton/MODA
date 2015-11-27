@@ -89,15 +89,25 @@ function imgServer(){
         user.batches = clone(this.batches);
         //user.batches = shuffleArray(this.batches); //TODO turn shuffle on!
         user.idx = 0;
+        user.markerIndex = 0;
     };
 
     self.updateMarkerState = function(user, marker){
-        marker = self.processMarker(marker);
-        if(user.batches[user.idx].imgs[user.batches[user.idx].idx].markers[marker.type].length > [marker.index]){
-          user.batches[user.idx].imgs[user.batches[user.idx].idx].markers[marker.type][marker.index] = marker;
-        } else {
-          user.batches[user.idx].imgs[user.batches[user.idx].idx].markers[marker.type].push(marker)
+      if (user.markerIndex < marker.index){
+        user.markerIndex = marker.index;
+      }
+      marker = self.processMarker(marker);
+      var exists = false;
+      user.batches[user.idx].imgs[user.batches[user.idx].idx].markers[marker.type].forEach(function(currentMarker,i){
+        if (currentMarker.index == marker.index){
+          user.batches[user.idx].imgs[user.batches[user.idx].idx].markers[marker.type][i] = marker; //this was just a move
+          exists = true;
         }
+      });
+      //else, this is a new marker
+      if(!exists){
+        user.batches[user.idx].imgs[user.batches[user.idx].idx].markers[marker.type].push(marker);
+      }
     };
 
     self.processMarker = function(marker){ //TODO do y

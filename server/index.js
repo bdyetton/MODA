@@ -6,6 +6,7 @@ var usr = require('./user');
 var users = new usr;
 var imgServer = require('./imgServer');
 var imServ = new imgServer;
+
 var Ben = {};
 var currentUsers = {};
 
@@ -42,21 +43,29 @@ app.get('/api/updateMarkerState',cors(),function(req,res){ //TODO get very first
 });
 
 app.get('/api/getUser',cors(),function(req,res){
+  users.loadUser(req.query.user,function(err,userData){
     var out = {};
-    currentUsers[req.query.user] = users.login(req.query.user);
-    if(currentUsers[req.query.user]){
-        out.login = true;
-        out.createdUser = false;
-        out.userName = currentUsers[req.query.user].name;
-        out.img = imServ.getImage(currentUsers[req.query.user],0)
-    } else {
-        currentUsers[req.query.user] = users.createUser(req.query.user,imServ);
+    if (!err) { //load user
+      out.login = true;
+      out.createdUser = false;
+      currentUsers[req.query.user] = userData;
+      out.userName = currentUsers[req.query.user].name;
+      out.img = {};
+      out.img = imServ.getImage(currentUsers[req.query.user], 0);
+      out.img.markers = imServ.getMarkers(currentUsers[req.query.user]);
+      out.img.markerIndex = currentUsers[req.query.user].markerIndex;
+    } else { //create user
+      if(err.code == 'NoSuchKey') {
+        currentUsers[req.query.user] = users.createUser(req.query.user, imServ);
         out.login = true;
         out.createdUser = true;
         out.userName = currentUsers[req.query.user].name;
-        out.img = imServ.getImage(currentUsers[req.query.user],0);
+        out.markers = {};
+        out.img = imServ.getImage(currentUsers[req.query.user], 0);
+      } else { console.log(err)}
     }
     res.send(out);
+  });
 });
 
 app.route('/').get(function(req, res) {
@@ -76,10 +85,8 @@ function nocache(req, res, next) {
 app.use('/', express.static(static_path, {
     maxage: 31557600
 }));
-//app.use('/img', express.static(static_path+'/img'));
 
 var server = app.listen(process.env.PORT || 5000, function () {
-
     var host = server.address().address;
     var port = server.address().port;
     console.log('SleepScoring App listening at http://%s:%s', host, port);

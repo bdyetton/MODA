@@ -6,12 +6,12 @@ module.exports = React.createClass({
     displayName: 'Scorer',
 
     getInitialState: function() {
-        return { currentRemImage: this.props.img.url, markers: {} , markerIndex: 0, msg:this.props.img.msg};
+        return { currentRemImage: this.props.img.url, markers: {} , markerIndex: this.props.img.markerIndex || 0, msg:this.props.img.msg};
     },
 
-    //componentDidMount: function() {
-    //    this.getNextRemImage()
-    //},
+    componentDidMount: function() {
+        this.populateMarkers(this.props.img.markers);
+    },
 
     getPreviousRemImage: function() {
         var self = this;
@@ -45,8 +45,7 @@ module.exports = React.createClass({
       var self = this;
       var scoreImg = $(this.refs.sigImg.getDOMNode());
       markers.seg.forEach(function(marker){
-        //marker = JSON.parse(marker);
-        if (marker.deleted=='true') {return; };
+        if (marker.deleted=='true') {return; }
         var newMarker = <Segment
           initialPos={marker.currentPos}
           className='box'
