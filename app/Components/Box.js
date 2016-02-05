@@ -1,8 +1,8 @@
 var React = require('react');
 var $ = require('jquery');
-//http://stackoverflow.com/questions/20926551/recommended-way-of-making-react-component-div-draggable
+
 module.exports = React.createClass({
-  displayName: 'Box',
+  displayName: 'Segment',
   getDefaultProps: function () {
     return {
       // allow the initial position to be passed in as a prop
@@ -12,24 +12,39 @@ module.exports = React.createClass({
   getInitialState: function () {
     return {
       currentPos: this.props.initialPos,
-      index: this.props.index;
       dragging: false,
-      rel: null // position relative to the cursor
+      index: this.props.index,
+      rel: null, // position relative to the cursor
+      deleted:false,
+      type:'seg',
+      saved: this.props.saved || false
     }
   },
 
   componentDidMount: function(){
     var initPos = $(this.getDOMNode()).offset();
-    this.setState({initial:{
-      x: initPos.left - this.props.initialPos.x,
-      y: initPos.top - this.props.initialPos.y
-    }});
-    this.onMouseDown();
+    this.setState({
+      initial:{
+        x: initPos.left - this.props.initialPos.x,
+        y: initPos.top - this.props.initialPos.y
+      },
+      img:{
+        x:this.props.scoreImg.offset().left,
+        y:this.props.scoreImg.offset().top
+      },
+      relToImg:{
+        x:this.props.initialPos.x,
+        y:this.state.currentPos.y-this.props.scoreImg.offset().top
+      }
+    });
+
+    if (!this.state.saved) {
+      this.setState({saved:true},function() {
+        this.props.updateServerState(this.state);
+      });
+    }
   },
-  // we could get away with not having this (and just having the listeners on
-  // our div), but then the experience would be possibly be janky. If there's
-  // anything w/ a higher z-index that gets in the way, then you're toast,
-  // etc.
+
   componentDidUpdate: function (props, state) {
     if (this.state.dragging && !state.dragging) {
       document.addEventListener('mousemove', this.onMouseMove);
@@ -42,39 +57,40 @@ module.exports = React.createClass({
 
   // calculate relative position to the mouse and set dragging=true
   onMouseDown: function (e) {
-    //if (e.button == 2){ //Delete box
-    //  e.stopPropagation();
-    //  e.preventDefault();
-    //  this.props.removeMarker(this.props.index);
-    //  return
+    //if (e=undefined){
+    //  e = this.props.masterE;
     //}
-    if (e.button !== 0) return; // only left mouse button
-    var currentPos = $(this.getDOMNode()).offset();
-    this.setState({
-      dragging: true,
-      posOfClick:{
-        x: e.pageX,
-        y: e.pageY
-      },
-      posRel: {
-        x: e.pageX - currentPos.left,
-        y: e.pageY - currentPos.top
-      },
-      posAtClick: {
-        x: currentPos.left,
-        y: currentPos.top
-      }
-    });
-    console.log('pos of click');
-    console.log(this.state.posOfClick);
-    console.log('pos at click');
-    console.log(this.state.posAtClick);
-    e.stopPropagation();
-    e.preventDefault();
+    if (e.button == 0) { // only left mouse button
+      var currentPos = $(this.getDOMNode()).offset();
+      this.setState({
+        dragging: true,
+        posOfClick: {
+          x: e.pageX,
+          y: e.pageY
+        },
+        posRelToMarker: {
+          x: e.pageX - currentPos.left,
+          y: e.pageY - currentPos.top
+        },
+        posAtClick: {
+          x: currentPos.left,
+          y: currentPos.top
+        }
+      });
+      e.stopPropagation();
+      e.preventDefault();
+    }
+    if (e.button == 2){ //Delete box
+      this.setState({deleted:true},function() {
+        this.props.updateServerState(this.state);
+        this.props.removeMarker(this.state.index);
+      });
+    }
   },
 
   onMouseUp: function (e) {
     this.setState({dragging: false});
+    this.props.updateServerState(this.state);
     e.stopPropagation();
     e.preventDefault();
   },
@@ -91,27 +107,28 @@ module.exports = React.createClass({
         y: this.state.posAtClick.y + move.y-this.state.initial.y
       };
 
+    var relToImg ={
+      x: e.pageX - this.state.img.x,
+      y: e.pageY - this.state.img.y,
+    };
+
     this.setState({
       move: move,
-      currentPos: currentPos
+      currentPos: currentPos,
+      relToImg: relToImg
     });
 
-    console.log(move);
-    console.log(currentPos);
-    console.log(this.state.initial);
     e.stopPropagation();
     e.preventDefault();
   },
   render: function () {
     return <div {...this.props} onMouseDown={this.onMouseDown}
       style={{
-        width:'100px',
-        height:'100px',
+        width:'2px',
+        height:this.props.scoreImg.height(),
         position: 'absolute',
-        left: this.state.currentPos.x + 'px',
-        top: this.state.currentPos.y + 'px',
-        border: '2px solid #0d0',
-        padding: '10px'
+        left: this.state.currentPos.x - 3 + 'px', //-3 because we want segment at middle of click.
+        border: '3px solid #0d0',
       }}></div>
   }
 });
