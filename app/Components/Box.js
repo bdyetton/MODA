@@ -2,7 +2,7 @@ var React = require('react');
 var $ = require('jquery');
 
 module.exports = React.createClass({
-  displayName: 'Segment',
+  displayName: 'Box',
   getDefaultProps: function () {
     return {
       // allow the initial position to be passed in as a prop
@@ -61,7 +61,18 @@ module.exports = React.createClass({
     //  e = this.props.masterE;
     //}
     if (e.button == 0) { // only left mouse button
-      var currentPos = $(this.getDOMNode()).offset();
+      this.moveBox(e);
+    }
+    if (e.button == 2){ //Delete box
+      this.setState({deleted:true},function() {
+        this.props.updateServerState(this.state);
+        this.props.removeMarker(this.state.index);
+      });
+    }
+  },
+
+  moveBox: function(e){
+    var currentPos = $(this.getDOMNode()).offset();
       this.setState({
         dragging: true,
         posOfClick: {
@@ -79,14 +90,9 @@ module.exports = React.createClass({
       });
       e.stopPropagation();
       e.preventDefault();
-    }
-    if (e.button == 2){ //Delete box
-      this.setState({deleted:true},function() {
-        this.props.updateServerState(this.state);
-        this.props.removeMarker(this.state.index);
-      });
-    }
   },
+
+  resizeBox: function(){},
 
   onMouseUp: function (e) {
     this.setState({dragging: false});
@@ -124,11 +130,11 @@ module.exports = React.createClass({
   render: function () {
     return <div {...this.props} onMouseDown={this.onMouseDown}
       style={{
-        width:'2px',
+        width:'10px',
         height:this.props.scoreImg.height(),
         position: 'absolute',
         left: this.state.currentPos.x - 3 + 'px', //-3 because we want segment at middle of click.
-        border: '3px solid #0d0',
+        border: '1px solid #0d0',
       }}></div>
   }
 });

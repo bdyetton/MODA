@@ -7,7 +7,6 @@ var users = new usr;
 var imgServer = require('./imgServer');
 var imServ = new imgServer;
 
-var Ben = {};
 var currentUsers = {};
 
 var app = express();

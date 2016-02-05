@@ -1,6 +1,7 @@
 var React = require('react');
 var $ = require('jquery');
-var Segment = require('./Segment');
+var Box = require('./Box');
+var DragBox = require('./DragBox');
 
 module.exports = React.createClass({
     displayName: 'Scorer',
@@ -46,7 +47,7 @@ module.exports = React.createClass({
       var scoreImg = $(this.refs.sigImg.getDOMNode());
       markers.seg.forEach(function(marker){
         if (marker.deleted=='true') {return; }
-        var newMarker = <Segment
+        var newMarker = <Box
           initialPos={marker.currentPos}
           className='box'
           scoreImg={scoreImg}
@@ -63,11 +64,11 @@ module.exports = React.createClass({
       });
     },
 
-    addMarker: function(e) {
+    addMarker: function(e,dragging) {
       var self = this;
       if (e.button !== 0) return;
       var scoreImg = $(this.refs.sigImg.getDOMNode());
-      var newMarker = <Segment initialPos={{x: e.pageX-scoreImg.offset().left, y: scoreImg.offset().top}}
+      var newMarker = <Box initialPos={{x: e.pageX-scoreImg.offset().left, y: scoreImg.offset().top}}
                         className='box'
                         scoreImg={scoreImg}
                         key={self.state.markerIndex}
@@ -89,13 +90,26 @@ module.exports = React.createClass({
         this.setState({markers:markers});
     },
 
-    render: function () { //FIXME Print each key of object, NOT the whole object (will get rid of react warning)
+    dragStart: function(e){
+      this.addMarker(e,true);
+    },
+
+    dragStop: function(e){
+      console.log('Stopping')
+      this.addMarker(e,true);
+    },
+
+    render: function () {
         var self = this;
+        var markers = $.map(this.state.markers, function(value, index) {
+            return [value];
+        });
         return (
             <div><p>Now logged in as {self.props.user}</p><p>Epoch ID: {self.state.currentRemImage}</p>
             <div style={{position:'relative'}}>
-                {this.state.markers}
-                <img ref='sigImg' src={window.location.href + (self.state.currentRemImage)} alt='remImage' onClick={this.addMarker} pointer-events='none'></img>
+              <DragBox/>
+                {markers}
+                <img ref='sigImg' src={window.location.href + (self.state.currentRemImage)} alt='remImage' onClick={this.addMarker} onDragStart={this.dragStart} onDragEnd={this.dragStop} pointer-events='none'></img>
             </div>
             <input ref='previous' type='button' onClick={self.getPreviousRemImage } value='Previous Epoch'></input>
             <input ref='next' type='button' onClick={self.getNextRemImage} value='Next Epoch'></input>

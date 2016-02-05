@@ -1,6 +1,6 @@
 var React = require('react');
 var $ = require('jquery');
-//http://stackoverflow.com/questions/20926551/recommended-way-of-making-react-component-div-draggable
+
 module.exports = React.createClass({
   displayName: 'Segment',
   getDefaultProps: function () {

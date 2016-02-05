@@ -3,7 +3,7 @@ import Draggable from 'react-draggable';
 import Resizable from 'react-resizable-box';
 import assign from 'react/lib/Object.assign';
 
-export default class DragBox extends Component {
+export default class ResizableAndMovable extends Component {
   constructor(props) {
     super(props);
     this.state = {isDraggable: true};
