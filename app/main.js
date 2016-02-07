@@ -1,7 +1,10 @@
 require("./Assets/style.scss")
-
-var React = require('react');
-
+var $ = require('jquery');
+var jQuery = $;
+global.$=$;
+global.jQuery = jQuery;
+global.React = require('react');
+global.ReactDOM = require('react-dom');
 var App = require('./App.js');
 
-React.render(<App/>, document.getElementById('body'));
+ReactDOM.render(<App/>, document.getElementById('main'));

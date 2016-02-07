@@ -22,7 +22,7 @@ module.exports = React.createClass({
   },
 
   componentDidMount: function(){
-    var initPos = $(this.getDOMNode()).offset();
+    var initPos = $(reactDOM.findDOMNode(this)).offset();
     this.setState({
       initial:{
         x: initPos.left - this.props.initialPos.x,
@@ -61,7 +61,7 @@ module.exports = React.createClass({
     //  e = this.props.masterE;
     //}
     if (e.button == 0) { // only left mouse button
-      var currentPos = $(this.getDOMNode()).offset();
+      var currentPos = $(reactDOM.findDOMNode(this)).offset();
       this.setState({
         dragging: true,
         posOfClick: {

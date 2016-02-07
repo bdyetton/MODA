@@ -1,7 +1,8 @@
-var React = require('react');
-var $ = require('jquery');
 var Box = require('./Box');
 var DragBox = require('./DragBox');
+var Stager = require('./Stager');
+var Button = require('react-bootstrap').Button;
+var bootstrap = require('bootstrap');
 
 module.exports = React.createClass({
     displayName: 'Scorer',
@@ -44,7 +45,7 @@ module.exports = React.createClass({
     populateMarkers: function(markers) {
       var popMarkers = {};
       var self = this;
-      var scoreImg = $(this.refs.sigImg.getDOMNode());
+      var scoreImg = $(this.refs.sigImg);
       markers.seg.forEach(function(marker){
         if (marker.deleted=='true') {return; }
         var newMarker = <Box
@@ -64,18 +65,17 @@ module.exports = React.createClass({
       });
     },
 
-    addMarker: function(e,dragging) {
+    addMarker: function(e) {
       var self = this;
       if (e.button !== 0) return;
-      var scoreImg = $(this.refs.sigImg.getDOMNode());
-      var newMarker = <Box initialPos={{x: e.pageX-scoreImg.offset().left, y: scoreImg.offset().top}}
-                        className='box'
-                        scoreImg={scoreImg}
-                        key={self.state.markerIndex}
-                        index={self.state.markerIndex}
-                        removeMarker={self.removeMarker}
-                        updateServerState={self.updateServerState}
-                    />;
+      var scoreImg = $(this.refs.sigImg);
+
+      var newMarker = <DragBox
+          key={self.state.markerIndex}
+          index={self.state.markerIndex}
+          start={{x: e.pageX-scoreImg.offset().left, y: 0, width: 200, height: scoreImg.height()}}
+          customStyle={{background:"#393", opacity: 0.7, textAlign:"center", paddingTop: '20px', border:'1px solid #0d0'}}
+          />;
       var markers = self.state.markers;
       markers[self.state.markerIndex]=newMarker;
       this.setState({
@@ -95,7 +95,7 @@ module.exports = React.createClass({
     },
 
     dragStop: function(e){
-      console.log('Stopping')
+      console.log('Stopping');
       this.addMarker(e,true);
     },
 
@@ -105,17 +105,18 @@ module.exports = React.createClass({
             return [value];
         });
         return (
-            <div><p>Now logged in as {self.props.user}</p><p>Epoch ID: {self.state.currentRemImage}</p>
-            <div style={{position:'relative'}}>
-              <DragBox/>
-                {markers}
-                <img ref='sigImg' src={window.location.href + (self.state.currentRemImage)} alt='remImage' onClick={this.addMarker} onDragStart={this.dragStart} onDragEnd={this.dragStop} pointer-events='none'></img>
-            </div>
-            <input ref='previous' type='button' onClick={self.getPreviousRemImage } value='Previous Epoch'></input>
-            <input ref='next' type='button' onClick={self.getNextRemImage} value='Next Epoch'></input>
-            <p>{self.state.msg == 'ok' ? '' : self.state.msg}</p>
+            <div className='container'><p>Now logged in as {self.props.user}</p><p>Epoch ID: {self.state.currentRemImage}</p>
+              <div className='row channels' style={{position:'relative'}}>
+                  {markers}
+                  <img ref='sigImg' src={window.location.href + (self.state.currentRemImage)} alt='remImage' onClick={this.addMarker} pointer-events='none'></img>
+              </div>
+              <div className='row'>
+                <Button bsStyle="primary" ref='previous' type='button' onClick={self.getPreviousRemImage }>Previous Epoch</Button>
+                <Stager/>
+                <Button bsStyle="primary" ref='next' type='button' onClick={self.getNextRemImage}>Next Epoch</Button>
+              </div>
+              <p>{self.state.msg == 'ok' ? '' : self.state.msg}</p>
             </div>
         );
     }
-
 });

@@ -6,20 +6,30 @@ import assign from 'react/lib/Object.assign';
 export default class DragBox extends Component {
   constructor(props) {
     super(props);
-    this.state = {isDraggable: true};
-    this.isResizing = false;
+    this.state = {
+      isDraggable: true,
+      isResizing: false,
+    };
+
   }
 
-  onResizeStart(e) {
-    this.setState({isDraggable: false});
+  componentDidMount(){
+    this.onResizeStart()
+  }
+
+  onResizeStart(dir) {
     this.isResizing = true;
+    this.setState({isDraggable: false, isResizing:true});
+
     this.props.onResizeStart();
+    //e.stopPropagation();
   }
 
   onResizeStop(size) {
-    this.setState({isDraggable: true});
     this.isResizing = false;
+    this.setState({isDraggable: true, isResizing:true});
     this.props.onResizeStop(size);
+    //e.stopPropagation();
   }
 
   onDragStart(e, ui) {
@@ -50,7 +60,7 @@ export default class DragBox extends Component {
            zIndex} = this.props;
     return (
       <Draggable
-         axis="both"
+         axis="x"
          zIndex={zIndex}
          start={{x:start.x, y:start.y}}
          disabled={!this.state.isDraggable}
@@ -65,13 +75,14 @@ export default class DragBox extends Component {
              }}>
           <Resizable
              onClick={onClick}
+             draggableOpts={{axis:"y"}}
              onTouchStart={onTouchStart}
+             isResizable={{x:true,y:false,xy:false}}
              onResizeStart={this.onResizeStart.bind(this)}
-             onResize={this.props.onResize}
              onResizeStop={this.onResizeStop.bind(this)}
              width={start.width}
              height={start.height}
-             minWidth={minWidth}
+             minWidth={minWidth || 20}
              minHeight={minHeight}
              maxWidth={maxWidth}
              maxHeight={maxHeight}
@@ -85,7 +96,7 @@ export default class DragBox extends Component {
   }
 }
 
-ResizableAndMovable.propTypes = {
+DragBox.propTypes = {
   onClick: PropTypes.func,
   onTouchStart: PropTypes.func,
   x: PropTypes.number,
@@ -95,9 +106,9 @@ ResizableAndMovable.propTypes = {
   height: PropTypes.number.isRequired
 };
 
-ResizableAndMovable.defaultProps = {
-  width: 100,
-  height: 100,
+DragBox.defaultProps = {
+  width: 50,
+  height: 50,
   x: 0,
   y: 0,
   start: {x:0, y:0},

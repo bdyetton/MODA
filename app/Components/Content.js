@@ -1,9 +1,5 @@
-var React = require('react');
-
 var Scorer = require('./Scorer');
 var Login = require('./Login');
-
-//require('./bootstrap.css');
 
 module.exports = React.createClass({
     displayName: 'Content',

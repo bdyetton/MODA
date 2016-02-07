@@ -1,4 +1,5 @@
 var React = require('react');
+var reactDOM = require('react-dom');
 var $ = require('jquery');
 
 module.exports = React.createClass({
@@ -22,7 +23,7 @@ module.exports = React.createClass({
   },
 
   componentDidMount: function(){
-    var initPos = $(this.getDOMNode()).offset();
+    var initPos = $(reactDOM.findDOMNode(this)).offset();
     this.setState({
       initial:{
         x: initPos.left - this.props.initialPos.x,
@@ -72,7 +73,7 @@ module.exports = React.createClass({
   },
 
   moveBox: function(e){
-    var currentPos = $(this.getDOMNode()).offset();
+    var currentPos = $(reactDOM.findDOMNode(this)).offset();
       this.setState({
         dragging: true,
         posOfClick: {

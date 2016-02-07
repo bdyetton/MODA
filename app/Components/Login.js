@@ -9,7 +9,7 @@ module.exports = React.createClass({
 
     getUser: function() {
         var self = this;
-        var userName = self.refs.User.getDOMNode().value;
+        var userName = self.refs.User.value;
         $.get('/api/getUser',{user:userName},function(data){
             self.props.loggedInCallback(data.userName,data.img);
         });
