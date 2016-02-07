@@ -1,5 +1,7 @@
 var Box = require('./Box');
-var DragBox = require('./DragBox');
+var DragBox = require('react-resizable-and-movable');
+//import ResizableAndMovable from 'react-resizable-and-movable'
+import ResizableAndMovable from '/home/ben/simple-webpack-react-starter/node_modules/react-resizable-and-movable'
 var Stager = require('./Stager');
 var Button = require('react-bootstrap').Button;
 var bootstrap = require('bootstrap');
@@ -8,7 +10,7 @@ module.exports = React.createClass({
     displayName: 'Scorer',
 
     getInitialState: function() {
-        return { currentRemImage: this.props.img.url, markers: {} , markerIndex: this.props.img.markerIndex || 0, msg:this.props.img.msg};
+        return { currentRemImage: this.props.img.url, markers: {} , markerIndex: parseInt(this.props.img.markerIndex) || 0, msg:this.props.img.msg};
     },
 
     componentDidMount: function() {
@@ -69,10 +71,11 @@ module.exports = React.createClass({
       var self = this;
       if (e.button !== 0) return;
       var scoreImg = $(this.refs.sigImg);
-
-      var newMarker = <DragBox
+      var newMarker = <ResizableAndMovable
           key={self.state.markerIndex}
           index={self.state.markerIndex}
+          minWidth={20}
+          isResizable={{x:true, y:false, xy: false}}
           start={{x: e.pageX-scoreImg.offset().left, y: 0, width: 200, height: scoreImg.height()}}
           customStyle={{background:"#393", opacity: 0.7, textAlign:"center", paddingTop: '20px', border:'1px solid #0d0'}}
           />;
