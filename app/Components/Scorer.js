@@ -10,7 +10,7 @@ module.exports = React.createClass({
     displayName: 'Scorer',
 
     getInitialState: function() {
-        return { currentRemImage: this.props.image.url, markers: {} , stage: this.props.image.stage , markerIndex: parseInt(this.props.image.markerIndex) || 0, msg:this.props.image.msg};
+        return { currentRemImage: this.props.image.url, slothmode: this.props.sme, markers: {} , stage: this.props.image.stage , markerIndex: parseInt(this.props.image.markerIndex) || 0, msg:this.props.image.msg};
     },
 
     componentDidMount: function() {
@@ -40,7 +40,8 @@ module.exports = React.createClass({
               console.log('Error saving marker');
             }
         }).fail(function(xhr, textStatus, errorThrown){
-          alert('Oh Snap! Something went horribly wrong saving the data, please refresh the page');
+          console.log('Error saving marker');
+          //alert('Oh Snap! Something went horribly wrong saving the data, please refresh the page');
         });
     },
 
@@ -48,23 +49,27 @@ module.exports = React.createClass({
       var popMarkers = {};
       var self = this;
       var scoreImg = $(this.refs.sigImg);
-      markers.seg.forEach(function(marker){
-        if (marker.deleted=='true') {return; }
-        var newMarker = <Box
-          initialPos={marker.currentPos}
-          className='box'
-          scoreImg={scoreImg}
-          key={marker.index}
-          index={marker.index}
-          saved={true}
-          removeMarker={self.removeMarker}
-          updateServerState={self.updateServerState}
-          />;
-        popMarkers[marker.index] = newMarker;
-      });
-      this.setState({
+      if (markers != undefined) {
+        markers.seg.forEach(function (marker) {
+          if (marker.deleted == 'true') {
+            return;
+          }
+          var newMarker = <Box
+            initialPos={marker.currentPos}
+            className='box'
+            scoreImg={scoreImg}
+            key={marker.index}
+            index={marker.index}
+            saved={true}
+            removeMarker={self.removeMarker}
+            updateServerState={self.updateServerState}
+            />;
+          popMarkers[marker.index] = newMarker;
+        });
+        this.setState({
           markers: popMarkers
-      });
+        });
+      }
     },
 
     addMarker: function(e) {
@@ -122,7 +127,12 @@ module.exports = React.createClass({
             <div className='container'><p>Now logged in as {self.props.user}</p><p>Epoch ID: {self.state.currentRemImage}</p>
               <div className='row channels' style={{position:'relative'}}>
                   {markers}
-                  <img ref='sigImg' src={window.location.href + (self.state.currentRemImage)} alt='remImage' onClick={this.addMarker} pointer-events='none'></img>
+                  <img ref='sigImg' src={function(){
+                    if(self.state.sme){
+                      return window.location.href + (self.state.currentRemImage)}
+                    else{
+                      return self.state.currentRemImage
+                    }}()} alt='remImage' onClick={this.addMarker} pointer-events='none'></img>
               </div>
               <div className='row'>
                 <Button bsStyle="primary" ref='previous' type='button' onClick={self.getPreviousRemImage }>Previous Epoch</Button>

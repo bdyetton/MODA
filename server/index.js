@@ -67,10 +67,18 @@ app.get('/api/getUser',cors(),function(req,res){
         out.login = true;
         out.createdUser = true;
         out.userName = currentUsers[req.query.user].name;
-        out.markers = {};
+        out.markers = {}; //FIXME remove?
         out.image = imServ.getImage(currentUsers[req.query.user], 0);
         out.stage = imServ.getStage(currentUsers[req.query.user]);
-      } else { console.log(err)}
+      } else {
+        out.image = {};
+        out.image.url = 'http://i.imgur.com/xEv2LWQ.jpg';
+        out.userName = 'Invalid User *Slothmode Enabled*';
+        out.login = true;
+        out.sme = true;
+        out.createdUser = false;
+        console.log(err)
+      }
     }
     res.send(out);
   });
