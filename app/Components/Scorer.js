@@ -1,5 +1,5 @@
 var Box = require('./Box');
-import ResizableAndMovable from '/home/ben/simple-webpack-react-starter/node_modules/react-resizable-and-movable'
+import ResizableAndMovable from '../../node_modules/react-resizable-and-movable'
 var Stager = require('./Stager');
 var Button = require('react-bootstrap').Button;
 var bootstrap = require('bootstrap');
