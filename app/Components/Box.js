@@ -1,6 +1,3 @@
-var React = require('react');
-var reactDOM = require('react-dom');
-var $ = require('jquery');
 
 module.exports = React.createClass({
   displayName: 'Box',
