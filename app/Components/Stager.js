@@ -3,21 +3,20 @@ module.exports = React.createClass({
     displayName: 'Stager',
 
     getInitialState: function() {
-        return { stage: 'Not Set'};
+        return {};
     },
 
     componentDidMount: function (){
-      var self=this;
+      var self = this;
+
       $(".toggle-btn:not('.noscript') input[type=radio]").addClass("visuallyhidden");
 
       $(".toggle-btn:not('.noscript') input[type=radio]").change(function() {
-          if( $(this).attr("name") ) {
-              $(this).parent().addClass("success").siblings().removeClass("success")
-              self.changeStage(parseInt($(this).attr("name")))
-          } else {
-              $(this).parent().toggleClass("success");
-          }
+        //self.toggleButtonState(self,this)
+        self.props.changeStage(($(this).attr("data-stage")));
       });
+
+
     },
 
     componentWillMount:function(){
@@ -25,47 +24,52 @@ module.exports = React.createClass({
     },
 
 
+    toggleButtonState: function(self,toggleButton){
+      if( $(toggleButton).attr("name") ) {
+              $(toggleButton).parent().addClass("success").siblings().removeClass("success");
+              //self.props.changeStage($(toggleButton).attr("data-stage"))
+          } else {
+              $(toggleButton).parent().toggleClass("success");
+          }
+      },
+
     componentWillUnmount: function() {
       document.removeEventListener("keydown", this.handleKey, false);
     },
 
-    changeStage: function(stage){
-      this.setState({stage:stage});
-      console.log(stage);
-      //if (stage==='W'){$("wake").mousedown()} else {$("wake").mouseup()}
-    },
-
-    handleKey:function(event){
-      console.log(event);
+    handleKey: function(event){
+      console.log(event); // TODO The button last pushed cannot be selected again...
       if (event.keyCode===48){
-        this.changeStage(0);
+        this.toggleButtonState(this,$('*[data-stage="0"]'))
       }
-      else if (event.keyCode===49){}
-      else if (event.keyCode===50){}
-      else if (event.keyCode===51){}
-      else if (event.keyCode===52){}
+      else if (event.keyCode===49){
+        this.toggleButtonState(this,$('*[data-stage="1"]'))
+      }
+      else if (event.keyCode===50){
+        this.toggleButtonState(this,$('*[data-stage="2"]'))
+      }
+      else if (event.keyCode===51){
+        this.toggleButtonState(this,$('*[data-stage="3"]'))
+      }
+      else if (event.keyCode===52){
+        this.toggleButtonState(this,$('*[data-stage="4"]'))
+      }
     },
 
     render: function () {
       var self = this;
+      var toggleState = '*[data-stage='+self.props.stage+']';
+      this.toggleButtonState(this,$(toggleState));
       return (
         <div id='StageButtons' onKeyDown={this.handleKeypress}>
         <div className="toggle-btn-grp joint-toggle">
-            <label onclick="" className="toggle-btn"><input type="radio" name="0"/>Wake</label>
-            <label onclick="" className="toggle-btn"><input type="radio" name="1"/>S1</label>
-            <label onclick="" className="toggle-btn"><input type="radio" name="2"/>S2</label>
-            <label onclick="" className="toggle-btn"><input type="radio" name="3"/>SWS</label>
-            <label onclick="" className="toggle-btn"><input type="radio" name="4"/>REM</label>
+            <label onclick="" className="toggle-btn"><input type="radio" name="stage" data-stage='0'/>Wake</label>
+            <label onclick="" className="toggle-btn"><input type="radio" name="stage" data-stage='1'/>S1</label>
+            <label onclick="" className="toggle-btn"><input type="radio" name="stage" data-stage='2'/>S2</label>
+            <label onclick="" className="toggle-btn"><input type="radio" name="stage" data-stage='3'/>SWS</label>
+            <label onclick="" className="toggle-btn"><input type="radio" name="stage" data-stage='4'/>REM</label>
         </div>
         </div>
       );
     }
 });
-
-
-
-        //onClick={self.changeStage('W')}
-        //<input ref='stage1' type='button' onClick={self.changeStage('S1')} value='Stage 1 (1)'></input>
-        //<input ref='stage2' type='button' onClick={self.changeStage('S2')} value='Stage 2 (2)'></input>
-        //<input ref='SWS' type='button' onClick={self.changeStage('SWS')} value='SWS (3)'></input>
-        //<input ref='REM' type='button' onClick={self.changeStage('REM')} value='REM (4)'></input>

@@ -25,14 +25,22 @@ app.get('/api/currentTime', cors(), function(req, res) {
 app.get('/api/nextRemImage',cors(),function(req,res){
     var nextImg = imServ.getImage(currentUsers[req.query.user],1);
     var nextMarkers = imServ.getMarkers(currentUsers[req.query.user]);
-    res.send({image: nextImg, markers: nextMarkers});
+    var stage = imServ.getStage(currentUsers[req.query.user]) || undefined;
+    res.send({image: nextImg, markers: nextMarkers, stage:'1'});
+    users.saveUser(currentUsers[req.query.user]);
+});
+
+app.get('/api/updateStage',cors(),function(req,res){
+    imServ.setStage(currentUsers[req.query.user],req.query.stage);
     users.saveUser(currentUsers[req.query.user]);
 });
 
 app.get('/api/previousRemImage',cors(),function(req,res){
     var nextImg = imServ.getImage(currentUsers[req.query.user],-1);
     var nextMarkers = imServ.getMarkers(currentUsers[req.query.user]);
-    res.send({image: nextImg, markers: nextMarkers});
+    var stage = imServ.getStage(currentUsers[req.query.user]) || undefined;
+    console.log(stage);
+    res.send({image: nextImg, markers: nextMarkers, stage:'0'});
     users.saveUser(currentUsers[req.query.user]);
 });
 
@@ -49,10 +57,10 @@ app.get('/api/getUser',cors(),function(req,res){
       out.createdUser = false;
       currentUsers[req.query.user] = userData;
       out.userName = currentUsers[req.query.user].name;
-      out.img = {};
-      out.img = imServ.getImage(currentUsers[req.query.user], 0);
-      out.img.markers = imServ.getMarkers(currentUsers[req.query.user]);
-      out.img.markerIndex = currentUsers[req.query.user].markerIndex;
+      out.image = {};
+      out.image = imServ.getImage(currentUsers[req.query.user], 0);
+      out.image.markers = imServ.getMarkers(currentUsers[req.query.user]); //TODO check if this is correct .?
+      out.image.markerIndex = currentUsers[req.query.user].markerIndex;
     } else { //create user
       if(err.code == 'NoSuchKey') {
         currentUsers[req.query.user] = users.createUser(req.query.user, imServ);
@@ -60,7 +68,8 @@ app.get('/api/getUser',cors(),function(req,res){
         out.createdUser = true;
         out.userName = currentUsers[req.query.user].name;
         out.markers = {};
-        out.img = imServ.getImage(currentUsers[req.query.user], 0);
+        out.image = imServ.getImage(currentUsers[req.query.user], 0);
+        out.stage = imServ.getStage(currentUsers[req.query.user]);
       } else { console.log(err)}
     }
     res.send(out);

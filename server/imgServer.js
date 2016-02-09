@@ -92,6 +92,9 @@ function imgServer(){
         user.markerIndex = 0;
     };
 
+    self.setStage = function(user, stage){return true};
+    self.getStage = function(user){return 0};
+
     self.updateMarkerState = function(user, marker){
       if (user.markerIndex < marker.index){
         user.markerIndex = marker.index;

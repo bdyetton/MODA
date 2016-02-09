@@ -10,17 +10,17 @@ module.exports = React.createClass({
     displayName: 'Scorer',
 
     getInitialState: function() {
-        return { currentRemImage: this.props.img.url, markers: {} , markerIndex: parseInt(this.props.img.markerIndex) || 0, msg:this.props.img.msg};
+        return { currentRemImage: this.props.image.url, markers: {} , stage: this.props.image.stage , markerIndex: parseInt(this.props.image.markerIndex) || 0, msg:this.props.image.msg};
     },
 
     componentDidMount: function() {
-        this.populateMarkers(this.props.img.markers);
+        this.populateMarkers(this.props.image.markers);
     },
 
     getPreviousRemImage: function() {
         var self = this;
         $.get('/api/previousRemImage', {user: this.props.user}, function(data){
-          self.setState({ currentRemImage: data.image.url, msg:data.image.msg});
+          self.setState({ currentRemImage: data.image.url, msg:data.image.msg, stage:data.stage});
           self.populateMarkers(data.markers);
         });
     },
@@ -28,7 +28,7 @@ module.exports = React.createClass({
     getNextRemImage: function() {
         var self = this;
         $.get('/api/nextRemImage', {user: this.props.user}, function(data){
-          self.setState({ currentRemImage: data.image.url, msg:data.image.msg});
+          self.setState({ currentRemImage: data.image.url, msg:data.image.msg, stage:data.stage});
           self.populateMarkers(data.markers);
         });
     },
@@ -102,6 +102,17 @@ module.exports = React.createClass({
       this.addMarker(e,true);
     },
 
+    changeStage: function(stage){
+      this.setState({stage:stage});
+      $.get('/api/updateStage', {stage:stage, user: this.props.user}, function(data){
+          if (!data.success){
+            console.log('Error saving stage');
+          }
+      }).fail(function(xhr, textStatus, errorThrown){
+        alert('Oh Snap! Something went horribly wrong saving the stage data, please refresh the page');
+      });
+    },
+
     render: function () {
         var self = this;
         var markers = $.map(this.state.markers, function(value, index) {
@@ -115,7 +126,7 @@ module.exports = React.createClass({
               </div>
               <div className='row'>
                 <Button bsStyle="primary" ref='previous' type='button' onClick={self.getPreviousRemImage }>Previous Epoch</Button>
-                <Stager/>
+                <Stager stage={self.state.stage} changeStage={self.changeStage}/>
                 <Button bsStyle="primary" ref='next' type='button' onClick={self.getNextRemImage}>Next Epoch</Button>
               </div>
               <p>{self.state.msg == 'ok' ? '' : self.state.msg}</p>
