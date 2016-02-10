@@ -1,7 +1,7 @@
 {
-  "name": "webpack-starter",
+  "name": "MODA",
   "version": "1.0.0",
-  "description": "Bare bones webpack project with a node express server",
+  "description": "Massive Online Data Annotation",
   "main": "server/index.js",
   "scripts": {
     "dev-server": "nodemon server/index.js --watch server",
@@ -12,8 +12,8 @@
     "test": "karma start",
     "testing": "karma start --single-run=false"
   },
-  "repository": "git@github.com:cgreening/webpack-starter.git",
-  "author": "Chris Greening",
+  "repository": "https://github.com/bdyetton/MODA.git",
+  "author": "Ben Yetton",
   "license": "MIT",
   "dependencies": {
     "aws-sdk": "*",

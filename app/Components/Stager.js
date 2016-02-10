@@ -62,12 +62,12 @@ module.exports = React.createClass({
       this.toggleButtonState(this,$(toggleState));
       return (
         <div id='StageButtons' onKeyDown={this.handleKeypress}>
-        <div className="toggle-btn-grp joint-toggle">
-            <label onclick="" className="toggle-btn"><input type="radio" name="stage" data-stage='0'/>Wake</label>
-            <label onclick="" className="toggle-btn"><input type="radio" name="stage" data-stage='1'/>S1</label>
-            <label onclick="" className="toggle-btn"><input type="radio" name="stage" data-stage='2'/>S2</label>
-            <label onclick="" className="toggle-btn"><input type="radio" name="stage" data-stage='3'/>SWS</label>
-            <label onclick="" className="toggle-btn"><input type="radio" name="stage" data-stage='4'/>REM</label>
+        <div className="toggle-btn-grp joint-toggle horz">
+            <label onclick="" className="toggle-btn toggle-btn-horz"><input type="radio" name="stage" data-stage='0'/>Wake</label>
+            <label onclick="" className="toggle-btn toggle-btn-horz"><input type="radio" name="stage" data-stage='1'/>S1</label>
+            <label onclick="" className="toggle-btn toggle-btn-horz"><input type="radio" name="stage" data-stage='2'/>S2</label>
+            <label onclick="" className="toggle-btn toggle-btn-horz"><input type="radio" name="stage" data-stage='3'/>SWS</label>
+            <label onclick="" className="toggle-btn toggle-btn-horz"><input type="radio" name="stage" data-stage='4'/>REM</label>
         </div>
         </div>
       );
