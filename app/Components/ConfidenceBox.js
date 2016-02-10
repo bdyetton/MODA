@@ -21,7 +21,7 @@ module.exports = React.createClass({
 
 
   render: function () {
-    return <div className='arrow_box'>Rate Confidence
+    return <div className='arrow_box'>Confidence?
             <div className="toggle-btn-grp joint-toggle">
             <label onclick="" className="toggle-btn toggle-btn-conf-high"><input type="radio" name="stage" data-stage='0'/>High</label>
             <label onclick="" className="toggle-btn toggle-btn-conf-med"><input type="radio" name="stage" data-stage='1'/>Med</label>
