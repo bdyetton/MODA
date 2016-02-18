@@ -62,7 +62,7 @@
     "react-bootstrap": "^0.28.2",
     "react-dom": "^0.14.7",
     "react-hot-loader": "^1.2.7",
-    "react-resizable-and-movable": "^0.2.4",
+    "react-resizable-and-movable": "^0.2.7",
     "react-resizable-box": "^0.1.7",
     "sass-loader": "^1.0.2",
     "sinon": "^1.15.3",

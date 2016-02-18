@@ -80,6 +80,7 @@ module.exports = React.createClass({
           index={self.state.markerIndex}
           minWidth={20}
           isResizable={{x:true, y:false, xy: false}}
+          moveAxis={'x'}
           children={<ConfidenceBox/>}
           start={{x: e.pageX-scoreImg.offset().left, y: 0, width: 200, height: scoreImg.height()}}
           customStyle={{background:"#393", opacity: 0.7, textAlign:"center", paddingTop: '20px', border:'1px solid #0d0'}}
