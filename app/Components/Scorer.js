@@ -65,9 +65,9 @@ module.exports = React.createClass({
           if (marker.deleted == 'true') {
             return;
           }
-          var newMarker = <Box
+          var newMarker = <ResizableAndMovable
             initialPos={marker.currentPos}
-            className='box'
+            className='box_marker'
             scoreImg={scoreImg}
             key={marker.index}
             index={marker.index}
@@ -90,13 +90,14 @@ module.exports = React.createClass({
       var scoreImg = $(this.refs.sigImg);
       var newMarker = <ResizableAndMovable
           key={self.state.markerIndex}
+          className='box_marker'
           index={self.state.markerIndex}
           minWidth={20}
           isResizable={{x:true, y:false, xy: false}}
           moveAxis={'x'}
-          children={<ConfidenceBox/>}
+          children={<ConfidenceBox active={true}/>}
           start={{x: e.pageX-scoreImg.offset().left, y: 0, width: 200, height: scoreImg.height()}}
-          customStyle={{background:"#393", opacity: 0.7, textAlign:"center", paddingTop: '20px', border:'1px solid #0d0'}}
+          customStyle={{background:"#393", opacity: 0.7, border:'1px solid #0d0'}}
           />;
       var markers = self.state.markers;
       markers[self.state.markerIndex]=newMarker;
