@@ -3,13 +3,23 @@ import ResizableAndMovable from '../../node_modules/react-resizable-and-movable'
 var Stager = require('./Stager');
 var ConfidenceBox = require('./ConfidenceBox');
 var Button = require('react-bootstrap').Button;
+var Input = require('react-bootstrap').Input;
 var bootstrap = require('bootstrap');
 
 module.exports = React.createClass({
     displayName: 'Scorer',
 
     getInitialState: function() {
-        return { currentRemImage: this.props.image.url, slothmode: this.props.sme, markers: {} , stage: this.props.image.stage , markerIndex: parseInt(this.props.image.markerIndex) || 0, msg:this.props.image.msg};
+        return {
+          markerType: "spindles",
+          noMarkerState:false,
+          currentRemImage: this.props.image.url,
+          slothmode: this.props.sme,
+          markers: {} ,
+          stage: this.props.image.stage,
+          markerIndex: parseInt(this.props.image.markerIndex) || 0, msg:this.props.image.msg,
+          numMarkers: 0
+        };
     },
 
     componentDidMount: function() {
@@ -48,6 +58,7 @@ module.exports = React.createClass({
       var popMarkers = {};
       var self = this;
       var scoreImg = $(this.refs.sigImg);
+      this.setState({noMarkerState: false}); //TODO set from server
       if (markers != undefined) {
         markers.seg.forEach(function (marker) {
           if (marker.deleted == 'true') {
@@ -66,7 +77,8 @@ module.exports = React.createClass({
           popMarkers[marker.index] = newMarker;
         });
         this.setState({
-          markers: popMarkers
+          markers: popMarkers,
+          numMarkers: markers.seg.length
         });
       }
     },
@@ -89,8 +101,18 @@ module.exports = React.createClass({
       markers[self.state.markerIndex]=newMarker;
       this.setState({
           markers: markers,
-          markerIndex: self.state.markerIndex+1
+          markerIndex: self.state.markerIndex+1,
+          numMarkers: self.state.numMarkers+1
       });
+    },
+
+    setNoMarkers: function(e){
+      if(this.state.noMarkerState){
+          this.setState({noMarkerState: false});
+      }
+      else{
+          this.setState({noMarkerState: true})
+      }
     },
 
     removeMarker: function(index){
@@ -137,8 +159,11 @@ module.exports = React.createClass({
               </div>
               <div className='row'>
                 <Button bsStyle="primary" ref='previous' type='button' onClick={self.getPreviousRemImage }>Previous Epoch</Button>
-                <Stager stage={self.state.stage} changeStage={self.changeStage}/>
-                <Button bsStyle="primary" ref='next' type='button' onClick={self.getNextRemImage}>Next Epoch</Button>
+                <Input type="checkbox" ref='noMarkers' checked={self.state.noMarkerState} label={'No '+self.state.markerType+' in epoch'} onClick={self.setNoMarkers}/>
+                <Stager stage={self.state.stage} changeStage={self.changeStage} />
+                <Button bsStyle="primary" ref='next' type='button'
+                        disabled={!(self.state.noMarkerState || self.state.numMarkers>0)}
+                        onClick={self.getNextRemImage}>Next Epoch</Button>
               </div>
               <p>{self.state.msg == 'ok' ? '' : self.state.msg}</p>
             </div>

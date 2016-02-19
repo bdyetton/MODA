@@ -3,7 +3,6 @@ module.exports = React.createClass({
   displayName: 'ConfidenceBox',
 
   getInitialState: function () {
-    console.log('Working!');
     return {}
   },
 
