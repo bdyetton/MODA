@@ -10,6 +10,7 @@ module.exports = React.createClass({
     displayName: 'Scorer',
 
     getInitialState: function() {
+        console.log('Hi');
         return {
           markerType: "spindles",
           noMarkerState:false,
