@@ -18,7 +18,7 @@ module.exports = React.createClass({
   render: function (){
     return (
 	  	<div className='header'>
-    	MOSS - Massive Online Sleep Scoring
+    	MODA - Massive Online Data Annotation
     	</div>
 		)
 	}
