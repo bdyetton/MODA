@@ -7,15 +7,24 @@ module.exports = React.createClass({
     return {page: 'login'};
   },
 
+  updatePage: function(page,data){
+    if (page==='score'){
+      this.setState({user:data.userName, image:data.image});}
+    else if(page==='instructions'){
+
+    }
+    else{
+
+    }
+    this.setState({page:page})
+  },
+
   render: function () {
     var self = this;
     if(self.state.page==='login')
     {
-      return (<div><Login loggedInCallback={function(user,image){
-                self.setState({user:user, image:image});
-                self.setState({loggedIn:'login'});
-            }}/></div>)
-    } else
+      return (<div><Login updatePage={self.updatePage}/></div>)
+    } else if (self.state.page==='score')
     {
       return (<div><Scorer user={this.state.user} image={this.state.image}/></div>)
     }

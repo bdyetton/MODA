@@ -1,6 +1,6 @@
 {
-  "name": "Bare bones webpack project",
-  "description": "Barbones webpack starter sample with react",
+  "name": "MODA",
+  "description": "Massive Online Data Annotation",
   "repository": "https://github.com/cgreening/simple-webpack-react-starter",
-  "keywords": ["node", "express", "webpack", "react"]
+  "keywords": ["PSG", "Sleep", "Scoring", "Spindles"]
 }

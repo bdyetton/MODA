@@ -35,7 +35,7 @@ module.exports = {
   // https://www.npmjs.com/package/html-webpack-plugin - generate our html file from a template - makes it easier to include custom stuff
   indexPagePlugin: new HtmlWebpackPlugin({
                           inject: true,
-                          title: 'MOSS - Massive Online Sleep Scoring',
+                          title: 'MODA - Massive Online Data Annotation',
                           filename: 'index.html',
                           template: './app/index_template.html'
                         })

@@ -10,7 +10,7 @@ module.exports = React.createClass({
         var self = this;
         var userName = self.refs.User.value;
         $.get('/api/getUser',{user:userName},function(data){
-            self.props.loggedInCallback(data.userName,data.image);
+            self.props.updatePage('score',data);
         });
     },
 
