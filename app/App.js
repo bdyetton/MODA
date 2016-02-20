@@ -5,8 +5,9 @@ module.exports = React.createClass({
   displayName: 'App',
 
   render: function () {
-    return (<div>
-              <Header/>
+    return (<div style={{'margin': '0 auto',
+                        'text-align': 'left',
+                        'width': '100%'}}>
               <Content/>
             </div>)
   }
