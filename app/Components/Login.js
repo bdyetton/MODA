@@ -21,7 +21,7 @@ module.exports = React.createClass({
     render: function () {
         return (
         <div style={{'text-align':'center', position:'absolute', left:'50%', top: '50%',  transform: 'translateY(-50%) translateX(-50%)'}}>
-        <div><p>Please Login or Create username</p></div>
+        <div style={{'font-size':'20'}}><p>Please Login or Create username</p></div>
         <input ref='User' type='text'></input>
         <input ref='Login' type='button' onClick={this.getUser} value='Login/Create username'></input>
         </div>

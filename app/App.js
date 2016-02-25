@@ -6,7 +6,7 @@ module.exports = React.createClass({
 
   render: function () {
     return (<div style={{'margin': '0 auto',
-                        'text-align': 'left',
+                        'textAlign': 'left',
                         'width': '100%'}}>
               <Content/>
             </div>)

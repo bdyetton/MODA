@@ -1,7 +1,5 @@
-var Box = require('./Box');
-import ResizableAndMovable from '../../node_modules/react-resizable-and-movable';
 var Stager = require('./Stager');
-var ConfidenceBox = require('./ConfidenceBox');
+var Marker = require('./Marker');
 var rb = require('react-bootstrap');
 
 module.exports = React.createClass({
@@ -40,7 +38,7 @@ module.exports = React.createClass({
     });
   },
 
-  updateServerState: function(markerData){
+  updateMarkerState: function(markerData){
     var self = this;
     $.get('/api/updateMarkerState', {marker:markerData, user: this.props.user}, function(data){
       if (!data.success){
@@ -85,16 +83,14 @@ module.exports = React.createClass({
     var self = this;
     if (e.button !== 0) return;
     var scoreImg = $(this.refs.sigImg);
-    var newMarker = <ResizableAndMovable
+    var newMarker = <Marker
       key={self.state.markerIndex}
-      className='box_marker'
-      index={self.state.markerIndex}
-      minWidth={20}
-      isResizable={{x:true, y:false, xy: false}}
-      moveAxis={'x'}
-      children={<ConfidenceBox active={true}/>}
-      start={{x: e.pageX-scoreImg.offset().left, y: 0, width: 200, height: scoreImg.height()}}
-      customStyle={{background:"#393", opacity: 0.7, border:'1px solid #0d0'}}
+      markerIndex={self.state.markerIndex}
+      x={e.pageX-scoreImg.offset().left}
+      y={0}
+      h={scoreImg.height()}
+      removeMarker={self.removeMarker}
+      updateMarkerState={self.updateMarkerState}
       />;
     var markers = self.state.markers;
     markers[self.state.markerIndex]=newMarker;
@@ -120,15 +116,6 @@ module.exports = React.createClass({
     this.setState({markers:markers});
   },
 
-  dragStart: function(e){
-    this.addMarker(e,true);
-  },
-
-  dragStop: function(e){
-    console.log('Stopping');
-    this.addMarker(e,true);
-  },
-
   changeStage: function(stage){
     this.setState({stage:stage});
     $.get('/api/updateStage', {stage:stage, user: this.props.user}, function(data){
@@ -146,9 +133,9 @@ module.exports = React.createClass({
       return [value];
     });
     return (
-      <div className='container' style={{'text-align':'center', position:'absolute', left:'50%', top: '50%',  transform: 'translateY(-50%) translateX(-50%)'}}>
+      <div className='container' style={{textAlign:'center', position:'absolute', left:'50%', top: '50%',  transform: 'translateY(-50%) translateX(-50%)'}}>
         <rb.Panel bsStyle="primary" textAlign='center' header="MODA - Massive Online Data Annotation">
-          <rb.ListGroup fill>
+          <rb.ListGroup fill style={{margin:'10px'}}>
             <rb.ListGroupItem>Channel 1</rb.ListGroupItem>
             <rb.ListGroupItem>
               <div className='row channels' style={{position:'relative'}}>
@@ -162,26 +149,26 @@ module.exports = React.createClass({
               </div>
             </rb.ListGroupItem>
             <rb.ListGroupItem>
-              <div className='row' style={{position:'relative','text-align':'center'}}>
-              <rb.ButtonToolbar>
-                <rb.ButtonGroup className='pull-left'>
-                  <rb.Button bsStyle="primary" ref='previous' onClick={self.getPreviousRemImage}>Previous Epoch</rb.Button>
-                </rb.ButtonGroup>
-                <rb.ButtonGroup style={{'text-align':'center', position:'absolute', left:'50%', top: '50%',  transform: 'translateY(-50%) translateX(-50%)'}}>
-                  <Stager stage={self.state.stage} changeStage={self.changeStage}/>
-                </rb.ButtonGroup>
-                <rb.ButtonGroup className='pull-right'>
-                  <rb.Button bsStyle="primary" ref='next'
-                             disabled={!(self.state.noMarkerState || self.state.numMarkers>0)}
-                             onClick={self.getNextRemImage}>Next Epoch</rb.Button>
-                </rb.ButtonGroup>
-              </rb.ButtonToolbar>
-                </div>
+              <div className='row' style={{position:'relative',textAlign:'center'}}>
+                <rb.ButtonToolbar>
+                  <rb.ButtonGroup className='pull-left'>
+                    <rb.Button bsStyle="primary" ref='previous' onClick={self.getPreviousRemImage}>Previous Epoch</rb.Button>
+                  </rb.ButtonGroup>
+                  <rb.ButtonGroup style={{textAlign:'center', position:'absolute', left:'50%', top: '50%',  transform: 'translateY(-50%) translateX(-50%)'}}>
+                    <Stager stage={self.state.stage} changeStage={self.changeStage}/>
+                  </rb.ButtonGroup>
+                  <rb.ButtonGroup className='pull-right'>
+                    <rb.Button bsStyle="primary" ref='next'
+                               disabled={!(self.state.noMarkerState || self.state.numMarkers>0)}
+                               onClick={self.getNextRemImage}>Next Epoch</rb.Button>
+                  </rb.ButtonGroup>
+                </rb.ButtonToolbar>
+              </div>
             </rb.ListGroupItem>
-                              <rb.Input type="checkbox" ref='noMarkers'
-                                checked={self.state.noMarkerState}
-                                label={'No '+self.state.markerType+' in epoch'}
-                                onClick={self.setNoMarkers}/>
+            <rb.Input type="checkbox" ref='noMarkers'
+                      checked={self.state.noMarkerState}
+                      label={'No '+self.state.markerType+' in epoch'}
+                      onClick={self.setNoMarkers}/>
           </rb.ListGroup>
         </rb.Panel>
         <p>{self.state.msg == 'ok' ? '' : self.state.msg}</p>
