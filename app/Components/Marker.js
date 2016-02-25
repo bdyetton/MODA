@@ -1,6 +1,5 @@
 import ResizableAndMovable from '../../node_modules/react-resizable-and-movable';
 var ConfidenceBox = require('./ConfidenceBox');
-var ConfidenceBox = require('./ConfidenceBox');
 var rb = require('react-bootstrap');
 
 module.exports = React.createClass({
@@ -25,12 +24,22 @@ module.exports = React.createClass({
     this.props.removeMarker(this.props.markerIndex);
   },
 
+  updatePos: function(e, pos){
+    var self=this;
+    self.setState({x:pos.position.left},function(){self.props.updateMarkerState(self.state)});
+  },
+
+  updateSize: function(size){
+    var self=this;
+    self.setState({w:size.width},function(){self.props.updateMarkerState(self.state)});
+  },
+
   render: function () {
     var self = this;
 
     var removeButton =
       <div className='gyp-x-holder'>
-        <rb.Button bsStyle='btn gyp-x' bsSize='xsmall' onClick={self.removeMarker}>
+        <rb.Button className='gyp-x' bsSize='xsmall' onClick={self.removeMarker}>
           <rb.Glyphicon style={{'fontSize': '25px'}} glyph="glyphicon glyphicon-remove-circle" />
         </rb.Button>
       </div>;
@@ -43,6 +52,8 @@ module.exports = React.createClass({
         minWidth:20,
         isResizable:{x: true, y: false, xy: false},
         moveAxis:'x',
+        onResizeStop:self.updateSize,
+        onDragStop:self.updatePos,
         customStyle:{background: "rgba(60, 230, 70,0.5)", border: '1p solid #0d0'},
         children:[
           <ConfidenceBox updateConf={self.updateConf} conf={self.state.conf}/>,

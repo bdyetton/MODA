@@ -14,12 +14,20 @@ module.exports = React.createClass({
       markers: {} ,
       stage: this.props.image.stage,
       markerIndex: parseInt(this.props.image.markerIndex) || 0, msg:this.props.image.msg,
-      numMarkers: 0
+      numMarkers: 0,
+      screenSizeValid: true
     };
   },
 
   componentDidMount: function() {
-    this.populateMarkers(this.props.image.markers);
+    var self = this;
+    var widthOfPannel = ReactDOM.findDOMNode(self.refs.grandPanel).offsetWidth;
+    var widthOfImg = 500;//ReactDOM.findDOMNode(self.refs.sigImg).offsetWidth;
+    if (widthOfPannel < widthOfImg){
+      self.setState({screenSizeValid: false});
+    }
+
+    self.populateMarkers(this.props.image.markers);
   },
 
   getPreviousRemImage: function() {
@@ -132,21 +140,26 @@ module.exports = React.createClass({
     var markers = $.map(this.state.markers, function(value, index) {
       return [value];
     });
+    if (self.state.screenSizeValid){
+      var imgAndMarkers =  (<div className='row channels' style={{position:'relative'}}>
+        {markers}
+        <img ref='sigImg' src={function(){
+              if(self.state.sme){
+                return window.location.href + (self.state.currentRemImage)}
+              else{
+                return self.state.currentRemImage
+              }}()} alt='remImage' onClick={this.addMarker} pointer-events='none'></img>
+      </div>)
+    } else {
+      var imgAndMarkers = (<p style={{color:'#F00'}}>ERROR: Your screen size is too small for valid scoring, please increase your screen resolution or move to a larger device</p>)
+    }
     return (
       <div className='container' style={{textAlign:'center', position:'absolute', left:'50%', top: '50%',  transform: 'translateY(-50%) translateX(-50%)'}}>
-        <rb.Panel bsStyle="primary" textAlign='center' header="MODA - Massive Online Data Annotation">
+        <rb.Panel bsStyle="primary" className="grand-panel" ref='grandPanel' textAlign='center' header="MODA - Massive Online Data Annotation">
           <rb.ListGroup fill style={{margin:'10px'}}>
             <rb.ListGroupItem>Channel 1</rb.ListGroupItem>
             <rb.ListGroupItem>
-              <div className='row channels' style={{position:'relative'}}>
-                {markers}
-                <img ref='sigImg' src={function(){
-                      if(self.state.sme){
-                        return window.location.href + (self.state.currentRemImage)}
-                      else{
-                        return self.state.currentRemImage
-                      }}()} alt='remImage' onClick={this.addMarker} pointer-events='none'></img>
-              </div>
+              {imgAndMarkers}
             </rb.ListGroupItem>
             <rb.ListGroupItem>
               <div className='row' style={{position:'relative',textAlign:'center'}}>
