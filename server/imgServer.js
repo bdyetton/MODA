@@ -34,6 +34,10 @@ imgConfig = {
   seg:{
     w:3,
     h:null
+  },
+  box:{
+    w:null,
+    h:null
   }
 };
 
@@ -60,6 +64,7 @@ function imgServer(){
     self.batchSize = 5;
     self.folderLengthMap = {};
     self.batches = [];
+
     self.init = function (){
         var imageFolders = fs.readdirSync('./build/img/');
         imageFolders = imageFolders.filter(function(item){return item.indexOf("Sub") > -1});
@@ -71,13 +76,12 @@ function imgServer(){
             var packedImgs = [];
             imgs.forEach(function(img,idx){
                 packedImgs.push({
-                  name:img,
+                  name:img, //TODO multi image (channel) support
                   folder:folder,
-                  start:idx*imgConfig.secs,
+                  start:idx*imgConfig.secs, //TODO pack into meta block, this data should come from a csv
                   end:(idx+1)*imgConfig.secs-1/imgConfig.sampleRate,
-                  markers:{
-                    seg:[]
-                  }
+                  stage:'', //TODO pull meta data from some csv file...
+                  markers:[]
                 });
             });
             Array.prototype.push.apply(self.batches,split(packedImgs,self.batchSize));
@@ -96,25 +100,35 @@ function imgServer(){
     self.getStage = function(user){return 0};
 
     self.updateMarkerState = function(user, marker){
-      if (user.markerIndex < marker.index){
-        user.markerIndex = marker.index;
+      if (user.markerIndex < marker.markerIndex){ //set new number of marker
+        user.markerIndex = marker.markerIndex;
       }
-      marker = self.processMarker(marker);
+      marker = self.processMarker(marker); //convert px to secs (adds xSecs field)
+
+      //check if this marker exists in the server already
       var exists = false;
-      user.batches[user.idx].imgs[user.batches[user.idx].idx].markers[marker.type].forEach(function(currentMarker,i){
-        if (currentMarker.index == marker.index){
-          user.batches[user.idx].imgs[user.batches[user.idx].idx].markers[marker.type][i] = marker; //this was just a move
+      user.batches[user.idx].imgs[user.batches[user.idx].idx].markers.forEach(function(currentMarker,i){
+        if (currentMarker.markerIndex == marker.markerIndex){
+          user.batches[user.idx].imgs[user.batches[user.idx].idx].markers[i] = marker; //this was just a move
           exists = true;
         }
       });
       //else, this is a new marker
       if(!exists){
-        user.batches[user.idx].imgs[user.batches[user.idx].idx].markers[marker.type].push(marker);
+        user.batches[user.idx].imgs[user.batches[user.idx].idx].markers.push(marker);
       }
+      console.log( user.batches[user.idx].imgs[user.batches[user.idx].idx].markers);
     };
 
     self.processMarker = function(marker){ //TODO do y
-      marker.xSecs = (marker.relToImg.x-imgConfig.margins.left+imgConfig[marker.type].w)*(imgConfig.secs/imgConfig.img.w);
+      if (marker.type==='seg') {
+        marker.xSecs = (marker.relToImg.x - imgConfig.margins.left + imgConfig[marker.type].w) * (imgConfig.secs / imgConfig.img.w);
+      } else if (marker.type==='box'){
+        var secPerPx = (imgConfig.secs / imgConfig.img.w);
+        marker.wSecs = marker.w * secPerPx;
+        marker.xSecs = (marker.x - imgConfig.margins.left + marker.w/2) * secPerPx;
+
+      }
       return marker
     };
 
@@ -122,10 +136,9 @@ function imgServer(){
       return user.batches[user.idx].imgs[user.batches[user.idx].idx].markers;
     };
 
-
     self.getImage = function(user,inc) {
         var msg = 'ok';
-        user.batches[user.idx].idx += inc; //TODO fix inc greater than one
+        user.batches[user.idx].idx += inc; //FIXME fix inc greater than one
         if (user.batches[user.idx].idx >= user.batches[user.idx].imgs.length) { //Need to get another batch
           user.batches[user.idx].idx -= inc; //undo what we did
           user.idx += 1;

@@ -8,14 +8,16 @@ module.exports = React.createClass({
   getInitialState: function() {
     return {
       markerType: "spindles",
-      noMarkerState:false,
+      noMarkerChecked:false,
       currentRemImage: this.props.image.url,
       slothmode: this.props.sme,
       markers: {} ,
       stage: this.props.image.stage,
-      markerIndex: parseInt(this.props.image.markerIndex) || 0, msg:this.props.image.msg,
+      markerIndex: parseInt(this.props.image.markerIndex) || 0,
+      msg:this.props.image.msg,
       numMarkers: 0,
-      screenSizeValid: true
+      screenSizeValid: true,
+      confCounter:0
     };
   },
 
@@ -26,7 +28,6 @@ module.exports = React.createClass({
     if (widthOfPannel < widthOfImg){
       self.setState({screenSizeValid: false});
     }
-
     self.populateMarkers(this.props.image.markers);
   },
 
@@ -35,6 +36,7 @@ module.exports = React.createClass({
     $.get('/api/previousRemImage', {user: this.props.user}, function(data){
       self.setState({ currentRemImage: data.image.url, msg:data.image.msg, stage:data.stage});
       self.populateMarkers(data.markers);
+      //TODO get the batch/image number so i can unactoivate the previous epoch button
     });
   },
 
@@ -54,37 +56,46 @@ module.exports = React.createClass({
       }
     }).fail(function(xhr, textStatus, errorThrown){
       console.log('Error saving marker');
-      //alert('Oh Snap! Something went horribly wrong saving the data, please refresh the page');
     });
   },
 
   populateMarkers: function(markers) {
     var popMarkers = {};
     var self = this;
+    this.setState({noMarkerChecked: false}); //TODO pull from server
     var scoreImg = $(this.refs.sigImg);
-    this.setState({noMarkerState: false}); //TODO set from server
     if (markers != undefined) {
-      markers.seg.forEach(function (marker) {
-        if (marker.deleted == 'true') {
+      markers.forEach(function (marker) {
+        if (marker.deleted === 'true') {
           return;
         }
-        var newMarker = <ResizableAndMovable
-          initialPos={marker.currentPos}
-          className='box_marker'
-          scoreImg={scoreImg}
-          key={marker.index}
-          index={marker.index}
-          saved={true}
-          removeMarker={self.removeMarker}
-          updateServerState={self.updateServerState}
-          />;
-        popMarkers[marker.index] = newMarker;
+        if (marker.type==='box') {
+          var newMarker = <Marker
+            key={parseInt(marker.markerIndex)}
+            markerIndex={parseInt(marker.markerIndex)}
+            x={parseInt(marker.x)+parseInt(marker.w)}
+            w={parseInt(marker.w)}
+            y={0}
+            h={scoreImg.height()}
+            conf={marker.conf}
+            confActive={marker.confActive==='true'}
+            decrementConfCounter={self.decrementConfCounter}
+            removeMarker={self.removeMarker}
+            updateMarkerState={self.updateMarkerState}
+            />;
+          popMarkers[marker.markerIndex] = newMarker;
+        }
       });
       this.setState({
         markers: popMarkers,
-        numMarkers: markers.seg.length
+        numMarkers: markers.length,
+        confCounter: 0
       });
     }
+  },
+
+  decrementConfCounter: function(){
+    this.setState({confCounter:this.state.confCounter-1});
   },
 
   addMarker: function(e) {
@@ -98,23 +109,25 @@ module.exports = React.createClass({
       y={0}
       h={scoreImg.height()}
       removeMarker={self.removeMarker}
+      decrementConfCounter={self.decrementConfCounter}
       updateMarkerState={self.updateMarkerState}
       />;
     var markers = self.state.markers;
     markers[self.state.markerIndex]=newMarker;
     this.setState({
       markers: markers,
+      confCounter: self.state.confCounter+1,
       markerIndex: self.state.markerIndex+1,
       numMarkers: self.state.numMarkers+1
     });
   },
 
   setNoMarkers: function(e){
-    if(this.state.noMarkerState){
-      this.setState({noMarkerState: false});
+    if(this.state.noMarkerChecked){
+      this.setState({noMarkerChecked: false});
     }
     else{
-      this.setState({noMarkerState: true})
+      this.setState({noMarkerChecked: true})
     }
   },
 
@@ -137,8 +150,8 @@ module.exports = React.createClass({
 
   render: function () {
     var self = this;
-    var markers = $.map(this.state.markers, function(value, index) {
-      return [value];
+    var markers = $.map(this.state.markers, function(marker, index) {
+        return [marker]
     });
     if (self.state.screenSizeValid){
       var imgAndMarkers =  (<div className='row channels' style={{position:'relative'}}>
@@ -172,14 +185,14 @@ module.exports = React.createClass({
                   </rb.ButtonGroup>
                   <rb.ButtonGroup className='pull-right'>
                     <rb.Button bsStyle="primary" ref='next'
-                               disabled={!(self.state.noMarkerState || self.state.numMarkers>0)}
+                               disabled={!((self.state.noMarkerChecked || markers.length>0) && self.state.confCounter===0)}
                                onClick={self.getNextRemImage}>Next Epoch</rb.Button>
                   </rb.ButtonGroup>
                 </rb.ButtonToolbar>
               </div>
             </rb.ListGroupItem>
             <rb.Input type="checkbox" ref='noMarkers'
-                      checked={self.state.noMarkerState}
+                      checked={self.state.noMarkerChecked}
                       label={'No '+self.state.markerType+' in epoch'}
                       onClick={self.setNoMarkers}/>
           </rb.ListGroup>

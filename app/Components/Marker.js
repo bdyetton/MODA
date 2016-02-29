@@ -7,21 +7,35 @@ module.exports = React.createClass({
 
   getInitialState: function() {
     return {
+      markerIndex: this.props.markerIndex,
       conf:this.props.conf || '',
+      confActive:(this.props.confActive===undefined) ? true : this.props.confActive,
       x:this.props.x-(this.props.w || 50) || 0,
-      y:this.props.y || 0,
       w:this.props.w || 100,
-      h:this.props.h || 100
+      type:'box',
+      deleted:false
     };
   },
 
-  updateConf: function(index,conf){
-      this.setState({conf:conf});
-      this.props.updateMarkerState(this.state)
+  componentWillMount: function(){
+    this.props.updateMarkerState(this.state)
+  },
+
+  updateConf: function(conf){
+    if (this.state.conf===''){
+      this.props.decrementConfCounter();
+    }
+    this.setState({conf:conf, confActive:false},function(){
+      this.props.updateMarkerState(this.state);
+    });
   },
 
   removeMarker: function(){
-    this.props.removeMarker(this.props.markerIndex);
+    var self = this;
+    self.setState({deleted:true},function(){
+      self.props.updateMarkerState(self.state);
+      self.props.removeMarker(self.props.markerIndex);
+    })
   },
 
   updatePos: function(e, pos){
@@ -34,32 +48,39 @@ module.exports = React.createClass({
     self.setState({w:size.width},function(){self.props.updateMarkerState(self.state)});
   },
 
+  getColor: function(){
+    if (this.state.conf==='high'){ return "rgba(140, 217, 140, 0.7)"}
+    else if (this.state.conf==='med'){ return "rgba(255, 204, 102, 0.7)"}
+    else if (this.state.conf==='low'){ return "rgba(255, 153, 153, 0.7)"}
+    else { return "rgba(136, 183, 213, 0.7)" }
+  },
+
+  toggleConf: function(){
+    this.setState({confActive:!this.state.confActive});
+  },
+
   render: function () {
     var self = this;
 
     var removeButton =
-      <div className='gyp-x-holder'>
+      <div key='removeBut' className='remove-gyp-holder'>
         <rb.Button className='gyp-x' bsSize='xsmall' onClick={self.removeMarker}>
           <rb.Glyphicon style={{'fontSize': '25px'}} glyph="glyphicon glyphicon-remove-circle" />
         </rb.Button>
       </div>;
 
     var initialProps={
-        key:self.props.markerIndex,
-        index:self.props.markerIndex,
-        start:{x:self.state.x, y:self.state.y, width:self.state.w, height:self.state.h},
-        className:'box_marker',
+        start:{x:self.state.x, y:0, width:self.state.w, height:self.props.h},
         minWidth:20,
         isResizable:{x: true, y: false, xy: false},
         moveAxis:'x',
         onResizeStop:self.updateSize,
         onDragStop:self.updatePos,
-        customStyle:{background: "rgba(60, 230, 70,0.5)", border: '1p solid #0d0'},
+        customStyle:{background: self.getColor(), border: '1p solid #0d0'},
         children:[
-          <ConfidenceBox updateConf={self.updateConf} conf={self.state.conf}/>,
+          <ConfidenceBox key='confBox' updateConf={self.updateConf} toggleConf={self.toggleConf} conf={self.state.conf}  confActive={self.state.confActive}/>,
           removeButton]
     };
-
     return <ResizableAndMovable {...initialProps}/>
   }
 });
