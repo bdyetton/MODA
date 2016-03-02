@@ -80,7 +80,10 @@ function imgServer(){
                   folder:folder,
                   start:idx*imgConfig.secs, //TODO pack into meta block, this data should come from a csv
                   end:(idx+1)*imgConfig.secs-1/imgConfig.sampleRate,
-                  stage:'', //TODO pull meta data from some csv file...
+                  meta:{
+                    noMarkers:false,
+                    stage:''
+                  },
                   markers:[]
                 });
             });
@@ -98,6 +101,12 @@ function imgServer(){
 
     self.setStage = function(user, stage){return true};
     self.getStage = function(user){return 0};
+
+    self.updateImgMeta = function(user, meta){
+      user.batches[user.idx].imgs[user.batches[user.idx].idx].meta = meta;
+      console.log(user.batches[user.idx].idx);
+      console.log(user.batches[user.idx].imgs[user.batches[user.idx].idx])
+    };
 
     self.updateMarkerState = function(user, marker){
       if (user.markerIndex < marker.markerIndex){ //set new number of marker
@@ -117,7 +126,7 @@ function imgServer(){
       if(!exists){
         user.batches[user.idx].imgs[user.batches[user.idx].idx].markers.push(marker);
       }
-      console.log( user.batches[user.idx].imgs[user.batches[user.idx].idx].markers);
+      //console.log( user.batches[user.idx].imgs[user.batches[user.idx].idx].markers);
     };
 
     self.processMarker = function(marker){ //TODO do y
@@ -155,9 +164,12 @@ function imgServer(){
             msg = 'This is the first Epoch';
           }
         }
+        //Get other data //TODO include all in metaData
         var folder = self.batches[user.idx].imgs[user.batches[user.idx].idx].folder;
         var fileName = self.batches[user.idx].imgs[user.batches[user.idx].idx].name;
-        return {url:'/img/' +folder + '/' + fileName,msg:msg};
+        var meta = self.batches[user.idx].imgs[user.batches[user.idx].idx].meta;
+        console.log(self.batches[user.idx].imgs[user.batches[user.idx].idx]);
+        return {url:'/img/' +folder + '/' + fileName,msg:msg, meta:meta};
     };
 };
 

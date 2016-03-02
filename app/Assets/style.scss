@@ -64,7 +64,7 @@ label {
 }
 
 .toggle-btn-horz {
-    background-color:#FFF;
+    background-color:#c2e1f5;
     border:solid 1px #CCC;
 }
 
@@ -84,7 +84,6 @@ label {
     border-radius: 0px 10px 10px 0px;
     border-right:solid 1px #CCC;
 }
-
 
 .toggle-btn:hover {
     border:solid 1px #a0d5dc !important;
@@ -183,9 +182,18 @@ label {
   //color: rgba(255, 255, 255, 1);
 }
 
+.cb-no-markers {
+  background-color: #0000cc;
+  color: #ff00ff;
+}
+
+.cb-no-markers.disable {
+  color:#dadada;
+}
+
 .active-green {
   background:#ffffff;
-  border:solid 1px #000000;
+  border: solid 1px #c2e1f5 !important;
 }
 
 .active-green:hover {
@@ -194,8 +202,8 @@ label {
 }
 
 .active-green.active {
-    background:lightgreen;
-    border:solid 1px green !important;
+    background:#c2e1f5;
+    border:solid 1px blue !important;
 }
 
 .arrow_box_container {

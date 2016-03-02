@@ -7,11 +7,12 @@ module.exports = React.createClass({
 
   getInitialState: function() {
     return {
-      markerType: "spindles",
+      markerType: "box",
       noMarkerChecked:false,
       currentRemImage: this.props.image.url,
       slothmode: this.props.sme,
-      markers: {} ,
+      markers: {},
+      imgMeta: this.props.image.meta || {noMarkers: false, stage: ''},
       stage: this.props.image.stage,
       markerIndex: parseInt(this.props.image.markerIndex) || 0,
       msg:this.props.image.msg,
@@ -23,9 +24,9 @@ module.exports = React.createClass({
 
   componentDidMount: function() {
     var self = this;
-    var widthOfPannel = ReactDOM.findDOMNode(self.refs.grandPanel).offsetWidth;
+    var widthOfPanel = ReactDOM.findDOMNode(self.refs.grandPanel).offsetWidth;
     var widthOfImg = 500;//ReactDOM.findDOMNode(self.refs.sigImg).offsetWidth;
-    if (widthOfPannel < widthOfImg){
+    if (widthOfPanel < widthOfImg){
       self.setState({screenSizeValid: false});
     }
     self.populateMarkers(this.props.image.markers);
@@ -34,16 +35,16 @@ module.exports = React.createClass({
   getPreviousRemImage: function() {
     var self = this;
     $.get('/api/previousRemImage', {user: this.props.user}, function(data){
-      self.setState({ currentRemImage: data.image.url, msg:data.image.msg, stage:data.stage});
+      self.setState({ currentRemImage: data.image.url, msg:data.image.msg, imgMeta:data.image.meta});
       self.populateMarkers(data.markers);
-      //TODO get the batch/image number so i can unactoivate the previous epoch button
+      //TODO get the batch/image number so i can unactivated the previous epoch button
     });
   },
 
   getNextRemImage: function() {
     var self = this;
     $.get('/api/nextRemImage', {user: this.props.user}, function(data){
-      self.setState({ currentRemImage: data.image.url, msg:data.image.msg, stage:data.stage});
+      self.setState({ currentRemImage: data.image.url, msg:data.image.msg, imgMeta:data.image.meta});
       self.populateMarkers(data.markers);
     });
   },
@@ -59,10 +60,20 @@ module.exports = React.createClass({
     });
   },
 
+  updateImgMeta: function(){
+    var self = this;
+    $.get('/api/updateImgMeta', {imgMeta:self.state.imgMeta, user: self.props.user}, function(data){
+      if (!data.success){
+        console.log('Error saving meta');
+      }
+    }).fail(function(xhr, textStatus, errorThrown){
+      console.log('Error saving meta');
+    });
+  },
+
   populateMarkers: function(markers) {
     var popMarkers = {};
     var self = this;
-    this.setState({noMarkerChecked: false}); //TODO pull from server
     var scoreImg = $(this.refs.sigImg);
     if (markers != undefined) {
       markers.forEach(function (marker) {
@@ -102,32 +113,36 @@ module.exports = React.createClass({
     var self = this;
     if (e.button !== 0) return;
     var scoreImg = $(this.refs.sigImg);
-    var newMarker = <Marker
-      key={self.state.markerIndex}
-      markerIndex={self.state.markerIndex}
-      x={e.pageX-scoreImg.offset().left}
-      y={0}
-      h={scoreImg.height()}
-      removeMarker={self.removeMarker}
-      decrementConfCounter={self.decrementConfCounter}
-      updateMarkerState={self.updateMarkerState}
-      />;
+    if (self.state.markerType==='box') {
+      var newMarker = <Marker
+        key={self.state.markerIndex}
+        markerIndex={self.state.markerIndex}
+        x={e.pageX-scoreImg.offset().left}
+        y={0}
+        h={scoreImg.height()}
+        removeMarker={self.removeMarker}
+        decrementConfCounter={self.decrementConfCounter}
+        updateMarkerState={self.updateMarkerState}
+        />;
+    } else {return;} //TODO add line marker
     var markers = self.state.markers;
     markers[self.state.markerIndex]=newMarker;
     this.setState({
       markers: markers,
       confCounter: self.state.confCounter+1,
       markerIndex: self.state.markerIndex+1,
-      numMarkers: self.state.numMarkers+1
+      numMarkers: self.state.numMarkers+1,
+      imgMeta:$.extend(this.state.imgMeta,{noMarkers: false})
     });
   },
 
   setNoMarkers: function(e){
-    if(this.state.noMarkerChecked){
-      this.setState({noMarkerChecked: false});
+    var self = this;
+    if(self.state.imgMeta.noMarkers){
+      self.setState({imgMeta:$.extend(self.state.imgMeta,{noMarkers: false})}, self.updateImgMeta);
     }
     else{
-      this.setState({noMarkerChecked: true})
+      self.setState({imgMeta:$.extend(self.state.imgMeta,{noMarkers: true})}, self.updateImgMeta);
     }
   },
 
@@ -138,14 +153,7 @@ module.exports = React.createClass({
   },
 
   changeStage: function(stage){
-    this.setState({stage:stage});
-    $.get('/api/updateStage', {stage:stage, user: this.props.user}, function(data){
-      if (!data.success){
-        console.log('Error saving stage');
-      }
-    }).fail(function(xhr, textStatus, errorThrown){
-      alert('Oh Snap! Something went horribly wrong saving the stage data, please refresh the page');
-    });
+    this.setState({imgMeta:$.extend(this.state.imgMeta,{stage: stage})},this.updateImgMeta);
   },
 
   render: function () {
@@ -181,20 +189,21 @@ module.exports = React.createClass({
                     <rb.Button bsStyle="primary" ref='previous' onClick={self.getPreviousRemImage}>Previous Epoch</rb.Button>
                   </rb.ButtonGroup>
                   <rb.ButtonGroup style={{textAlign:'center', position:'absolute', left:'50%', top: '50%',  transform: 'translateY(-50%) translateX(-50%)'}}>
-                    <Stager stage={self.state.stage} changeStage={self.changeStage}/>
+                    <Stager stage={self.state.imgMeta.stage} changeStage={self.changeStage}/>
                   </rb.ButtonGroup>
                   <rb.ButtonGroup className='pull-right'>
                     <rb.Button bsStyle="primary" ref='next'
-                               disabled={!((self.state.noMarkerChecked || markers.length>0) && self.state.confCounter===0)}
+                               disabled={!(self.state.imgMeta.noMarkers || (markers.length>0 && self.state.confCounter===0))}
                                onClick={self.getNextRemImage}>Next Epoch</rb.Button>
                   </rb.ButtonGroup>
                 </rb.ButtonToolbar>
               </div>
             </rb.ListGroupItem>
             <rb.Input type="checkbox" ref='noMarkers'
-                      checked={self.state.noMarkerChecked}
-                      label={'No '+self.state.markerType+' in epoch'}
-                      onClick={self.setNoMarkers}/>
+                      disabled={markers.length!==0}
+                      checked={self.state.imgMeta.noMarkers}
+                      label={'No spindles in epoch'}
+                      onChange={self.setNoMarkers}/>
           </rb.ListGroup>
         </rb.Panel>
         <p>{self.state.msg == 'ok' ? '' : self.state.msg}</p>

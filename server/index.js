@@ -23,29 +23,27 @@ app.get('/api/currentTime', cors(), function(req, res) {
 });
 
 app.get('/api/nextRemImage',cors(),function(req,res){
-    var nextImg = imServ.getImage(currentUsers[req.query.user],1);
+    var img = imServ.getImage(currentUsers[req.query.user],1);
     var nextMarkers = imServ.getMarkers(currentUsers[req.query.user]);
-    var stage = imServ.getStage(currentUsers[req.query.user]) || undefined;
-    res.send({image: nextImg, markers: nextMarkers, stage:'1'});
-    users.saveUser(currentUsers[req.query.user]);
-});
-
-app.get('/api/updateStage',cors(),function(req,res){
-    imServ.setStage(currentUsers[req.query.user],req.query.stage);
+    res.send({image: img, markers: nextMarkers});
     users.saveUser(currentUsers[req.query.user]);
 });
 
 app.get('/api/previousRemImage',cors(),function(req,res){
-    var nextImg = imServ.getImage(currentUsers[req.query.user],-1);
+    var img = imServ.getImage(currentUsers[req.query.user],-1);
     var nextMarkers = imServ.getMarkers(currentUsers[req.query.user]);
-    var stage = imServ.getStage(currentUsers[req.query.user]) || undefined;
-    console.log(stage);
-    res.send({image: nextImg, markers: nextMarkers, stage:'0'});
+    res.send({image: img, markers: nextMarkers});
     users.saveUser(currentUsers[req.query.user]);
+    //console.log(img)
 });
 
 app.get('/api/updateMarkerState',cors(),function(req,res){ //TODO get very first image working
     imServ.updateMarkerState(currentUsers[req.query.user], req.query.marker);
+    res.send({success: true});
+});
+
+app.get('/api/updateImgMeta',cors(),function(req,res){
+    imServ.updateImgMeta(currentUsers[req.query.user], req.query.imgMeta);
     res.send({success: true});
 });
 
@@ -59,7 +57,7 @@ app.get('/api/getUser',cors(),function(req,res){
       out.userName = currentUsers[req.query.user].name;
       out.image = {};
       out.image = imServ.getImage(currentUsers[req.query.user], 0);
-      out.image.markers = imServ.getMarkers(currentUsers[req.query.user]); //TODO check if this is correct .?
+      out.image.markers = imServ.getMarkers(currentUsers[req.query.user]);
       out.image.markerIndex = currentUsers[req.query.user].markerIndex;
     } else { //create user
       if(err.code == 'NoSuchKey') {
