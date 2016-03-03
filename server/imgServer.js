@@ -82,6 +82,7 @@ function imgServer(){
                   end:(idx+1)*imgConfig.secs-1/imgConfig.sampleRate,
                   meta:{
                     noMarkers:false,
+                    prac:false,
                     stage:''
                   },
                   markers:[]
@@ -92,20 +93,17 @@ function imgServer(){
     };
     self.init();
 
-    self.initUser = function(user) {
-        user.batches = clone(this.batches);
+    self.initUser = function(userData,err,pracData,cb) {
+        userData.batches = clone(this.batches);
         //user.batches = shuffleArray(this.batches); //TODO turn shuffle on!
-        user.idx = 0;
-        user.markerIndex = 0;
+        userData.idx = 0;
+        userData.markerIndex = 0;
+        userData.batches.unshift(pracData.pracData);
+        cb(err,userData);
     };
-
-    self.setStage = function(user, stage){return true};
-    self.getStage = function(user){return 0};
 
     self.updateImgMeta = function(user, meta){
       user.batches[user.idx].imgs[user.batches[user.idx].idx].meta = meta;
-      console.log(user.batches[user.idx].idx);
-      console.log(user.batches[user.idx].imgs[user.batches[user.idx].idx])
     };
 
     self.updateMarkerState = function(user, marker){
@@ -126,7 +124,6 @@ function imgServer(){
       if(!exists){
         user.batches[user.idx].imgs[user.batches[user.idx].idx].markers.push(marker);
       }
-      //console.log( user.batches[user.idx].imgs[user.batches[user.idx].idx].markers);
     };
 
     self.processMarker = function(marker){ //TODO do y
@@ -153,7 +150,7 @@ function imgServer(){
           user.idx += 1;
           if (user.idx >= user.batches.length){
             user.idx=user.batches.length-1;
-            msg = 'This is the last Epoch';
+            msg = 'lastEpoch';
           }
         }
         else if (user.batches[user.idx].idx < 0) { //Need to get another batch
@@ -161,15 +158,14 @@ function imgServer(){
           user.idx -= 1;
           if (user.idx < 0){
             user.idx=0;
-            msg = 'This is the first Epoch';
           }
         }
-        //Get other data //TODO include all in metaData
-        var folder = self.batches[user.idx].imgs[user.batches[user.idx].idx].folder;
-        var fileName = self.batches[user.idx].imgs[user.batches[user.idx].idx].name;
-        var meta = self.batches[user.idx].imgs[user.batches[user.idx].idx].meta;
-        console.log(self.batches[user.idx].imgs[user.batches[user.idx].idx]);
-        return {url:'/img/' +folder + '/' + fileName,msg:msg, meta:meta};
+
+        if(user.idx===0 && user.batches[user.idx].idx===0){msg = 'firstEpoch';}
+        var folder = user.batches[user.idx].imgs[user.batches[user.idx].idx].folder;
+        var fileName = user.batches[user.idx].imgs[user.batches[user.idx].idx].name;
+        var meta = user.batches[user.idx].imgs[user.batches[user.idx].idx].meta;
+        return {url:'/img/' +folder + '/' + fileName, msg:msg, meta:meta};
     };
 };
 

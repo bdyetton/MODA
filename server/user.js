@@ -6,7 +6,7 @@ function user(){
     var self = this;
     self.aws = new aws_;
 
-    self.loginFromFileSystem = function(userName){
+    this.loginFromFileSystem = function(userName){
         self.userList = fs.readdirSync('./server/Data/User/');
         self.userList = self.userList.filter(function(item){return item.indexOf(".txt") > -1});
         if (self.userList.some(function(user){
@@ -18,14 +18,18 @@ function user(){
         return false;
     };
 
-    self.createUser = function(userName,imServ){
-        var user = {name:userName};
-        imServ.initUser(user);
-        self.saveUser(user);
-        return user;
+    this.getPracData = function(cb){
+        self.aws.getFile('PracData_1',cb);
     };
 
-    self.saveUser = function(user,loc){
+    this.createUser = function(userName,imServ,cb){
+        var user = {name:userName};
+        this.getPracData(function(err,pracData){
+            imServ.initUser(user,err,pracData,cb);
+        });
+    };
+
+    this.saveUser = function(user,loc){
         loc = loc || 's3';
         //Write to s3
         if (loc == 's3') {
@@ -44,7 +48,7 @@ function user(){
         }
     };
 
-    self.loadUser = function(userName,cb,loc) {
+    this.loadUser = function(userName,cb,loc) {
         loc = loc || 's3';
 
         //Write to s3

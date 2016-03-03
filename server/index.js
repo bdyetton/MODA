@@ -34,10 +34,9 @@ app.get('/api/previousRemImage',cors(),function(req,res){
     var nextMarkers = imServ.getMarkers(currentUsers[req.query.user]);
     res.send({image: img, markers: nextMarkers});
     users.saveUser(currentUsers[req.query.user]);
-    //console.log(img)
 });
 
-app.get('/api/updateMarkerState',cors(),function(req,res){ //TODO get very first image working
+app.get('/api/updateMarkerState',cors(),function(req,res){
     imServ.updateMarkerState(currentUsers[req.query.user], req.query.marker);
     res.send({success: true});
 });
@@ -48,37 +47,56 @@ app.get('/api/updateImgMeta',cors(),function(req,res){
 });
 
 app.get('/api/getUser',cors(),function(req,res){
-  users.loadUser(req.query.user,function(err,userData){
-    var out = {};
+  users.loadUser(req.query.user,function(err,userData){ //async callback
     if (!err) { //load user
+      var out = {};
       out.login = true;
       out.createdUser = false;
       currentUsers[req.query.user] = userData;
       out.userName = currentUsers[req.query.user].name;
-      out.image = {};
       out.image = imServ.getImage(currentUsers[req.query.user], 0);
       out.image.markers = imServ.getMarkers(currentUsers[req.query.user]);
       out.image.markerIndex = currentUsers[req.query.user].markerIndex;
+      res.send(out);
     } else { //create user
       if(err.code == 'NoSuchKey') {
-        currentUsers[req.query.user] = users.createUser(req.query.user, imServ);
-        out.login = true;
-        out.createdUser = true;
-        out.userName = currentUsers[req.query.user].name;
-        out.markers = {}; //FIXME remove?
-        out.image = imServ.getImage(currentUsers[req.query.user], 0);
-        out.stage = imServ.getStage(currentUsers[req.query.user]);
+        users.createUser(req.query.user, imServ, function(err, userData){ //async callback
+          if (!err) {
+            currentUsers[req.query.user] = userData;
+            var out = {};
+            out.login = true;
+            out.createdUser = true;
+            out.userName = currentUsers[req.query.user].name;
+            out.image = imServ.getImage(currentUsers[req.query.user], 0);
+            out.image.markers = imServ.getMarkers(currentUsers[req.query.user]);
+            console.log(out.image.markers);
+            out.image.markerIndex = currentUsers[req.query.user].markerIndex;
+            res.send(out);
+          } else {
+            var out = {};
+            out.image = {};
+            out.image.url = 'http://i.imgur.com/xEv2LWQ.jpg';
+            out.userName = 'Invalid User *Slothmode Enabled*';
+            out.login = true;
+            out.sme = true;
+            out.createdUser = false;
+            console.log(err);
+            res.send(out);
+          }
+        });
       } else {
+        var out = {};
         out.image = {};
         out.image.url = 'http://i.imgur.com/xEv2LWQ.jpg';
         out.userName = 'Invalid User *Slothmode Enabled*';
         out.login = true;
         out.sme = true;
         out.createdUser = false;
-        console.log(err)
+        console.log(err);
+        res.send(out);
       }
     }
-    res.send(out);
+
   });
 });
 

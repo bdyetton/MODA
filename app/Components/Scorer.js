@@ -12,11 +12,12 @@ module.exports = React.createClass({
       currentRemImage: this.props.image.url,
       slothmode: this.props.sme,
       markers: {},
-      imgMeta: this.props.image.meta || {noMarkers: false, stage: ''},
+      gsMarkers: {},
+      imgMeta: this.props.image.meta || {noMarkers: false, stage: '', prac: false},
       stage: this.props.image.stage,
       markerIndex: parseInt(this.props.image.markerIndex) || 0,
       msg:this.props.image.msg,
-      numMarkers: 0,
+      showGSMarkers: false,
       screenSizeValid: true,
       confCounter:0
     };
@@ -35,7 +36,7 @@ module.exports = React.createClass({
   getPreviousRemImage: function() {
     var self = this;
     $.get('/api/previousRemImage', {user: this.props.user}, function(data){
-      self.setState({ currentRemImage: data.image.url, msg:data.image.msg, imgMeta:data.image.meta});
+      self.setState({ currentRemImage: data.image.url, msg:data.image.msg, imgMeta: data.image.meta, showGSMarkers: false});
       self.populateMarkers(data.markers);
       //TODO get the batch/image number so i can unactivated the previous epoch button
     });
@@ -44,7 +45,7 @@ module.exports = React.createClass({
   getNextRemImage: function() {
     var self = this;
     $.get('/api/nextRemImage', {user: this.props.user}, function(data){
-      self.setState({ currentRemImage: data.image.url, msg:data.image.msg, imgMeta:data.image.meta});
+      self.setState({ currentRemImage: data.image.url, msg:data.image.msg, imgMeta: data.image.meta, showGSMarkers: false});
       self.populateMarkers(data.markers);
     });
   },
@@ -73,6 +74,7 @@ module.exports = React.createClass({
 
   populateMarkers: function(markers) {
     var popMarkers = {};
+    var popGSMarkers = {};
     var self = this;
     var scoreImg = $(this.refs.sigImg);
     if (markers != undefined) {
@@ -81,7 +83,7 @@ module.exports = React.createClass({
           return;
         }
         if (marker.type==='box') {
-          var newMarker = <Marker
+          popMarkers[marker.markerIndex] = <Marker
             key={parseInt(marker.markerIndex)}
             markerIndex={parseInt(marker.markerIndex)}
             x={parseInt(marker.x)+parseInt(marker.w)}
@@ -94,13 +96,22 @@ module.exports = React.createClass({
             removeMarker={self.removeMarker}
             updateMarkerState={self.updateMarkerState}
             />;
-          popMarkers[marker.markerIndex] = newMarker;
+        }
+        if (marker.type==='gsbox') {
+          popGSMarkers[marker.markerIndex] = <Marker
+            key={parseInt(marker.markerIndex)}
+            x={parseInt(marker.x)+parseInt(marker.w)}
+            w={parseInt(marker.w)}
+            y={0}
+            h={scoreImg.height()}
+            gs={true}
+            />;
         }
       });
       this.setState({
         markers: popMarkers,
-        numMarkers: markers.length,
-        confCounter: 0
+        gsMarkers: popGSMarkers,
+        confCounter: 0,
       });
     }
   },
@@ -131,7 +142,6 @@ module.exports = React.createClass({
       markers: markers,
       confCounter: self.state.confCounter+1,
       markerIndex: self.state.markerIndex+1,
-      numMarkers: self.state.numMarkers+1,
       imgMeta:$.extend(this.state.imgMeta,{noMarkers: false})
     });
   },
@@ -159,11 +169,15 @@ module.exports = React.createClass({
   render: function () {
     var self = this;
     var markers = $.map(this.state.markers, function(marker, index) {
-        return [marker]
+      return [marker]
+    });
+    var gsMarkers = $.map(this.state.gsMarkers, function(marker, index) {
+      return [marker]
     });
     if (self.state.screenSizeValid){
       var imgAndMarkers =  (<div className='row channels' style={{position:'relative'}}>
         {markers}
+        {self.state.showGSMarkers ? gsMarkers : []}
         <img ref='sigImg' src={function(){
               if(self.state.sme){
                 return window.location.href + (self.state.currentRemImage)}
@@ -174,9 +188,18 @@ module.exports = React.createClass({
     } else {
       var imgAndMarkers = (<p style={{color:'#F00'}}>ERROR: Your screen size is too small for valid scoring, please increase your screen resolution or move to a larger device</p>)
     }
+
+    console.log(self.state.imgMeta);
+
     return (
       <div className='container' style={{textAlign:'center', position:'absolute', left:'50%', top: '50%',  transform: 'translateY(-50%) translateX(-50%)'}}>
-        <rb.Panel bsStyle="primary" className="grand-panel" ref='grandPanel' textAlign='center' header="MODA - Massive Online Data Annotation">
+        <rb.Panel bsStyle="primary" className="grand-panel" ref='grandPanel' textAlign='center' header={
+            <div>
+              <h4>MODA: Massive Online Data Annotation</h4>
+              {JSON.parse(self.state.imgMeta.prac) ?
+                <div className='pull-right' style={{color:'rgb(102, 255, 102)', position:'relative' ,top:'-30px'}}>Practice Mode</div>
+                : [] }
+            </div>}>
           <rb.ListGroup fill style={{margin:'10px'}}>
             <rb.ListGroupItem>Channel 1</rb.ListGroupItem>
             <rb.ListGroupItem>
@@ -186,27 +209,33 @@ module.exports = React.createClass({
               <div className='row' style={{position:'relative',textAlign:'center'}}>
                 <rb.ButtonToolbar>
                   <rb.ButtonGroup className='pull-left'>
-                    <rb.Button bsStyle="primary" ref='previous' onClick={self.getPreviousRemImage}>Previous Epoch</rb.Button>
+                    <rb.Button bsStyle="primary"
+                               ref='previous'
+                               onClick={self.getPreviousRemImage}
+                               disabled={self.state.msg == 'firstEpoch'}> {self.state.msg == 'firstEpoch' ? 'This is the first epoch' : 'Previous Epoch'}
+                    </rb.Button>
                   </rb.ButtonGroup>
                   <rb.ButtonGroup style={{textAlign:'center', position:'absolute', left:'50%', top: '50%',  transform: 'translateY(-50%) translateX(-50%)'}}>
                     <Stager stage={self.state.imgMeta.stage} changeStage={self.changeStage}/>
                   </rb.ButtonGroup>
                   <rb.ButtonGroup className='pull-right'>
-                    <rb.Button bsStyle="primary" ref='next'
-                               disabled={!(self.state.imgMeta.noMarkers || (markers.length>0 && self.state.confCounter===0))}
-                               onClick={self.getNextRemImage}>Next Epoch</rb.Button>
+                    {JSON.parse(self.state.imgMeta.prac) && !self.state.showGSMarkers ?
+                      <rb.Button bsStyle='warning' //TODO make custom style
+                                 onClick={function(){self.setState({showGSMarkers:true})}}>Show correct markers</rb.Button>
+                      : <rb.Button bsStyle="primary" ref='next'
+                                   disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (markers.length>0 && self.state.confCounter===0) || self.state.showGSMarkers)}
+                                   onClick={self.getNextRemImage}>{self.state.msg == 'lastEpoch' ? 'This is the last epoch' : 'Next Epoch'}</rb.Button>}
                   </rb.ButtonGroup>
                 </rb.ButtonToolbar>
               </div>
             </rb.ListGroupItem>
             <rb.Input type="checkbox" ref='noMarkers'
                       disabled={markers.length!==0}
-                      checked={self.state.imgMeta.noMarkers}
+                      checked={JSON.parse(self.state.imgMeta.noMarkers)}
                       label={'No spindles in epoch'}
                       onChange={self.setNoMarkers}/>
           </rb.ListGroup>
         </rb.Panel>
-        <p>{self.state.msg == 'ok' ? '' : self.state.msg}</p>
       </div>
     );
   }
