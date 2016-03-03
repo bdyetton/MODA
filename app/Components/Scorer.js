@@ -1,5 +1,6 @@
 var Stager = require('./Stager');
 var Marker = require('./Marker');
+var Instructions = require('./Instructions');
 var rb = require('react-bootstrap');
 
 module.exports = React.createClass({
@@ -19,7 +20,8 @@ module.exports = React.createClass({
       msg:this.props.image.msg,
       showGSMarkers: false,
       screenSizeValid: true,
-      confCounter:0
+      confCounter:0,
+      showInst: false
     };
   },
 
@@ -111,7 +113,7 @@ module.exports = React.createClass({
       this.setState({
         markers: popMarkers,
         gsMarkers: popGSMarkers,
-        confCounter: 0,
+        confCounter: 0
       });
     }
   },
@@ -166,6 +168,14 @@ module.exports = React.createClass({
     this.setState({imgMeta:$.extend(this.state.imgMeta,{stage: stage})},this.updateImgMeta);
   },
 
+  openInst: function(){
+    this.setState({showInst:true});
+  },
+
+  closeInst: function(){
+    this.setState({showInst:false});
+  },
+
   render: function () {
     var self = this;
     var markers = $.map(this.state.markers, function(marker, index) {
@@ -196,6 +206,9 @@ module.exports = React.createClass({
         <rb.Panel bsStyle="primary" className="grand-panel" ref='grandPanel' textAlign='center' header={
             <div>
               <h4>MODA: Massive Online Data Annotation</h4>
+              <div className='pull-left' style={{position:'relative',top:'-36px'}}>
+                <Instructions showInst={self.state.showInst} openInst={self.openInst} closeInst={self.closeInst}/>
+              </div>
               {JSON.parse(self.state.imgMeta.prac) ?
                 <div className='pull-right' style={{color:'rgb(102, 255, 102)', position:'relative' ,top:'-30px'}}>Practice Mode</div>
                 : [] }
