@@ -75,13 +75,13 @@ module.exports = React.createClass({
         start:{x:self.state.x, y:0, width:self.state.w, height:self.props.h},
         minWidth:20,
         isResizable:{x: !self.state.gs, y: false, xy: false},
-        moveAxis:'x', //TODO update to be none also.
+        moveAxis: self.state.gs ? 'none' : 'x', //TODO update to be none also.
         onResizeStop:self.updateSize,
         onDragStop:self.updatePos,
         customStyle:{background: self.getColor(), border: '1p solid #0d0'},
         children: !self.state.gs ? [
           <ConfidenceBox key='confBox' updateConf={self.updateConf} toggleConf={self.toggleConf} conf={self.state.conf}  confActive={self.state.confActive}/>,
-          removeButton] : []
+          removeButton] : <div style={{color:'#f0ad4e',fontSize:'24'}}>GS</div>
     };
     return <ResizableAndMovable {...initialProps}/>
   }

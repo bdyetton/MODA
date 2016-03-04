@@ -8,7 +8,6 @@ module.exports = React.createClass({
       <div>
         <rb.Button
           bsStyle="primary"
-          bsSize="medium"
           onClick={this.props.openInst}
         >
         Instructions
@@ -21,9 +20,7 @@ module.exports = React.createClass({
           <rb.Modal.Body>
             <h4>Welcome to the Massive Online Data Annotation Tool</h4>
             <p>Here are some instructions</p>
-            
             <hr />
-
             <h4>YAY a video!</h4>
             <rb.ResponsiveEmbed a16by9>
               <embed type="image/svg+xml" src="https://www.youtube.com/embed/FavUpD_IjVY" />

@@ -25,14 +25,22 @@ module.exports = React.createClass({
     };
   },
 
-  componentDidMount: function() {
+  componentDidMount: function(){
+    this.checkScreenAndPopulateMarkers();
+  },
+
+  checkScreenAndPopulateMarkers: function(){
     var self = this;
-    var widthOfPanel = ReactDOM.findDOMNode(self.refs.grandPanel).offsetWidth;
-    var widthOfImg = 500;//ReactDOM.findDOMNode(self.refs.sigImg).offsetWidth;
-    if (widthOfPanel < widthOfImg){
-      self.setState({screenSizeValid: false});
+    if (ReactDOM.findDOMNode(self.refs.sigImg).offsetWidth>0) {
+      var widthOfPanel = ReactDOM.findDOMNode(self.refs.grandPanel).offsetWidth;
+      var widthOfImg = ReactDOM.findDOMNode(self.refs.sigImg).offsetWidth-500; //TODO remove when image is correct size
+      if (widthOfPanel < widthOfImg) {
+        self.setState({screenSizeValid: false});
+      }
+      self.populateMarkers(self.props.image.markers);
+    } else {
+      setTimeout(this.checkScreenAndPopulateMarkers, 0);
     }
-    self.populateMarkers(this.props.image.markers);
   },
 
   getPreviousRemImage: function() {
@@ -40,7 +48,6 @@ module.exports = React.createClass({
     $.get('/api/previousRemImage', {user: this.props.user}, function(data){
       self.setState({ currentRemImage: data.image.url, msg:data.image.msg, imgMeta: data.image.meta, showGSMarkers: false});
       self.populateMarkers(data.markers);
-      //TODO get the batch/image number so i can unactivated the previous epoch button
     });
   },
 
@@ -214,7 +221,9 @@ module.exports = React.createClass({
                 : [] }
             </div>}>
           <rb.ListGroup fill style={{margin:'10px'}}>
-            <rb.ListGroupItem>Channel 1</rb.ListGroupItem>
+            <rb.ListGroupItem>
+              Channel 1
+          </rb.ListGroupItem>
             <rb.ListGroupItem>
               {imgAndMarkers}
             </rb.ListGroupItem>
