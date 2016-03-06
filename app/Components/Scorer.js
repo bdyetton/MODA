@@ -206,8 +206,6 @@ module.exports = React.createClass({
       var imgAndMarkers = (<p style={{color:'#F00'}}>ERROR: Your screen size is too small for valid scoring, please increase your screen resolution or move to a larger device</p>)
     }
 
-    console.log(self.state.imgMeta);
-
     return (
       <div className='container' style={{textAlign:'center', position:'absolute', left:'50%', top: '50%',  transform: 'translateY(-50%) translateX(-50%)'}}>
         <rb.Panel bsStyle="primary" className="grand-panel" ref='grandPanel' textAlign='center' header={

@@ -3,23 +3,6 @@ var rb = require('react-bootstrap');
 module.exports = React.createClass({
   displayName: 'ConfidenceBox',
 
-
-    componentWillMount:function(){
-     document.addEventListener("keydown", this.handleKey, false);
-    },
-
-    handleKey: function(event){
-      if (event.keyCode===48){
-        this.props.changeStage('high');
-      }
-      else if (event.keyCode===49){
-        this.props.changeStage('med');
-      }
-      else if (event.keyCode===50){
-        this.props.changeStage('low');
-      }
-    },
-
   updateConf: function(e){
     var clickedButton = ReactDOM.findDOMNode(e.currentTarget).getAttribute("data-id");
     this.props.updateConf(clickedButton);

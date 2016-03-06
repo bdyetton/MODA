@@ -7,20 +7,46 @@ module.exports = React.createClass({
 
   getInitialState: function() {
     return {
-      markerIndex: this.props.markerIndex,
       conf:this.props.conf || '',
       confActive:(this.props.confActive===undefined) ? true : this.props.confActive,
       x:this.props.x-(this.props.w || 50) || 0,
       w:this.props.w || 100,
       type:'box',
       deleted:false,
-      gs:this.props.gs || false
+      gs:this.props.gs || false,
     };
   },
 
   componentWillMount: function(){
     if(!this.state.gs){this.props.updateMarkerState(this.state)};
   },
+
+  componentDidMount: function() {
+    setTimeout(function() {
+      ReactDOM.findDOMNode(this.refs['Marker'+ this.props.markerIndex]).focus();
+    }.bind(this), 0);
+  },
+
+  handleKey: function(event) {
+    if (event.keyCode === 39) {
+      this.setState({x:this.state.x+1});
+    } else if (event.keyCode === 37) {
+      this.setState({x:this.state.x-1});
+    } else if (event.keyCode===72){
+        this.updateConf('high');
+      }
+      else if (event.keyCode===77){
+        this.updateConf('med');
+      }
+      else if (event.keyCode===76){
+        this.updateConf('low');
+      } else {
+        return;//Do nothing, let event propagate
+      }
+      event.stopPropagation();
+      event.preventDefault();
+  },
+
 
   updateConf: function(conf){
     if (this.state.conf===''){
@@ -80,10 +106,21 @@ module.exports = React.createClass({
         onDragStop:self.updatePos,
         customStyle:{background: self.getColor(), border: '1p solid #0d0'},
         children: !self.state.gs ? [
-          <ConfidenceBox key='confBox' updateConf={self.updateConf} toggleConf={self.toggleConf} conf={self.state.conf}  confActive={self.state.confActive}/>,
+          <ConfidenceBox key='confBox'
+                         tabIndex='0'
+                         index={'confBox'+ this.props.markerIndex}
+                         ref={'confBox'+ this.props.markerIndex}
+                         updateConf={self.updateConf}
+                         toggleConf={self.toggleConf}
+                         conf={self.state.conf}
+                         confActive={self.state.confActive}/>,
           removeButton] : <div style={{color:'#f0ad4e',fontSize:'24'}}>GS</div>
     };
-    return <ResizableAndMovable {...initialProps}/>
+    return (<div ref={'Marker'+ this.props.markerIndex}
+                 tabIndex='0'
+                 onKeyDown={this.handleKey}>
+      <ResizableAndMovable key={'ResizableAndMovable'+ initialProps.start.x} {...initialProps}/>
+    </div>)
   }
 });
 

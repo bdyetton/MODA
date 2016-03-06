@@ -9,7 +9,6 @@ module.exports = React.createClass({
     },
 
     handleKey: function(event){
-      console.log(event); // TODO The button last pushed cannot be selected again...
       if (event.keyCode===48){
         this.props.changeStage('0');
       }
