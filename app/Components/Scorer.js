@@ -133,8 +133,10 @@ module.exports = React.createClass({
     var self = this;
     if (e.button !== 0) return;
     var scoreImg = $(this.refs.sigImg);
+    e.persist();
     if (self.state.markerType==='box') {
       var newMarker = <Marker
+        initAsResizing={{enable:true,direction:'x',event:e}}
         key={self.state.markerIndex}
         markerIndex={self.state.markerIndex}
         x={e.pageX-scoreImg.offset().left}
@@ -143,6 +145,7 @@ module.exports = React.createClass({
         removeMarker={self.removeMarker}
         decrementConfCounter={self.decrementConfCounter}
         updateMarkerState={self.updateMarkerState}
+        clickEvent={e}
         />;
     } else {return;} //TODO add line marker
     var markers = self.state.markers;
@@ -200,7 +203,7 @@ module.exports = React.createClass({
                 return window.location.href + (self.state.currentRemImage)}
               else{
                 return self.state.currentRemImage
-              }}()} alt='remImage' onClick={this.addMarker} pointer-events='none'></img>
+              }}()} alt='remImage' onMouseDown={this.addMarker} pointer-events='none'></img>
       </div>)
     } else {
       var imgAndMarkers = (<p style={{color:'#F00'}}>ERROR: Your screen size is too small for valid scoring, please increase your screen resolution or move to a larger device</p>)

@@ -9,8 +9,8 @@ module.exports = React.createClass({
     return {
       conf:this.props.conf || '',
       confActive:(this.props.confActive===undefined) ? true : this.props.confActive,
-      x:this.props.x-(this.props.w || 50) || 0,
-      w:this.props.w || 100,
+      x:this.props.x || 0,
+      w:this.props.w || 0,
       type:'box',
       deleted:false,
       gs:this.props.gs || false,
@@ -92,15 +92,16 @@ module.exports = React.createClass({
 
     var removeButton =
       <div key='removeBut' className='remove-gyp-holder'>
-        <rb.Button className='gyp-x' bsSize='xsmall' onClick={self.removeMarker}>
+        <rb.Button className='gyp-x' bsSize='xsmall' onMouseDown={self.removeMarker}>
           <rb.Glyphicon style={{'fontSize': '25px'}} glyph="glyphicon glyphicon-remove-circle" />
         </rb.Button>
       </div>;
 
     var initialProps={
         start:{x:self.state.x, y:0, width:self.state.w, height:self.props.h},
-        minWidth:20,
+        minWidth:5,
         isResizable:{x: !self.state.gs, y: false, xy: false},
+        initAsResizing:this.props.initAsResizing,
         moveAxis: self.state.gs ? 'none' : 'x', //TODO update to be none also.
         onResizeStop:self.updateSize,
         onDragStop:self.updatePos,
@@ -119,7 +120,7 @@ module.exports = React.createClass({
     return (<div ref={'Marker'+ this.props.markerIndex}
                  tabIndex='0'
                  onKeyDown={this.handleKey}>
-      <ResizableAndMovable key={'ResizableAndMovable'+ initialProps.start.x} {...initialProps}/>
+      <ResizableAndMovable key={'ResizableAndMovable'+ initialProps.start.x} {...initialProps} clickEvent={this.props.clickEvent}/>
     </div>)
   }
 });
