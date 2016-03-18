@@ -2,9 +2,269 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e048ef08-bf05-4d55-b87e-868ccc77bdce" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig011.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig012.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig013.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig014.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig015.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig016.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig017.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig018.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig019.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig020.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig021.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig022.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig023.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig024.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig025.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig026.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig027.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig028.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig029.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig030.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig031.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig032.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig033.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig034.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig035.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig036.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig037.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig038.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig039.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig040.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig041.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig042.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig043.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig044.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig045.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig046.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig047.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub1/fig049.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig001.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig002.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig003.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig004.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig005.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig006.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig007.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig008.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig009.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig010.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig011.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig012.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig013.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig014.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig015.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig016.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig017.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig018.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig019.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig020.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig021.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig022.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig023.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig024.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig025.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig026.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig027.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig028.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig029.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig030.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig031.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig032.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig033.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig034.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig035.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig036.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig037.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig038.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig039.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig040.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig041.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig042.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig043.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig044.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig045.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig046.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig047.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig049.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig050.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig051.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig052.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig053.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub2/fig054.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub3/fig001.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub3/fig002.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub3/fig003.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub3/fig004.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub3/fig005.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub3/fig006.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub3/fig007.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub3/fig008.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub3/fig009.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub3/fig010.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub3/fig011.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub3/fig012.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub3/fig013.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub3/fig014.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub3/fig015.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub3/fig016.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub3/fig017.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub3/fig018.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub3/fig019.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub3/fig020.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub3/fig021.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub3/fig022.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub3/fig023.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub3/fig024.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub3/fig025.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub3/fig026.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub3/fig027.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig001.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig002.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig003.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig004.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig005.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig006.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig007.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig008.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig009.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig010.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig011.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig012.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig013.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig014.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig015.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig016.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig017.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig018.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig019.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig020.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig021.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig022.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig023.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig024.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig025.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig026.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig027.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig028.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig029.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig030.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig031.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig032.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig033.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig034.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig035.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig036.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig037.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig038.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig039.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig040.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig041.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig042.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig043.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig044.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig045.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig046.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig047.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig049.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig050.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig051.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig052.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig053.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig054.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub4/fig055.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig001.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig002.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig003.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig004.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig005.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig006.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig007.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig008.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig009.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig010.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig011.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig012.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig013.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig014.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig015.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig016.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig017.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig018.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig019.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig020.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig021.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig022.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig023.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig024.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig025.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig026.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig027.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig028.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig029.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig030.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig031.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig032.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig033.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig034.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig035.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig036.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig037.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig038.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig039.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig040.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig041.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig042.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig043.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig044.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig045.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig046.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig047.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig049.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig050.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig051.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig052.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig053.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig054.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig055.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig056.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig057.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig058.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig059.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig060.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig061.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig062.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig063.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig064.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig065.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig066.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig067.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig068.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig069.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig070.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig071.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig072.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig073.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig074.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/Sub5/fig075.png" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/img/Sub1/fig001.png" afterPath="$PROJECT_DIR$/build/img/Sub1/fig001.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/img/Sub1/fig002.png" afterPath="$PROJECT_DIR$/build/img/Sub1/fig002.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/img/Sub1/fig003.png" afterPath="$PROJECT_DIR$/build/img/Sub1/fig003.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/img/Sub1/fig004.png" afterPath="$PROJECT_DIR$/build/img/Sub1/fig004.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/img/Sub1/fig005.png" afterPath="$PROJECT_DIR$/build/img/Sub1/fig005.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/img/Sub1/fig006.png" afterPath="$PROJECT_DIR$/build/img/Sub1/fig006.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/img/Sub1/fig007.png" afterPath="$PROJECT_DIR$/build/img/Sub1/fig007.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/img/Sub1/fig008.png" afterPath="$PROJECT_DIR$/build/img/Sub1/fig008.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/img/Sub1/fig009.png" afterPath="$PROJECT_DIR$/build/img/Sub1/fig009.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/img/Sub1/fig010.png" afterPath="$PROJECT_DIR$/build/img/Sub1/fig010.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/App.js" afterPath="$PROJECT_DIR$/app/App.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Components/Marker.js" afterPath="$PROJECT_DIR$/app/Components/Marker.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Components/Scorer.js" afterPath="$PROJECT_DIR$/app/Components/Scorer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="simple-webpack-react-starter.iws" />
@@ -32,17 +292,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-              <folding>
-                <marker date="1457295287250" expanded="true" signature="328:1565" placeholder="&lt;xml/&gt;" />
-                <marker date="1457295287250" expanded="true" signature="340:604" placeholder="&lt;xml/&gt;" />
-                <marker date="1457295287250" expanded="true" signature="402:591" placeholder="&lt;xml/&gt;" />
-                <marker date="1457295287250" expanded="true" signature="636:1548" placeholder="&lt;xml/&gt;" />
-                <marker date="1457295287250" expanded="true" signature="682:1535" placeholder="&lt;xml/&gt;" />
-                <marker date="1457295287250" expanded="true" signature="776:1520" placeholder="&lt;xml/&gt;" />
-                <marker date="1457295287250" expanded="true" signature="891:1086" placeholder="&lt;xml/&gt;" />
-                <marker date="1457295287250" expanded="true" signature="1099:1289" placeholder="&lt;xml/&gt;" />
-                <marker date="1457295287250" expanded="true" signature="1302:1492" placeholder="&lt;xml/&gt;" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -52,64 +302,56 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="5" column="12" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
-              <folding>
-                <marker date="1457119220948" expanded="true" signature="139:1103" placeholder="&lt;xml/&gt;" />
-                <marker date="1457119220948" expanded="true" signature="153:283" placeholder="&lt;xml/&gt;" />
-                <marker date="1457119220948" expanded="true" signature="293:1090" placeholder="&lt;xml/&gt;" />
-                <marker date="1457119220948" expanded="true" signature="429:550" placeholder="&lt;xml/&gt;" />
-                <marker date="1457119220948" expanded="true" signature="561:941" placeholder="&lt;xml/&gt;" />
-                <marker date="1457119220948" expanded="true" signature="760:914" placeholder="&lt;xml/&gt;" />
-                <marker date="1457119220948" expanded="true" signature="952:1070" placeholder="&lt;xml/&gt;" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Scorer.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="App.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/App.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="12" column="4" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/main.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="30" selection-start-line="0" selection-start-column="30" selection-end-line="0" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Content.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Components/Content.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="12" column="11" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="11" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Header.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Components/Header.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="5" column="32" selection-start-line="5" selection-start-column="32" selection-end-line="5" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Scorer.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Components/Scorer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="142" column="0" selection-start-line="142" selection-start-column="0" selection-end-line="142" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Marker.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/Components/Marker.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3329753">
-              <caret line="94" column="64" selection-start-line="94" selection-start-column="64" selection-end-line="94" selection-end-column="64" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/node_modules/react-resizable-and-movable/lib/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="41" column="29" selection-start-line="41" selection-start-column="29" selection-end-line="41" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/node_modules/react-resizable-box/lib/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="111" column="43" selection-start-line="111" selection-start-column="34" selection-end-line="111" selection-end-column="43" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Login.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Components/Login.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="17" column="19" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="19" />
+            <state vertical-scroll-proportion="0.30031282">
+              <caret line="154" column="59" selection-start-line="154" selection-start-column="59" selection-end-line="154" selection-end-column="59" />
               <folding />
             </state>
           </provider>
@@ -119,17 +361,27 @@
         <entry file="file://$PROJECT_DIR$/server/imgServer.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="101" column="25" selection-start-line="101" selection-start-column="25" selection-end-line="101" selection-end-column="25" />
+              <caret line="67" column="28" selection-start-line="67" selection-start-column="28" selection-end-line="67" selection-end-column="28" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/index.js">
+      <file leaf-file-name="Marker.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Components/Marker.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="67" column="35" selection-start-line="67" selection-start-column="35" selection-end-line="67" selection-end-column="35" />
+              <caret line="110" column="13" selection-start-line="110" selection-start-column="13" selection-end-line="110" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="style.scss" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Assets/style.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-76.0">
+              <caret line="114" column="16" selection-start-line="114" selection-start-column="16" selection-end-line="114" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -171,8 +423,6 @@
         <option value="$PROJECT_DIR$/app.json" />
         <option value="$PROJECT_DIR$/app/Components/Content.js" />
         <option value="$PROJECT_DIR$/app/main.js" />
-        <option value="$PROJECT_DIR$/app/App.js" />
-        <option value="$PROJECT_DIR$/app/Assets/style.scss" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/app/Components/ModaHeader.js" />
         <option value="$PROJECT_DIR$/server/user.js" />
@@ -183,8 +433,10 @@
         <option value="$PROJECT_DIR$/app/Components/ConfidenceBox.js" />
         <option value="$PROJECT_DIR$/app/Components/Login.js" />
         <option value="$PROJECT_DIR$/node_modules/react-resizable-and-movable/lib/index.js" />
-        <option value="$PROJECT_DIR$/app/Components/Scorer.js" />
+        <option value="$PROJECT_DIR$/app/App.js" />
+        <option value="$PROJECT_DIR$/app/Assets/style.scss" />
         <option value="$PROJECT_DIR$/app/Components/Marker.js" />
+        <option value="$PROJECT_DIR$/app/Components/Scorer.js" />
       </list>
     </option>
   </component>
@@ -196,8 +448,7 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1600" />
-    <option name="y" value="1" />
+    <option name="x" value="1611" />
     <option name="width" value="1435" />
     <option name="height" value="1079" />
   </component>
@@ -224,8 +475,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -255,100 +504,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="simple-webpack-react-starter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MODA" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="node_modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="simple-webpack-react-starter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MODA" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="node_modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="react-resizable-box" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="simple-webpack-react-starter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MODA" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="node_modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="react-resizable-box" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="simple-webpack-react-starter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MODA" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="node_modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="react-resizable-and-movable" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="simple-webpack-react-starter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MODA" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="node_modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="react-resizable-and-movable" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -404,6 +559,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -654,7 +811,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1600" y="1" width="1435" height="1079" extended-state="0" />
+    <frame x="1611" y="0" width="1435" height="1079" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -669,13 +826,13 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925585" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925585" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="FLOATING" visible="false" weight="0.3168016" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" x="2444" y="0" width="1063" height="1058" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2165992" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2165992" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -694,9 +851,9 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.120625" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2165992" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -712,7 +869,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="5" />
+      <option name="time" value="6" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -729,7 +886,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="16" column="25" selection-start-line="16" selection-start-column="25" selection-end-line="16" selection-end-column="25" />
-          <folding />
+          <folding>
+            <marker date="1457303608059" expanded="true" signature="-1:-1" placeholder="&lt;xml/&gt;" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -884,8 +1043,10 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
-      <provider editor-type-id="MultiMarkdownFxPreviewEditor">
-        <state />
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
       <provider selected="true" editor-type-id="split-provider[text-editor;MultiMarkdownPreviewEditor]">
         <state split_layout="FIRST">
@@ -895,10 +1056,8 @@
           <second_editor />
         </state>
       </provider>
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
+      <provider editor-type-id="MultiMarkdownFxPreviewEditor">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/karma.conf.js">
@@ -957,53 +1116,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="30" selection-start-line="0" selection-start-column="30" selection-end-line="0" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Components/Header.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="32" selection-start-line="5" selection-start-column="32" selection-end-line="5" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Components/Content.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="11" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="34" selection-start-line="8" selection-start-column="34" selection-end-line="8" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Assets/style.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="185" column="28" selection-start-line="185" selection-start-column="28" selection-end-line="185" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/aws.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="18" column="9" selection-start-line="18" selection-start-column="9" selection-end-line="18" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/imgServer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="101" column="25" selection-start-line="101" selection-start-column="25" selection-end-line="101" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1047,15 +1163,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="17" column="19" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="19" />
-          <folding />
+          <folding>
+            <marker date="1457303608059" expanded="true" signature="-1:-1" placeholder="&lt;xml/&gt;" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/react-resizable-and-movable/lib/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="41" column="29" selection-start-line="41" selection-start-column="29" selection-end-line="41" selection-end-column="29" />
-          <folding />
+          <caret line="42" column="17" selection-start-line="42" selection-start-column="17" selection-end-line="42" selection-end-column="17" />
+          <folding>
+            <marker date="1457700192000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1457700192000" expanded="true" signature="-1:-1" placeholder="[...]" />
+            <marker date="1457700192000" expanded="true" signature="-1:-1" placeholder="{&quot;key&quot;: 'onResizeStart'...}" />
+            <marker date="1457700192000" expanded="true" signature="-1:-1" placeholder="{&quot;width&quot;: 100...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1067,21 +1190,43 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Components/ConfidenceBox.js">
+    <entry file="file://$PROJECT_DIR$/app/main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding>
-            <marker date="1457295287250" expanded="true" signature="328:1565" placeholder="&lt;xml/&gt;" />
-            <marker date="1457295287250" expanded="true" signature="340:604" placeholder="&lt;xml/&gt;" />
-            <marker date="1457295287250" expanded="true" signature="402:591" placeholder="&lt;xml/&gt;" />
-            <marker date="1457295287250" expanded="true" signature="636:1548" placeholder="&lt;xml/&gt;" />
-            <marker date="1457295287250" expanded="true" signature="682:1535" placeholder="&lt;xml/&gt;" />
-            <marker date="1457295287250" expanded="true" signature="776:1520" placeholder="&lt;xml/&gt;" />
-            <marker date="1457295287250" expanded="true" signature="891:1086" placeholder="&lt;xml/&gt;" />
-            <marker date="1457295287250" expanded="true" signature="1099:1289" placeholder="&lt;xml/&gt;" />
-            <marker date="1457295287250" expanded="true" signature="1302:1492" placeholder="&lt;xml/&gt;" />
-          </folding>
+          <caret line="0" column="30" selection-start-line="0" selection-start-column="30" selection-end-line="0" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Components/Content.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="12" column="11" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Components/Header.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="32" selection-start-line="5" selection-start-column="32" selection-end-line="5" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="12" column="4" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/imgServer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="67" column="28" selection-start-line="67" selection-start-column="28" selection-end-line="67" selection-end-column="28" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1089,30 +1234,38 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="5" column="12" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
-          <folding>
-            <marker date="1457119220948" expanded="true" signature="139:1103" placeholder="&lt;xml/&gt;" />
-            <marker date="1457119220948" expanded="true" signature="153:283" placeholder="&lt;xml/&gt;" />
-            <marker date="1457119220948" expanded="true" signature="293:1090" placeholder="&lt;xml/&gt;" />
-            <marker date="1457119220948" expanded="true" signature="429:550" placeholder="&lt;xml/&gt;" />
-            <marker date="1457119220948" expanded="true" signature="561:941" placeholder="&lt;xml/&gt;" />
-            <marker date="1457119220948" expanded="true" signature="760:914" placeholder="&lt;xml/&gt;" />
-            <marker date="1457119220948" expanded="true" signature="952:1070" placeholder="&lt;xml/&gt;" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Components/Scorer.js">
+    <entry file="file://$PROJECT_DIR$/app/Components/ConfidenceBox.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="142" column="0" selection-start-line="142" selection-start-column="0" selection-end-line="142" selection-end-column="13" />
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Assets/style.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-76.0">
+          <caret line="114" column="16" selection-start-line="114" selection-start-column="16" selection-end-line="114" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Components/Marker.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3329753">
-          <caret line="94" column="64" selection-start-line="94" selection-start-column="64" selection-end-line="94" selection-end-column="64" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="110" column="13" selection-start-line="110" selection-start-column="13" selection-end-line="110" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Components/Scorer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.30031282">
+          <caret line="154" column="59" selection-start-line="154" selection-start-column="59" selection-end-line="154" selection-end-column="59" />
           <folding />
         </state>
       </provider>

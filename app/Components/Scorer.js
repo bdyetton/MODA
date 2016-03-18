@@ -33,7 +33,7 @@ module.exports = React.createClass({
     var self = this;
     if (ReactDOM.findDOMNode(self.refs.sigImg).offsetWidth>0) {
       var widthOfPanel = ReactDOM.findDOMNode(self.refs.grandPanel).offsetWidth;
-      var widthOfImg = ReactDOM.findDOMNode(self.refs.sigImg).offsetWidth-500; //TODO remove when image is correct size
+      var widthOfImg = ReactDOM.findDOMNode(self.refs.sigImg).offsetWidth; //TODO remove when image is correct size
       if (widthOfPanel < widthOfImg) {
         self.setState({screenSizeValid: false});
       }
@@ -42,6 +42,18 @@ module.exports = React.createClass({
       setTimeout(this.checkScreenAndPopulateMarkers, 0);
     }
   },
+
+  //componentDidUpdate:function(){ // TODO get resize triggered compDidUpdate...
+  //  if (ReactDOM.findDOMNode(self.refs.sigImg).offsetWidth>0) {
+  //    var widthOfPanel = ReactDOM.findDOMNode(self.refs.grandPanel).offsetWidth;
+  //    var widthOfImg = ReactDOM.findDOMNode(self.refs.sigImg).offsetWidth; //TODO remove when image is correct size
+  //    if (widthOfPanel < widthOfImg) {
+  //      self.setState({screenSizeValid: false});
+  //    } else {
+  //      self.setState({screenSizeValid: true});
+  //    }
+  //  }
+  //},
 
   getPreviousRemImage: function() {
     var self = this;
@@ -133,13 +145,14 @@ module.exports = React.createClass({
     var self = this;
     if (e.button !== 0) return;
     var scoreImg = $(this.refs.sigImg);
+    var offsetFromPannel = ReactDOM.findDOMNode(self.refs.sigImg).offsetLeft;
     e.persist();
     if (self.state.markerType==='box') {
       var newMarker = <Marker
         initAsResizing={{enable:true,direction:'x',event:e}}
         key={self.state.markerIndex}
         markerIndex={self.state.markerIndex}
-        x={e.pageX-scoreImg.offset().left}
+        x={e.pageX-scoreImg.offset().left+offsetFromPannel}
         y={0}
         h={scoreImg.height()}
         removeMarker={self.removeMarker}
@@ -195,7 +208,7 @@ module.exports = React.createClass({
       return [marker]
     });
     if (self.state.screenSizeValid){
-      var imgAndMarkers =  (<div className='row channels' style={{position:'relative'}}>
+      var imgAndMarkers =  (<div className='row channels' style={{position:'relative', margin:'20px'}}>
         {markers}
         {self.state.showGSMarkers ? gsMarkers : []}
         <img ref='sigImg' src={function(){
@@ -221,10 +234,7 @@ module.exports = React.createClass({
                 <div className='pull-right' style={{color:'rgb(102, 255, 102)', position:'relative' ,top:'-30px'}}>Practice Mode</div>
                 : [] }
             </div>}>
-          <rb.ListGroup fill style={{margin:'10px'}}>
-            <rb.ListGroupItem>
-              Channel 1
-          </rb.ListGroupItem>
+          <rb.ListGroup fill style={{margin:'15px'}}>
             <rb.ListGroupItem>
               {imgAndMarkers}
             </rb.ListGroupItem>
@@ -239,7 +249,11 @@ module.exports = React.createClass({
                     </rb.Button>
                   </rb.ButtonGroup>
                   <rb.ButtonGroup style={{textAlign:'center', position:'absolute', left:'50%', top: '50%',  transform: 'translateY(-50%) translateX(-50%)'}}>
-                    <Stager stage={self.state.imgMeta.stage} changeStage={self.changeStage}/>
+                    <rb.Input type="checkbox" ref='noMarkers'
+                              disabled={markers.length!==0}
+                              checked={JSON.parse(self.state.imgMeta.noMarkers)}
+                              label={'No spindles in epoch'}
+                              onChange={self.setNoMarkers}/>
                   </rb.ButtonGroup>
                   <rb.ButtonGroup className='pull-right'>
                     {JSON.parse(self.state.imgMeta.prac) && !self.state.showGSMarkers ?
@@ -252,11 +266,7 @@ module.exports = React.createClass({
                 </rb.ButtonToolbar>
               </div>
             </rb.ListGroupItem>
-            <rb.Input type="checkbox" ref='noMarkers'
-                      disabled={markers.length!==0}
-                      checked={JSON.parse(self.state.imgMeta.noMarkers)}
-                      label={'No spindles in epoch'}
-                      onChange={self.setNoMarkers}/>
+
           </rb.ListGroup>
         </rb.Panel>
       </div>

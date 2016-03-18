@@ -14,6 +14,7 @@ module.exports = React.createClass({
       type:'box',
       deleted:false,
       gs:this.props.gs || false,
+      inited: this.props.inited || false
     };
   },
 
@@ -25,6 +26,10 @@ module.exports = React.createClass({
     setTimeout(function() {
       ReactDOM.findDOMNode(this.refs['Marker'+ this.props.markerIndex]).focus();
     }.bind(this), 0);
+  },
+
+  onResizeStop: function(width){
+
   },
 
   handleKey: function(event) {
@@ -72,14 +77,22 @@ module.exports = React.createClass({
 
   updateSize: function(size){
     var self=this;
+    if (!self.state.inited){
+      if (size.width>20){
+        self.setState({inited:true});
+      } else{
+        self.removeMarker();
+      }
+    }
     self.setState({w:size.width},function(){self.props.updateMarkerState(self.state)});
   },
 
   getColor: function(){
-    if (this.state.conf==='high'){ return "rgba(140, 217, 140, 0.7)"}
+    if (this.state.gs){ return "rgba(64,31,124,0.7)"}
+    else if (!this.state.inited){ return "rgba(136, 183, 213, 0.5)"}
+    else if (this.state.conf==='high'){ return "rgba(140, 217, 140, 0.7)"}
     else if (this.state.conf==='med'){ return "rgba(255, 204, 102, 0.7)"}
     else if (this.state.conf==='low'){ return "rgba(255, 153, 153, 0.7)"}
-    else if (this.state.gs){ return "rgba(64,31,124,0.7)"}
     else { return "rgba(136, 183, 213, 0.7)" }
   },
 
@@ -106,8 +119,8 @@ module.exports = React.createClass({
         onResizeStop:self.updateSize,
         onDragStop:self.updatePos,
         customStyle:{background: self.getColor(), border: '1p solid #0d0'},
-        children: !self.state.gs ? [
-          <ConfidenceBox key='confBox'
+        children: !self.state.gs ? [ self.state.inited ?
+          [<ConfidenceBox key='confBox'
                          tabIndex='0'
                          index={'confBox'+ this.props.markerIndex}
                          ref={'confBox'+ this.props.markerIndex}
@@ -115,7 +128,7 @@ module.exports = React.createClass({
                          toggleConf={self.toggleConf}
                          conf={self.state.conf}
                          confActive={self.state.confActive}/>,
-          removeButton] : <div style={{color:'#f0ad4e',fontSize:'24'}}>GS</div>
+          removeButton] : []] : <div style={{color:'#f0ad4e',fontSize:'24'}}>GS</div>
     };
     return (<div ref={'Marker'+ this.props.markerIndex}
                  tabIndex='0'
