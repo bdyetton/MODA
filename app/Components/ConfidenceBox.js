@@ -14,7 +14,7 @@ module.exports = React.createClass({
     return (<div>
       <div key='changeConfBut' className='conf-gyp-holder'>
         <rb.Button className='gyp-x' bsSize='xsmall' onClick={self.props.toggleConf}>
-          <rb.Glyphicon style={{'fontSize': '23px'}} glyph="glyphicon glyphicon-th-list"/>
+          <rb.Glyphicon style={{'fontSize': '16px'}} glyph="glyphicon glyphicon-th-list"/>
         </rb.Button>
       </div>
       {self.props.confActive ? <div className='arrow_box_container'>

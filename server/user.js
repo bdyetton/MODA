@@ -24,9 +24,7 @@ function user(){
 
     this.createUser = function(userName,imServ,cb){
         var user = {name:userName};
-        this.getPracData(function(err,pracData){
-            imServ.initUser(user,err,pracData,cb);
-        });
+        imServ.initUser(user,cb);
     };
 
     this.saveUser = function(user,loc){

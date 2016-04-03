@@ -36,6 +36,11 @@ app.get('/api/previousRemImage',cors(),function(req,res){
     users.saveUser(currentUsers[req.query.user]);
 });
 
+app.get('/api/compareToGS',cors(),function(req,res){
+    var markers = imServ.compareToGS(currentUsers[req.query.user]);
+    res.send({markers: markers});
+});
+
 app.get('/api/updateMarkerState',cors(),function(req,res){
     imServ.updateMarkerState(currentUsers[req.query.user], req.query.marker);
     res.send({success: true});

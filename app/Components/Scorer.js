@@ -2,7 +2,8 @@ var Stager = require('./Stager');
 var Marker = require('./Marker');
 var Instructions = require('./Instructions');
 var rb = require('react-bootstrap');
-
+var pannelMargin = 10;
+var listMargin = 15;
 module.exports = React.createClass({
   displayName: 'Scorer',
 
@@ -21,45 +22,52 @@ module.exports = React.createClass({
       showGSMarkers: false,
       screenSizeValid: true,
       confCounter:0,
-      showInst: false
+      showInst: false,
+      widthOfImg: 900
     };
   },
 
   componentDidMount: function(){
-    this.checkScreenAndPopulateMarkers();
+    window.addEventListener('resize', this.checkScreen);
+    this.checkScreenWithTimeout();
   },
 
-  checkScreenAndPopulateMarkers: function(){
+  checkScreenWithTimeout: function(){
     var self = this;
     if (ReactDOM.findDOMNode(self.refs.sigImg).offsetWidth>0) {
-      var widthOfPanel = ReactDOM.findDOMNode(self.refs.grandPanel).offsetWidth;
-      var widthOfImg = ReactDOM.findDOMNode(self.refs.sigImg).offsetWidth; //TODO remove when image is correct size
-      if (widthOfPanel < widthOfImg) {
-        self.setState({screenSizeValid: false});
+      if(self.checkScreen()) {
+        self.populateMarkers(self.props.image.markers);
+        self.populateGSMarkers(self.props.image.meta.gsMarkers);
       }
-      self.populateMarkers(self.props.image.markers);
     } else {
-      setTimeout(this.checkScreenAndPopulateMarkers, 0);
+      setTimeout(this.checkScreenWithTimeout, 0);
+      return false;
     }
   },
 
-  //componentDidUpdate:function(){ // TODO get resize triggered compDidUpdate...
-  //  if (ReactDOM.findDOMNode(self.refs.sigImg).offsetWidth>0) {
-  //    var widthOfPanel = ReactDOM.findDOMNode(self.refs.grandPanel).offsetWidth;
-  //    var widthOfImg = ReactDOM.findDOMNode(self.refs.sigImg).offsetWidth; //TODO remove when image is correct size
-  //    if (widthOfPanel < widthOfImg) {
-  //      self.setState({screenSizeValid: false});
-  //    } else {
-  //      self.setState({screenSizeValid: true});
-  //    }
-  //  }
-  //},
+  checkScreen: function(){
+      var self=this;
+      var widthOfPanel = ReactDOM.findDOMNode(self.refs.grandPanel).offsetWidth;
+      var widthOfImg = this.state.widthOfImg;//ReactDOM.findDOMNode(self.refs.sigImg).offsetWidth; //TODO remove when image is correct size
+      if (widthOfPanel - 2*(pannelMargin+listMargin) < widthOfImg) {
+        self.setState({screenSizeValid: false});
+        return false;
+      } else {
+        self.setState({screenSizeValid: true});
+        return true;
+      }
+  },
+
+  componentDidUpdate:function(){ // TODO get resize triggered compDidUpdate...
+    //this.checkScreen();
+  },
 
   getPreviousRemImage: function() {
     var self = this;
     $.get('/api/previousRemImage', {user: this.props.user}, function(data){
       self.setState({ currentRemImage: data.image.url, msg:data.image.msg, imgMeta: data.image.meta, showGSMarkers: false});
-      self.populateMarkers(data.markers);
+      self.populateMarkers(data.image.markers);
+      self.populateGSMarkers(data.image.meta.gsMarkers);
     });
   },
 
@@ -67,7 +75,18 @@ module.exports = React.createClass({
     var self = this;
     $.get('/api/nextRemImage', {user: this.props.user}, function(data){
       self.setState({ currentRemImage: data.image.url, msg:data.image.msg, imgMeta: data.image.meta, showGSMarkers: false});
+      self.populateMarkers(data.image.markers);
+      self.populateGSMarkers(data.image.meta.gsMarkers);
+    });
+  },
+
+  compareToGS: function(markerData){
+    var self = this;
+    self.setState({showGSMarkers:true})
+    $.get('/api/compareToGS', {user: this.props.user}, function(data){
       self.populateMarkers(data.markers);
+    }).fail(function(xhr, textStatus, errorThrown){
+      console.log('Error comparing markers to gs');
     });
   },
 
@@ -95,7 +114,6 @@ module.exports = React.createClass({
 
   populateMarkers: function(markers) {
     var popMarkers = {};
-    var popGSMarkers = {};
     var self = this;
     var scoreImg = $(this.refs.sigImg);
     if (markers != undefined) {
@@ -118,21 +136,34 @@ module.exports = React.createClass({
             updateMarkerState={self.updateMarkerState}
             />;
         }
-        if (marker.type==='gsbox') {
-          popGSMarkers[marker.markerIndex] = <Marker
-            key={parseInt(marker.markerIndex)}
-            x={parseInt(marker.x)+parseInt(marker.w)}
-            w={parseInt(marker.w)}
-            y={0}
-            h={scoreImg.height()}
-            gs={true}
-            />;
-        }
       });
       this.setState({
         markers: popMarkers,
-        gsMarkers: popGSMarkers,
         confCounter: 0
+      });
+    }
+  },
+
+  populateGSMarkers: function(markers) {
+    var popGSMarkers = {};
+    var scoreImg = $(this.refs.sigImg);
+    if (markers != undefined) {
+      markers.forEach(function (marker) {
+        if (marker.type === 'box') {
+          markers.forEach(function (marker) {
+            popGSMarkers[marker.markerIndex] = <Marker
+              key={parseInt(marker.markerIndex)}
+              x={parseInt(marker.x)+parseInt(marker.w)}
+              w={parseInt(marker.w)}
+              y={0}
+              h={scoreImg.height()}
+              gs={true}
+              />;
+          });
+        }
+      });
+      this.setState({
+        gsMarkers: popGSMarkers,
       });
     }
   },
@@ -234,7 +265,7 @@ module.exports = React.createClass({
                 <div className='pull-right' style={{color:'rgb(102, 255, 102)', position:'relative' ,top:'-30px'}}>Practice Mode</div>
                 : [] }
             </div>}>
-          <rb.ListGroup fill style={{margin:'15px'}}>
+          <rb.ListGroup fill style={{margin:listMargin+'px'}}>
             <rb.ListGroupItem>
               {imgAndMarkers}
             </rb.ListGroupItem>
@@ -258,7 +289,7 @@ module.exports = React.createClass({
                   <rb.ButtonGroup className='pull-right'>
                     {JSON.parse(self.state.imgMeta.prac) && !self.state.showGSMarkers ?
                       <rb.Button bsStyle='warning' //TODO make custom style
-                                 onClick={function(){self.setState({showGSMarkers:true})}}>Show correct markers</rb.Button>
+                                 onClick={self.compareToGS}>Show correct markers</rb.Button>
                       : <rb.Button bsStyle="primary" ref='next'
                                    disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (markers.length>0 && self.state.confCounter===0) || self.state.showGSMarkers)}
                                    onClick={self.getNextRemImage}>{self.state.msg == 'lastEpoch' ? 'This is the last epoch' : 'Next Epoch'}</rb.Button>}

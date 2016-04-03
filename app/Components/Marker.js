@@ -14,7 +14,8 @@ module.exports = React.createClass({
       type:'box',
       deleted:false,
       gs:this.props.gs || false,
-      inited: this.props.inited || false
+      inited: this.props.inited || false,
+      initAsResizing: true
     };
   },
 
@@ -37,14 +38,17 @@ module.exports = React.createClass({
       this.setState({x:this.state.x+1});
     } else if (event.keyCode === 37) {
       this.setState({x:this.state.x-1});
-    } else if (event.keyCode===72){
+    } else if (event.keyCode===51){
         this.updateConf('high');
       }
-      else if (event.keyCode===77){
+      else if (event.keyCode===50){
         this.updateConf('med');
       }
-      else if (event.keyCode===76){
+      else if (event.keyCode===49){
         this.updateConf('low');
+      }
+      else if (event.keyCode===27 || event.keyCode===46){
+        this.removeMarker();
       } else {
         return;//Do nothing, let event propagate
       }
@@ -78,7 +82,7 @@ module.exports = React.createClass({
   updateSize: function(size){
     var self=this;
     if (!self.state.inited){
-      if (size.width>20){
+      if (size.width>10){
         self.setState({inited:true});
       } else{
         self.removeMarker();
@@ -88,8 +92,7 @@ module.exports = React.createClass({
   },
 
   getColor: function(){
-    if (this.state.gs){ return "rgba(64,31,124,0.7)"}
-    else if (!this.state.inited){ return "rgba(136, 183, 213, 0.5)"}
+    if (!this.state.inited){ return "rgba(136, 183, 213, 0.5)"}
     else if (this.state.conf==='high'){ return "rgba(140, 217, 140, 0.7)"}
     else if (this.state.conf==='med'){ return "rgba(255, 204, 102, 0.7)"}
     else if (this.state.conf==='low'){ return "rgba(255, 153, 153, 0.7)"}
@@ -106,7 +109,7 @@ module.exports = React.createClass({
     var removeButton =
       <div key='removeBut' className='remove-gyp-holder'>
         <rb.Button className='gyp-x' bsSize='xsmall' onMouseDown={self.removeMarker}>
-          <rb.Glyphicon style={{'fontSize': '25px'}} glyph="glyphicon glyphicon-remove-circle" />
+          <rb.Glyphicon style={{'fontSize': '18px'}} glyph="glyphicon glyphicon-remove-circle" />
         </rb.Button>
       </div>;
 
@@ -114,11 +117,11 @@ module.exports = React.createClass({
         start:{x:self.state.x, y:0, width:self.state.w, height:self.props.h},
         minWidth:5,
         isResizable:{x: !self.state.gs, y: false, xy: false},
-        initAsResizing:this.props.initAsResizing,
-        moveAxis: self.state.gs ? 'none' : 'x', //TODO update to be none also.
+        initAsResizing: this.state.inited ? {enable: false} : self.props.initAsResizing,
+        moveAxis: self.state.gs ? 'none' : 'x', //FIXME implement none value
         onResizeStop:self.updateSize,
         onDragStop:self.updatePos,
-        customStyle:{background: self.getColor(), border: '1p solid #0d0'},
+        customStyle:{background: self.getColor(), border: self.state.gs ? '2px solid #f0ad4e' : ''},
         children: !self.state.gs ? [ self.state.inited ?
           [<ConfidenceBox key='confBox'
                          tabIndex='0'
@@ -128,7 +131,14 @@ module.exports = React.createClass({
                          toggleConf={self.toggleConf}
                          conf={self.state.conf}
                          confActive={self.state.confActive}/>,
-          removeButton] : []] : <div style={{color:'#f0ad4e',fontSize:'24'}}>GS</div>
+          removeButton] : []] :
+          <div style={{position:'absolute',
+                       color:'#f0ad4e',
+                       fontSize:'18',
+                       left:'50%',
+                       top:'100%',
+                       transform: 'translateX(-50%)'
+                       }}>GS</div>
     };
     return (<div ref={'Marker'+ this.props.markerIndex}
                  tabIndex='0'
