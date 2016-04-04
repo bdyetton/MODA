@@ -20,16 +20,16 @@ function split(a, n) {
 }
 
 var imgConfig = { //THIS DATA NEEDS TO BE UPDATED! //TODO break out into a file
-  secs:30,
+  secs:25,
   sampleRate:256,
   margins:{
-    left:45,
+    left:70,
     top:7,
     bottom:45,
     right:9},
   img:{
-    h:338,
-    w:1148
+    h:90,
+    w:900
   },
   seg:{
     w:3,
@@ -39,6 +39,11 @@ var imgConfig = { //THIS DATA NEEDS TO BE UPDATED! //TODO break out into a file
     w:null,
     h:null
   }
+};
+
+var matchThreshs = {
+  wDiffThresh:0.5,
+  xDiffThresh:0.5
 };
 
 var secPerPx = (imgConfig.secs / imgConfig.img.w);
@@ -85,7 +90,7 @@ function imgServer(){
           start:metaDataFile[img].start,
           end:metaDataFile[img].end,
           meta: metaDataFile[img].meta || {
-            noMarkers:metaDataFile[img].noMarkers,
+            noMarkers:metaDataFile[img].noMarkers, //This is also modified by user
             prac:metaDataFile[img].prac,
             stage:metaDataFile[img].stage,
             gsMarkers:metaDataFile[img].gsMarkers || []
@@ -98,57 +103,8 @@ function imgServer(){
   };
   self.init();
 
-  self.compareToGS = function(user){ //TODO debug
-    //Step through each non deleted marker and check against GS markers.
-    user.batches[user.idx].imgs[user.batches[user.idx].idx].markers.forEach(function(marker,mIdx){
-      var matches = user.batches[user.idx].imgs[user.batches[user.idx].idx].meta.gsMarkers.map(function(gsMarker){
-        var posMatch = self.compare2Markers(gsMarker,marker);
-        if (posMatch === 'match'){
-          var confMatch = gsMarker.conf === marker.conf;
-          user.batches[user.idx].imgs[user.batches[user.idx].idx].markers[mIdx].match = true;
-          user.batches[user.idx].imgs[user.batches[user.idx].idx].markers[mIdx].confMatch = confMatch;
-          user.batches[user.idx].imgs[user.batches[user.idx].idx].markers[mIdx].matchMessage = 'Welldone, this marker was placed correctly.' + !confMatch ?
-            ' However, the experts mark this with ' + gsMarker.conf + ' confidence' : '';
-          return true;
-        } else {
-          return false;
-        }
-      });
-      console.log(matches)
-      if (matches.every(function(el){return el===false;})){
-        user.batches[user.idx].imgs[user.batches[user.idx].idx].markers[mIdx].match = false;
-        user.batches[user.idx].imgs[user.batches[user.idx].idx].markers[mIdx].confMatch = false;
-        user.batches[user.idx].imgs[user.batches[user.idx].idx].markers[mIdx].matchMessage = 'Woops, this does not match. Try again'
-      }
-    });
-    console.log(user.batches[user.idx].imgs[user.batches[user.idx].idx].markers);
-    return user.batches[user.idx].imgs[user.batches[user.idx].idx].markers;
-  };
-
-  self.compare2Markers = function(m1,m2){
-    if (!m1.deleted && !m2.deleted){
-      if (m1.type === m2.type) {
-        if (m1.type === 'seg') {
-          var xDiff = Math.abs(m1.x - m2.x);
-          var wDiff = Math.abs(m1.w - m2.w);
-          if (wDiff < self.wDiffThresh && xDiff < self.xDiffThresh) {
-            return 'match'
-          } else {
-            return 'missMatch'
-          }
-        } else {
-          //TODO other types of markers...
-        }
-      } else {
-        return 'typeMissmatch';
-      }
-    } else {
-      return 'markerDeleted'
-    }
-  };
-
   self.initUser = function(userData,cb) {
-    userData.batches = clone(self.batches); //TODO
+    userData.batches = clone(self.batches);
     //user.batches = shuffleArray(this.batches); //TODO turn shuffle on from the second batch onwards
     userData.idx = 0;
     userData.markerIndex = 0;
@@ -186,15 +142,62 @@ function imgServer(){
   };
 
   self.processMarker = function(marker){ //TODO do y
+
     if (marker.type==='seg') {
       marker.xSecs = (marker.relToImg.x - imgConfig.margins.left + imgConfig[marker.type].w) * (imgConfig.secs / imgConfig.img.w);
     } else if (marker.type==='box'){
-      var secPerPx = (imgConfig.secs / imgConfig.img.w);
       marker.wSecs = secPerPx*marker.w;
-      marker.xSecs = secPerPx*(marker.x - imgConfig.margins.left + marker.w/2);//FIXME check this
+      marker.xSecs = secPerPx*(marker.x - imgConfig.margins.left);//FIXME check this
 
     }
     return marker
+  };
+
+  self.compareToGS = function(user){
+    //Step through each non deleted marker and check against GS markers.
+    user.batches[user.idx].imgs[user.batches[user.idx].idx].markers.forEach(function(marker,mIdx){
+      var matches = user.batches[user.idx].imgs[user.batches[user.idx].idx].meta.gsMarkers.map(function(gsMarker){
+        var posMatch = self.compare2Markers(gsMarker,marker);
+        if (posMatch === 'match'){
+          var confMatch = gsMarker.conf === marker.conf;
+          user.batches[user.idx].imgs[user.batches[user.idx].idx].markers[mIdx].match = true;
+          user.batches[user.idx].imgs[user.batches[user.idx].idx].markers[mIdx].confMatch = confMatch;
+          user.batches[user.idx].imgs[user.batches[user.idx].idx].markers[mIdx].matchMessage = 'Welldone! this spindle marker is placed correctly.'// + [!confMatch ?
+           // ' However, the experts mark this with ' + gsMarker.conf + ' confidence' : ''];
+          return true;
+        } else {
+          return false;
+        }
+      });
+      if (matches.every(function(el){return el===false;})){
+        user.batches[user.idx].imgs[user.batches[user.idx].idx].markers[mIdx].match = false;
+        user.batches[user.idx].imgs[user.batches[user.idx].idx].markers[mIdx].confMatch = false;
+        user.batches[user.idx].imgs[user.batches[user.idx].idx].markers[mIdx].matchMessage = 'Woops, this spindle marker is incorrect. Try again'
+      }
+    });
+    return user.batches[user.idx].imgs[user.batches[user.idx].idx].markers;
+  };
+
+  self.compare2Markers = function(m1,m2){
+    if (m1.deleted==='false' && m2.deleted==='false'){
+      if (m1.type === m2.type) {
+        if (m1.type === 'box') {
+          var xDiff = Math.abs(m1.xSecs - m2.xSecs);
+          var wDiff = Math.abs(m1.wSecs - m2.wSecs);
+          if (wDiff < matchThreshs.wDiffThresh && xDiff < matchThreshs.xDiffThresh) {
+            return 'match'
+          } else {
+            return 'missMatch'
+          }
+        } else {
+          //TODO other types of markers...
+        }
+      } else {
+        return 'typeMissmatch';
+      }
+    } else {
+      return 'markerDeleted'
+    }
   };
 
   self.getMarkers = function (user){
@@ -224,7 +227,13 @@ function imgServer(){
     var folder = user.batches[user.idx].imgs[user.batches[user.idx].idx].folder;
     var fileName = user.batches[user.idx].imgs[user.batches[user.idx].idx].name;
     var meta = user.batches[user.idx].imgs[user.batches[user.idx].idx].meta;
-    return {url:'/img/' +folder + '/' + fileName, msg:msg, meta:meta};
+    return {
+      url:'/img/' +folder + '/' + fileName,
+      msg:msg,
+      imgIdx:user.batches[user.idx].idx,
+      batchSize:user.batches[user.idx].imgs.length,
+      meta:meta
+    };
   };
 };
 

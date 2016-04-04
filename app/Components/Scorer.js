@@ -12,6 +12,8 @@ module.exports = React.createClass({
       markerType: "box",
       noMarkerChecked:false,
       currentRemImage: this.props.image.url,
+      imgIdx: this.props.image.imgIdx,
+      batchSize: this.props.image.batchSize,
       slothmode: this.props.sme,
       markers: {},
       gsMarkers: {},
@@ -22,7 +24,7 @@ module.exports = React.createClass({
       showGSMarkers: false,
       screenSizeValid: true,
       confCounter:0,
-      showInst: false,
+      showInst: this.props.showInstructions,
       widthOfImg: 900
     };
   },
@@ -58,41 +60,56 @@ module.exports = React.createClass({
       }
   },
 
-  componentDidUpdate:function(){ // TODO get resize triggered compDidUpdate...
-    //this.checkScreen();
-  },
-
   getPreviousRemImage: function() {
     var self = this;
-    $.get('/api/previousRemImage', {user: this.props.user}, function(data){
-      self.setState({ currentRemImage: data.image.url, msg:data.image.msg, imgMeta: data.image.meta, showGSMarkers: false});
-      self.populateMarkers(data.image.markers);
-      self.populateGSMarkers(data.image.meta.gsMarkers);
+    $.get('/api/previousRemImage', {user: this.props.userData.userName}, function(data){
+      self.setState({ currentRemImage: data.image.url,
+          msg:data.image.msg,
+          imgIdx:data.image.imgIdx,
+          batchSize:data.image.batchSize,
+          imgMeta: data.image.meta,
+          showGSMarkers: false},
+        function(){
+          self.populateMarkers(data.markers);
+          self.populateGSMarkers(data.image.meta.gsMarkers);
+        });
     });
   },
 
   getNextRemImage: function() {
     var self = this;
-    $.get('/api/nextRemImage', {user: this.props.user}, function(data){
-      self.setState({ currentRemImage: data.image.url, msg:data.image.msg, imgMeta: data.image.meta, showGSMarkers: false});
-      self.populateMarkers(data.image.markers);
-      self.populateGSMarkers(data.image.meta.gsMarkers);
+    $.get('/api/nextRemImage', {user: this.props.userData.userName}, function(data) {
+      self.setState({
+          currentRemImage: data.image.url,
+          msg: data.image.msg,
+          imgIdx: data.image.imgIdx,
+          batchSize: data.image.batchSize,
+          imgMeta: data.image.meta,
+          showGSMarkers: false
+        },
+        function () {
+          self.populateMarkers(data.markers);
+          self.populateGSMarkers(data.image.meta.gsMarkers);
+        });
     });
   },
 
   compareToGS: function(markerData){
     var self = this;
-    self.setState({showGSMarkers:true})
-    $.get('/api/compareToGS', {user: this.props.user}, function(data){
-      self.populateMarkers(data.markers);
-    }).fail(function(xhr, textStatus, errorThrown){
-      console.log('Error comparing markers to gs');
-    });
+    var showGS = this.state.showGSMarkers;
+    self.setState({showGSMarkers:!showGS});
+    if (!showGS) {
+      $.get('/api/compareToGS', {user: this.props.userData.userName}, function (data) {
+        self.populateMarkers(data.markers);
+      }).fail(function (xhr, textStatus, errorThrown) {
+        console.log('Error comparing markers to gs');
+      });
+    }
   },
 
   updateMarkerState: function(markerData){
     var self = this;
-    $.get('/api/updateMarkerState', {marker:markerData, user: this.props.user}, function(data){
+    $.get('/api/updateMarkerState', {marker:markerData, user: this.props.userData.userName}, function(data){
       if (!data.success){
         console.log('Error saving marker');
       }
@@ -103,7 +120,7 @@ module.exports = React.createClass({
 
   updateImgMeta: function(){
     var self = this;
-    $.get('/api/updateImgMeta', {imgMeta:self.state.imgMeta, user: self.props.user}, function(data){
+    $.get('/api/updateImgMeta', {imgMeta:self.state.imgMeta, user: self.props.userData.userName}, function(data){
       if (!data.success){
         console.log('Error saving meta');
       }
@@ -125,7 +142,8 @@ module.exports = React.createClass({
           popMarkers[marker.markerIndex] = <Marker
             key={parseInt(marker.markerIndex)}
             markerIndex={parseInt(marker.markerIndex)}
-            x={parseInt(marker.x)+parseInt(marker.w)}
+            inited={marker.inited==='true'}
+            x={parseInt(marker.x)}
             w={parseInt(marker.w)}
             y={0}
             h={scoreImg.height()}
@@ -134,14 +152,15 @@ module.exports = React.createClass({
             decrementConfCounter={self.decrementConfCounter}
             removeMarker={self.removeMarker}
             updateMarkerState={self.updateMarkerState}
+            match={marker.match}
+            matchMessage={marker.matchMessage}
             />;
         }
-      });
+      })}
       this.setState({
         markers: popMarkers,
         confCounter: 0
       });
-    }
   },
 
   populateGSMarkers: function(markers) {
@@ -153,7 +172,9 @@ module.exports = React.createClass({
           markers.forEach(function (marker) {
             popGSMarkers[marker.markerIndex] = <Marker
               key={parseInt(marker.markerIndex)}
-              x={parseInt(marker.x)+parseInt(marker.w)}
+              conf={marker.conf}
+              inited={true}
+              x={parseInt(marker.x)}
               w={parseInt(marker.w)}
               y={0}
               h={scoreImg.height()}
@@ -161,11 +182,10 @@ module.exports = React.createClass({
               />;
           });
         }
-      });
+      })};
       this.setState({
         gsMarkers: popGSMarkers,
       });
-    }
   },
 
   decrementConfCounter: function(){
@@ -261,12 +281,13 @@ module.exports = React.createClass({
               <div className='pull-left' style={{position:'relative',top:'-36px'}}>
                 <Instructions showInst={self.state.showInst} openInst={self.openInst} closeInst={self.closeInst}/>
               </div>
+              <div className='pull-right' style={{color:'rgb(102, 255, 102)', position:'relative' ,top:'-30px',marginLeft:'5px'}}>{'Epoch '+ self.state.imgIdx + ' of ' + self.state.batchSize}</div>
               {JSON.parse(self.state.imgMeta.prac) ?
-                <div className='pull-right' style={{color:'rgb(102, 255, 102)', position:'relative' ,top:'-30px'}}>Practice Mode</div>
+                <div className='pull-right' style={{color:'rgb(102, 255, 102)', position:'relative' ,top:'-30px'}}>Practice Mode:</div>
                 : [] }
-            </div>}>
+           </div>}>
           <rb.ListGroup fill style={{margin:listMargin+'px'}}>
-            <rb.ListGroupItem>
+            <rb.ListGroupItem style={{marginBottom:'80px', marginTop:'80px'}}>
               {imgAndMarkers}
             </rb.ListGroupItem>
             <rb.ListGroupItem>
@@ -287,12 +308,14 @@ module.exports = React.createClass({
                               onChange={self.setNoMarkers}/>
                   </rb.ButtonGroup>
                   <rb.ButtonGroup className='pull-right'>
-                    {JSON.parse(self.state.imgMeta.prac) && !self.state.showGSMarkers ?
+                    {self.state.imgMeta.prac==='true' ?
                       <rb.Button bsStyle='warning' //TODO make custom style
-                                 onClick={self.compareToGS}>Show correct markers</rb.Button>
-                      : <rb.Button bsStyle="primary" ref='next'
+                                 onClick={self.compareToGS}>Toggle correct markers</rb.Button>
+                      : []}
+                      <rb.Button bsStyle="primary" ref='next'
                                    disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (markers.length>0 && self.state.confCounter===0) || self.state.showGSMarkers)}
-                                   onClick={self.getNextRemImage}>{self.state.msg == 'lastEpoch' ? 'This is the last epoch' : 'Next Epoch'}</rb.Button>}
+                                   onClick={self.getNextRemImage}>{self.state.msg == 'lastEpoch' ? 'This is the last epoch' : 'Next Epoch'}
+                      </rb.Button>
                   </rb.ButtonGroup>
                 </rb.ButtonToolbar>
               </div>

@@ -9,7 +9,7 @@ module.exports = React.createClass({
 
   updatePage: function(page,data){
     if (page==='score'){
-      this.setState({user:data.userName, image:data.image});}
+      this.setState({userData:data.userData, showInstructions:data.createdUser, image:data.image});}
     else if(page==='instructions'){
 
     }
@@ -26,7 +26,7 @@ module.exports = React.createClass({
       return (<div><Login updatePage={self.updatePage}/></div>)
     } else if (self.state.page==='score')
     {
-      return (<div><Scorer user={this.state.user} image={this.state.image}/></div>)
+      return (<div><Scorer userData={this.state.userData} showInstructions={this.state.showInstructions} image={this.state.image}/></div>)
     }
 
   }

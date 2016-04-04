@@ -1,5 +1,6 @@
 import ResizableAndMovable from '../../node_modules/react-resizable-and-movable';
 var ConfidenceBox = require('./ConfidenceBox');
+var MatchBox = require('./MatchBox');
 var rb = require('react-bootstrap');
 
 module.exports = React.createClass({
@@ -7,6 +8,7 @@ module.exports = React.createClass({
 
   getInitialState: function() {
     return {
+      markerIndex:this.props.markerIndex,
       conf:this.props.conf || '',
       confActive:(this.props.confActive===undefined) ? true : this.props.confActive,
       x:this.props.x || 0,
@@ -15,7 +17,7 @@ module.exports = React.createClass({
       deleted:false,
       gs:this.props.gs || false,
       inited: this.props.inited || false,
-      initAsResizing: true
+      keyTicker: 0
     };
   },
 
@@ -35,9 +37,9 @@ module.exports = React.createClass({
 
   handleKey: function(event) {
     if (event.keyCode === 39) {
-      this.setState({x:this.state.x+1});
+      this.setState({x:this.state.x+1,keyTicker:this.state.keyTicker+1});
     } else if (event.keyCode === 37) {
-      this.setState({x:this.state.x-1});
+      this.setState({x:this.state.x-1,keyTicker:this.state.keyTicker+1});
     } else if (event.keyCode===51){
         this.updateConf('high');
       }
@@ -79,7 +81,7 @@ module.exports = React.createClass({
     self.setState({x:pos.position.left},function(){self.props.updateMarkerState(self.state)});
   },
 
-  updateSize: function(size){
+  updateSize: function(dir,size){
     var self=this;
     if (!self.state.inited){
       if (size.width>10){
@@ -131,19 +133,24 @@ module.exports = React.createClass({
                          toggleConf={self.toggleConf}
                          conf={self.state.conf}
                          confActive={self.state.confActive}/>,
-          removeButton] : []] :
+          removeButton] : [],
+          <MatchBox
+            key='MatchBox'
+            match={self.props.match}
+            matchMessage = {self.props.matchMessage}
+          />] :
           <div style={{position:'absolute',
                        color:'#f0ad4e',
-                       fontSize:'18',
+                       fontSize:'12',
                        left:'50%',
-                       top:'100%',
+                       top:'5%',
                        transform: 'translateX(-50%)'
-                       }}>GS</div>
+                       }}></div>
     };
     return (<div ref={'Marker'+ this.props.markerIndex}
                  tabIndex='0'
                  onKeyDown={this.handleKey}>
-      <ResizableAndMovable key={'ResizableAndMovable'+ initialProps.start.x} {...initialProps} clickEvent={this.props.clickEvent}/>
+      <ResizableAndMovable key={'ResizableAndMovable'+ this.state.keyTicker} {...initialProps} clickEvent={this.props.clickEvent}/>
     </div>)
   }
 });

@@ -52,30 +52,32 @@ app.get('/api/updateImgMeta',cors(),function(req,res){
 });
 
 app.get('/api/getUser',cors(),function(req,res){
-  users.loadUser(req.query.user,function(err,userData){ //async callback
+  users.loadUser(req.query.userData,function(err,userData){ //async callback
     if (!err) { //load user
       var out = {};
       out.login = true;
       out.createdUser = false;
-      currentUsers[req.query.user] = userData;
-      out.userName = currentUsers[req.query.user].name;
-      out.image = imServ.getImage(currentUsers[req.query.user], 0);
-      out.image.markers = imServ.getMarkers(currentUsers[req.query.user]);
-      out.image.markerIndex = currentUsers[req.query.user].markerIndex;
+      currentUsers[userData.userName] = userData;
+      out.userName = userData.userName;
+      out.userData = req.query.userData;
+      out.image = imServ.getImage(currentUsers[userData.userName], 0);
+      out.image.markers = imServ.getMarkers(currentUsers[userData.userName]);
+      out.image.markerIndex = currentUsers[userData.userName].markerIndex;
       res.send(out);
     } else { //create user
       if(err.code == 'NoSuchKey') {
-        users.createUser(req.query.user, imServ, function(err, userData){ //async callback
+        users.createUser(req.query.userData, imServ, function(err, userData){ //async callback
           if (!err) {
-            currentUsers[req.query.user] = userData;
+            currentUsers[userData.userName] = userData;
             var out = {};
             out.login = true;
             out.createdUser = true;
-            out.userName = currentUsers[req.query.user].name;
-            out.image = imServ.getImage(currentUsers[req.query.user], 0);
-            out.image.markers = imServ.getMarkers(currentUsers[req.query.user]);
+            out.userName = currentUsers[userData.userName].name;
+            out.userData = req.query.userData;
+            out.image = imServ.getImage(currentUsers[userData.userName], 0);
+            out.image.markers = imServ.getMarkers(currentUsers[userData.userName]);
             console.log(out.image.markers);
-            out.image.markerIndex = currentUsers[req.query.user].markerIndex;
+            out.image.markerIndex = currentUsers[userData.userName].markerIndex;
             res.send(out);
           } else {
             var out = {};

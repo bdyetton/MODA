@@ -22,8 +22,8 @@ function user(){
         self.aws.getFile('PracData_1',cb);
     };
 
-    this.createUser = function(userName,imServ,cb){
-        var user = {name:userName};
+    this.createUser = function(userData,imServ,cb){
+        var user = userData;
         imServ.initUser(user,cb);
     };
 
@@ -31,12 +31,12 @@ function user(){
         loc = loc || 's3';
         //Write to s3
         if (loc == 's3') {
-            self.aws.postFile('UserData_' + user.name, JSON.stringify(user));
+            self.aws.postFile('UserData_' + user.userName, JSON.stringify(user));
         }
 
         //Write to local disk
         if (loc == 'local') {
-            fs.writeFile('./server/Data/User/' + user.name + '.txt', JSON.stringify(user), function (err) {
+            fs.writeFile('./server/Data/User/' + user.userName + '.txt', JSON.stringify(user), function (err) {
                 if (err) {
                     console.log(err);
                     return false;
@@ -46,17 +46,17 @@ function user(){
         }
     };
 
-    this.loadUser = function(userName,cb,loc) {
+    this.loadUser = function(userData,cb,loc) {
         loc = loc || 's3';
 
-        //Write to s3
+        //Get from s3
         if (loc == 's3') {
-            self.aws.getFile('UserData_'+userName,cb);
+            self.aws.getFile('UserData_'+userData.userName,cb);
         }
 
         if (loc == 'local') {
             try {
-                var fileData = fs.readFileSync('./server/Data/User/' + userName + '.txt');
+                var fileData = fs.readFileSync('./server/Data/User/' + userData.userName + '.txt');
                 fileData = fileData.toString('utf8');
                 cb(false,JSON.parse(fileData));
             } catch (err) {
