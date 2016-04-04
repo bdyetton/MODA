@@ -18,8 +18,8 @@ print mturk.get_account_balance()  # [$10,000.00]
 
 url = "https://shrouded-plains-8041.herokuapp.com/"
 title = "Testing, do not accept hit"
-description = "Testing, do not accept hit, you will not be paid"
-keywords = ["cats", "dogs", "rabbits"]
+description = "Find patterns in recordings of the sleeping brain! Help science understand sleep and its memory benefits"
+keywords = ["sleep", "scoring", "MODA", "psych","annotation"]
 frame_height = 800  # the height of the iframe holding the external hit
 amount = .01
 

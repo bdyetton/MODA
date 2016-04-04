@@ -59,7 +59,7 @@ module.exports = React.createClass({
   },
 
   mTurkerLogin: function(){
-      window.location.href = "http://localhost:8080/?gameid=01523&assignmentId=123RVWYBAZW00EXAMPLE456RVWYBAZW00EXAMPLE&hitId=123RVWYBAZW00EXAMPLE&turkSubmitTo=https://www.mturk.com/&workerId=AZ3256EXAMPLE";
+      //window.location.href = "http://localhost:8080/?gameid=01523&assignmentId=123RVWYBAZW00EXAMPLE456RVWYBAZW00EXAMPLE&hitId=123RVWYBAZW00EXAMPLE&turkSubmitTo=https://www.mturk.com/&workerId=AZ3256EXAMPLE";
       return (<div style={{margin:'5px'}}>
         <rb.Row style={{margin:'0 5px 0px 5px'}}> Please log into you <a href='http://www.mturk.com/mturk/beginsignin'>amazon mturk account</a> and search for MODA HIT's</rb.Row>
       </div>)
@@ -87,6 +87,7 @@ module.exports = React.createClass({
         </rb.Button>
       </rb.ButtonGroup>
       {this.state.userType==='other' ? this.otherUserLogin() : this.mTurkerLogin()}
+      {window.location.href}
       </div>)
   },
 
