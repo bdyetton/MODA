@@ -10,7 +10,7 @@ module.exports = React.createClass({
   componentWillMount: function(){
     var query = URI.parse(window.location.href);
     var mTurkLoginData = URI.parseQuery(query.query);
-    if ('gameid' in mTurkLoginData){
+    if ('workerId' in mTurkLoginData){
       mTurkLoginData.userName=mTurkLoginData.workerId;
       mTurkLoginData.userType='mturker';
       this.setState({mTurkLoginData:mTurkLoginData},this.parseMturkLogin)
@@ -48,7 +48,7 @@ module.exports = React.createClass({
   otherUserLogin: function(){
     return (<div style={{margin:'5px'}}>
       <rb.Row style={{margin:'0 5px 0px 5px','padding':'0px'}}>Username: <rb.Input ref='username' type='text' autoFocus onKeyDown={this.handleKeypress}></rb.Input></rb.Row>
-        <rb.Row style={{margin:'0 5px 0px 5px'}}>Password: <rb.Input ref='password' type='text' value='Not Checked Currently' onKeyDown={this.handleKeypress}></rb.Input></rb.Row>
+        <rb.Row style={{margin:'0 5px 0px 5px'}}>Password: <rb.Input ref='password' type='text' defaultValue='Not Checked Currently' onKeyDown={this.handleKeypress}></rb.Input></rb.Row>
         <rb.Row style={{margin:'0 5px 20px 5px'}}><rb.Button ref='mTurkLogin'
                            onClick={this.getOtherUser}
                            value='Login'

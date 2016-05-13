@@ -9,7 +9,7 @@ print os.environ['AWS_ACCESS_KEY_ID']
 mturk = boto.mturk.connection.MTurkConnection(
     aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
     aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'],
-    host=sandbox_host,
+    host=real_host,
     debug=1  # debug = 2 prints out all requests.
 )
 

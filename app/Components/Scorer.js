@@ -7,17 +7,19 @@ var listMargin = 15;
 module.exports = React.createClass({
   displayName: 'Scorer',
 
+  //TODO fix all this new meta information format
+
   getInitialState: function() {
     return {
       markerType: "box",
       noMarkerChecked:false,
-      currentRemImage: this.props.image.url,
-      imgIdx: this.props.image.imgIdx,
-      batchSize: this.props.image.batchSize,
+      currentRemImage: this.props.image.filename,
+      imgIdx: this.props.image.idx,
+      batchSize: 5,
       slothmode: this.props.sme,
       markers: {},
       gsMarkers: {},
-      imgMeta: this.props.image.meta || {noMarkers: false, stage: '', prac: false},
+      imgMeta: this.props.image.meta || {noMarkers: false, stage: '', prac: false}, //FIXME
       stage: this.props.image.stage,
       markerIndex: parseInt(this.props.image.markerIndex) || 0,
       msg:this.props.image.msg,
@@ -39,7 +41,7 @@ module.exports = React.createClass({
     if (ReactDOM.findDOMNode(self.refs.sigImg).offsetWidth>0) {
       if(self.checkScreen()) {
         self.populateMarkers(self.props.image.markers);
-        self.populateGSMarkers(self.props.image.meta.gsMarkers);
+        self.populateGSMarkers(self.props.image.gsMarkers);
       }
     } else {
       setTimeout(this.checkScreenWithTimeout, 0);
@@ -63,7 +65,7 @@ module.exports = React.createClass({
   getPreviousRemImage: function() {
     var self = this;
     $.get('/api/previousRemImage', {user: this.props.userData.userName}, function(data){
-      self.setState({ currentRemImage: data.image.url,
+      self.setState({ currentRemImage: data.image.filename,
           msg:data.image.msg,
           imgIdx:data.image.imgIdx,
           batchSize:data.image.batchSize,
@@ -71,7 +73,7 @@ module.exports = React.createClass({
           showGSMarkers: false},
         function(){
           self.populateMarkers(data.markers);
-          self.populateGSMarkers(data.image.meta.gsMarkers);
+          self.populateGSMarkers(data.image.gsMarkers);
         });
     });
   },
@@ -80,7 +82,7 @@ module.exports = React.createClass({
     var self = this;
     $.get('/api/nextRemImage', {user: this.props.userData.userName}, function(data) {
       self.setState({
-          currentRemImage: data.image.url,
+          currentRemImage: data.image.filename,
           msg: data.image.msg,
           imgIdx: data.image.imgIdx,
           batchSize: data.image.batchSize,
@@ -89,7 +91,7 @@ module.exports = React.createClass({
         },
         function () {
           self.populateMarkers(data.markers);
-          self.populateGSMarkers(data.image.meta.gsMarkers);
+          self.populateGSMarkers(data.image.gsMarkers);
         });
     });
   },
@@ -266,7 +268,7 @@ module.exports = React.createClass({
               if(self.state.sme){
                 return window.location.href + (self.state.currentRemImage)}
               else{
-                return self.state.currentRemImage
+                return 'low_dpi/' + self.state.currentRemImage
               }}()} alt='remImage' onMouseDown={this.addMarker} pointer-events='none'></img>
       </div>)
     } else {

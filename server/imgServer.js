@@ -74,39 +74,40 @@ function imgServer(){
 
   self.init = function (){
     var metaDataFileHandle = fs.readFileSync('./app/Assets/metaData.json');
-    var metaDataFile = JSON.parse(metaDataFileHandle.toString('utf8'));
-    var imageFolders = fs.readdirSync('./build/img/');
-    imageFolders = imageFolders.filter(function(item){return item.indexOf("Sub") > -1});
-    self.numSets = imageFolders.length;
-    imageFolders.forEach(function(folder){
-      var imgs = fs.readdirSync('./build/img/'+folder);
-      imgs = imgs.filter(function(item){return item.indexOf("fig") > -1});
-      self.folderLengthMap[folder] = imgs.length;
-      var packedImgs = [];
-      imgs.forEach(function(img,idx){
-        packedImgs.push({
-          name:img, //TODO multi image (channel) support
-          folder:folder,
-          start:metaDataFile[img].start,
-          end:metaDataFile[img].end,
-          meta: metaDataFile[img].meta || {
-            noMarkers:metaDataFile[img].noMarkers, //This is also modified by user
-            prac:metaDataFile[img].prac,
-            stage:metaDataFile[img].stage,
-            gsMarkers:metaDataFile[img].gsMarkers || []
-          },
-          markers:[], //Only this is modified by user... the rest is static
-        });
-      });
-      Array.prototype.push.apply(self.batches,split(packedImgs,self.batchSize));
-    });
+    self.batches = JSON.parse(metaDataFileHandle.toString('utf8'));
+  //  var imageFolders = fs.readdirSync('./build/img/');
+  //  imageFolders = imageFolders.filter(function(item){return item.indexOf("Sub") > -1});
+  //  self.numSets = imageFolders.length;
+  //  imageFolders.forEach(function(folder){
+  //    var imgs = fs.readdirSync('./build/img/'+folder);
+  //    imgs = imgs.filter(function(item){return item.indexOf("fig") > -1});
+  //    self.folderLengthMap[folder] = imgs.length;
+  //    var packedImgs = [];
+  //    imgs.forEach(function(img,idx){
+  //      packedImgs.push({
+  //        name:img, //TODO multi image (channel) support
+  //        folder:folder,
+  //        start:metaDataFile[img].start,
+  //        end:metaDataFile[img].end,
+  //        meta: metaDataFile[img].meta || {
+  //          noMarkers:metaDataFile[img].noMarkers, //This is also modified by user
+  //          prac:metaDataFile[img].prac,
+  //          stage:metaDataFile[img].stage,
+  //          gsMarkers:metaDataFile[img].gsMarkers || []
+  //        },
+  //        markers:[], //Only this is modified by user... the rest is static
+  //      });
+  //    });
+  //    Array.prototype.push.apply(self.batches,split(packedImgs,self.batchSize));
+  //  });
   };
   self.init();
 
   self.initUser = function(userData,cb) {
     userData.batches = clone(self.batches);
+    //Everytime a new set is asked for, they get a random batch
     //user.batches = shuffleArray(this.batches); //TODO turn shuffle on from the second batch onwards
-    userData.idx = 0;
+    userData.idx = 1;
     userData.markerIndex = 0;
     cb(false,userData);
   };
@@ -212,7 +213,7 @@ function imgServer(){
       user.idx += 1;
       if (user.idx >= user.batches.length){
         user.idx=user.batches.length-1;
-        msg = 'lastEpoch';
+        msg = 'lastEpoch'; //FIXME
       }
     }
     else if (user.batches[user.idx].idx < 0) { //Need to get another batch
@@ -224,16 +225,7 @@ function imgServer(){
     }
 
     if(user.idx===0 && user.batches[user.idx].idx===0){msg = 'firstEpoch';}
-    var folder = user.batches[user.idx].imgs[user.batches[user.idx].idx].folder;
-    var fileName = user.batches[user.idx].imgs[user.batches[user.idx].idx].name;
-    var meta = user.batches[user.idx].imgs[user.batches[user.idx].idx].meta;
-    return {
-      url:'/img/' +folder + '/' + fileName,
-      msg:msg,
-      imgIdx:user.batches[user.idx].idx,
-      batchSize:user.batches[user.idx].imgs.length,
-      meta:meta
-    };
+    return user.batches[user.idx].imgs[user.batches[user.idx].idx];
   };
 };
 
