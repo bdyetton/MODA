@@ -7,24 +7,23 @@ var listMargin = 15;
 module.exports = React.createClass({
   displayName: 'Scorer',
 
-  //TODO fix all this new meta information format
+  //TODO Sets and batches randomization
+  //Mturk response
+  //test if complete
 
   getInitialState: function() {
     return {
       markerType: "box",
       noMarkerChecked:false,
-      currentRemImage: this.props.image.filename,
-      imgIdx: this.props.image.idx,
-      batchSize: 5,
       slothmode: this.props.sme,
       markers: {},
       gsMarkers: {},
-      imgMeta: this.props.image.meta || {noMarkers: false, stage: '', prac: false}, //FIXME
-      stage: this.props.image.stage,
+      imgMeta: this.props.image,
       markerIndex: parseInt(this.props.image.markerIndex) || 0,
       msg:this.props.image.msg,
       showGSMarkers: false,
       screenSizeValid: true,
+      approxDpi: 'low_dpi',
       confCounter:0,
       showInst: this.props.showInstructions,
       widthOfImg: 900
@@ -50,29 +49,28 @@ module.exports = React.createClass({
   },
 
   checkScreen: function(){
-      var self=this;
-      var widthOfPanel = ReactDOM.findDOMNode(self.refs.grandPanel).offsetWidth;
-      var widthOfImg = this.state.widthOfImg;//ReactDOM.findDOMNode(self.refs.sigImg).offsetWidth; //TODO remove when image is correct size
-      if (widthOfPanel - 2*(pannelMargin+listMargin) < widthOfImg) {
-        self.setState({screenSizeValid: false});
-        return false;
-      } else {
-        self.setState({screenSizeValid: true});
-        return true;
-      }
+    var self=this;
+    var widthOfPanel = ReactDOM.findDOMNode(self.refs.grandPanel).offsetWidth;
+    var widthOfImgLowDpi = 900;
+    var widthOfImgHighDpi = 1463;
+    if (widthOfPanel - 2*(pannelMargin+listMargin) < widthOfImgLowDpi) {
+      self.setState({screenSizeValid: false});
+      return false;
+    } else if(widthOfPanel - 2*(pannelMargin+listMargin) < widthOfImgHighDpi)  {
+      self.setState({screenSizeValid: true, approxDpi:'low_dpi'});
+      return true;
+    } else {
+      self.setState({screenSizeValid: true, approxDpi:'high_dpi'});
+      return true;
+    }
   },
 
   getPreviousRemImage: function() {
     var self = this;
     $.get('/api/previousRemImage', {user: this.props.userData.userName}, function(data){
-      self.setState({ currentRemImage: data.image.filename,
-          msg:data.image.msg,
-          imgIdx:data.image.imgIdx,
-          batchSize:data.image.batchSize,
-          imgMeta: data.image.meta,
-          showGSMarkers: false},
+      self.setState({ imgMeta: data.image, showGSMarkers: false},
         function(){
-          self.populateMarkers(data.markers);
+          self.populateMarkers(data.image.markers);
           self.populateGSMarkers(data.image.gsMarkers);
         });
     });
@@ -81,18 +79,17 @@ module.exports = React.createClass({
   getNextRemImage: function() {
     var self = this;
     $.get('/api/nextRemImage', {user: this.props.userData.userName}, function(data) {
-      self.setState({
-          currentRemImage: data.image.filename,
-          msg: data.image.msg,
-          imgIdx: data.image.imgIdx,
-          batchSize: data.image.batchSize,
-          imgMeta: data.image.meta,
-          showGSMarkers: false
-        },
-        function () {
-          self.populateMarkers(data.markers);
+      self.setState({ imgMeta: data.image, showGSMarkers: false},
+        function(){
+          self.populateMarkers(data.image.markers);
           self.populateGSMarkers(data.image.gsMarkers);
         });
+    });
+  },
+
+  submitHit: function() {
+    $.get('/api/submitHit', {user: this.props.userData.userName}, function(data) {
+      self.getNextRemImage();
     });
   },
 
@@ -102,7 +99,7 @@ module.exports = React.createClass({
     self.setState({showGSMarkers:!showGS});
     if (!showGS) {
       $.get('/api/compareToGS', {user: this.props.userData.userName}, function (data) {
-        self.populateMarkers(data.markers);
+        self.populateMarkers(data.image.markers);
       }).fail(function (xhr, textStatus, errorThrown) {
         console.log('Error comparing markers to gs');
       });
@@ -120,9 +117,9 @@ module.exports = React.createClass({
     });
   },
 
-  updateImgMeta: function(){
+  updateNoMakers: function(){
     var self = this;
-    $.get('/api/updateImgMeta', {imgMeta:self.state.imgMeta, user: self.props.userData.userName}, function(data){
+    $.get('/api/updateNoMakers', {noMarkers: this.state.imgMeta.noMarkers, user: self.props.userData.userName}, function(data){
       if (!data.success){
         console.log('Error saving meta');
       }
@@ -227,10 +224,10 @@ module.exports = React.createClass({
   setNoMarkers: function(e){
     var self = this;
     if(self.state.imgMeta.noMarkers){
-      self.setState({imgMeta:$.extend(self.state.imgMeta,{noMarkers: false})}, self.updateImgMeta);
+      self.setState({imgMeta:$.extend(self.state.imgMeta,{noMarkers: false})}, self.updateNoMakers);
     }
     else{
-      self.setState({imgMeta:$.extend(self.state.imgMeta,{noMarkers: true})}, self.updateImgMeta);
+      self.setState({imgMeta:$.extend(self.state.imgMeta,{noMarkers: true})}, self.updateNoMakers);
     }
   },
 
@@ -240,9 +237,9 @@ module.exports = React.createClass({
     this.setState({markers:markers});
   },
 
-  changeStage: function(stage){
-    this.setState({imgMeta:$.extend(this.state.imgMeta,{stage: stage})},this.updateImgMeta);
-  },
+  //changeStage: function(stage){
+  //  this.setState({imgMeta:$.extend(this.state.imgMeta,{stage: stage})},this.updateImgMeta);
+  //},
 
   openInst: function(){
     this.setState({showInst:true});
@@ -268,7 +265,7 @@ module.exports = React.createClass({
               if(self.state.sme){
                 return window.location.href + (self.state.currentRemImage)}
               else{
-                return 'low_dpi/' + self.state.currentRemImage
+                return 'img/' + self.state.approxDpi + '/' + self.state.imgMeta.filename
               }}()} alt='remImage' onMouseDown={this.addMarker} pointer-events='none'></img>
       </div>)
     } else {
@@ -276,14 +273,14 @@ module.exports = React.createClass({
     }
 
     return (
-      <div className='container' style={{textAlign:'center', position:'absolute', left:'50%', top: '50%',  transform: 'translateY(-50%) translateX(-50%)'}}>
+      <div className='container' style={{textAlign:'center', width:'95%', position:'absolute', left:'50%', top: '50%',  transform: 'translateY(-50%) translateX(-50%)'}}>
         <rb.Panel bsStyle="primary" className="grand-panel" ref='grandPanel' textAlign='center' header={
             <div>
               <h4>MODA: Massive Online Data Annotation</h4>
               <div className='pull-left' style={{position:'relative',top:'-36px'}}>
                 <Instructions showInst={self.state.showInst} openInst={self.openInst} closeInst={self.closeInst}/>
               </div>
-              <div className='pull-right' style={{color:'rgb(102, 255, 102)', position:'relative' ,top:'-30px',marginLeft:'5px'}}>{'Epoch '+ self.state.imgIdx + ' of ' + self.state.batchSize}</div>
+              <div className='pull-right' style={{color:'rgb(102, 255, 102)', position:'relative' ,top:'-30px',marginLeft:'5px'}}>{'Epoch '+ (self.state.imgMeta.idx+1) + ' of ' + (self.state.imgMeta.idxMax+1)}</div>
               {JSON.parse(self.state.imgMeta.prac) ?
                 <div className='pull-right' style={{color:'rgb(102, 255, 102)', position:'relative' ,top:'-30px'}}>Practice Mode:</div>
                 : [] }
@@ -299,7 +296,7 @@ module.exports = React.createClass({
                     <rb.Button bsStyle="primary"
                                ref='previous'
                                onClick={self.getPreviousRemImage}
-                               disabled={self.state.msg == 'firstEpoch'}> {self.state.msg == 'firstEpoch' ? 'This is the first epoch' : 'Previous Epoch'}
+                               disabled={self.state.msg == 'firstEpoch'}> {self.state.imgMeta.idx == 0 ? 'This is the first epoch' : 'Previous Epoch'}
                     </rb.Button>
                   </rb.ButtonGroup>
                   <rb.ButtonGroup style={{textAlign:'center', position:'absolute', left:'50%', top: '50%',  transform: 'translateY(-50%) translateX(-50%)'}}>
@@ -314,15 +311,19 @@ module.exports = React.createClass({
                       <rb.Button bsStyle='warning' //TODO make custom style
                                  onClick={self.compareToGS}>Toggle correct markers</rb.Button>
                       : []}
+                    {self.state.imgMeta.idx!==self.state.imgMeta.idxMax ?
                       <rb.Button bsStyle="primary" ref='next'
+                                   /*disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (markers.length>0 && self.state.confCounter===0) || self.state.showGSMarkers)}*/
+                                   onClick={self.getNextRemImage}>{'Next Epoch'}
+                      </rb.Button> :
+                      <rb.Button bsStyle="warning" ref='next'
                                    disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (markers.length>0 && self.state.confCounter===0) || self.state.showGSMarkers)}
-                                   onClick={self.getNextRemImage}>{self.state.msg == 'lastEpoch' ? 'This is the last epoch' : 'Next Epoch'}
-                      </rb.Button>
+                                   onClick={self.submitHit}>{'Submit Completed HIT'}
+                      </rb.Button>}
                   </rb.ButtonGroup>
                 </rb.ButtonToolbar>
               </div>
             </rb.ListGroupItem>
-
           </rb.ListGroup>
         </rb.Panel>
       </div>

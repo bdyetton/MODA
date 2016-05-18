@@ -27,8 +27,8 @@ module.exports = React.createClass({
 
   getOtherUser: function() {
     var self = this;
-    var userName = self.refs.username.value;
-    var password = self.refs.password.value;
+    var userName = self.refs.username.getValue();
+    var password = self.refs.password.getValue();
     $.get('/api/getUser',{userData:{userName:userName,password:password,userType:'other'}},function(data){
       self.props.updatePage('score',data);
     });

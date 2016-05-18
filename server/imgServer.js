@@ -75,51 +75,39 @@ function imgServer(){
   self.init = function (){
     var metaDataFileHandle = fs.readFileSync('./app/Assets/metaData.json');
     self.batches = JSON.parse(metaDataFileHandle.toString('utf8'));
-  //  var imageFolders = fs.readdirSync('./build/img/');
-  //  imageFolders = imageFolders.filter(function(item){return item.indexOf("Sub") > -1});
-  //  self.numSets = imageFolders.length;
-  //  imageFolders.forEach(function(folder){
-  //    var imgs = fs.readdirSync('./build/img/'+folder);
-  //    imgs = imgs.filter(function(item){return item.indexOf("fig") > -1});
-  //    self.folderLengthMap[folder] = imgs.length;
-  //    var packedImgs = [];
-  //    imgs.forEach(function(img,idx){
-  //      packedImgs.push({
-  //        name:img, //TODO multi image (channel) support
-  //        folder:folder,
-  //        start:metaDataFile[img].start,
-  //        end:metaDataFile[img].end,
-  //        meta: metaDataFile[img].meta || {
-  //          noMarkers:metaDataFile[img].noMarkers, //This is also modified by user
-  //          prac:metaDataFile[img].prac,
-  //          stage:metaDataFile[img].stage,
-  //          gsMarkers:metaDataFile[img].gsMarkers || []
-  //        },
-  //        markers:[], //Only this is modified by user... the rest is static
-  //      });
-  //    });
-  //    Array.prototype.push.apply(self.batches,split(packedImgs,self.batchSize));
-  //  });
   };
   self.init();
 
-  self.initUser = function(userData,cb) {
-    userData.batches = clone(self.batches);
-    //Everytime a new set is asked for, they get a random batch
-    //user.batches = shuffleArray(this.batches); //TODO turn shuffle on from the second batch onwards
-    userData.idx = 1;
-    userData.markerIndex = 0;
-    cb(false,userData);
+  self.initUser = function(user,cb) {
+    user.batches = clone(self.batches);
+    user.batchesIdxs = Array.apply(null, {length: user.batches.numBatches}).map(Number.call, Number);
+    user.batchesIdxs = shuffleArray(user.batchesIdxs);
+    user.currentSet = [0,1];
+    user.setsCompleted = 0;
+    user.idx = 0; //incs to 0-9
+    user.markerIndex = 0;
+    user.batchesCompleted = [];
+    cb(false,user);
   };
+
+  //self.getNewSet = function(user){
+  //  return [self.getNewBatch(user), self.getNewBatch(user)]
+  //};
+  //
+  //self.getNewBatch = function(user){
+  //  var randBatchIdx = Math.floor(Math.random() * (user.noncompleteBatches.length-1)); //TODO do i need to seed rand?
+  //  var randBatch = user.noncompleteBatches.splice(randBatchIdx, 1);
+  //  return randBatch;
+  //};
 
   self.loadImageMeta = function(img,folder){
-
     var fileData = fs.readFileSync('./server/Data/User/' + userName + '.txt');
-
   };
 
-  self.updateImgMeta = function(user, meta){
-    user.batches[user.idx].imgs[user.batches[user.idx].idx].meta = meta;
+  self.updateNoMakers = function(user, noMarkers){
+    var setIdx = Math.floor((user.idx) / user.batches.imgPerBatch);
+    var batchIdx = Math.floor((user.idx) % user.batches.imgPerBatch);
+    user.batches[user.batchesIdxs[user.currentSet[setIdx]]].imgs[batchIdx].noMarkers = noMarkers;
   };
 
   self.updateMarkerState = function(user, marker){
@@ -130,19 +118,21 @@ function imgServer(){
 
     //check if this marker exists in the server already
     var exists = false;
-    user.batches[user.idx].imgs[user.batches[user.idx].idx].markers.forEach(function(currentMarker,i){
+    var setIdx = Math.floor((user.idx) / user.batches.imgPerBatch);
+    var batchIdx = Math.floor((user.idx) % user.batches.imgPerBatch);
+    user.batches[user.batchesIdxs[user.currentSet[setIdx]]].imgs[batchIdx].markers.forEach(function(currentMarker,i){
       if (currentMarker.markerIndex == marker.markerIndex){
-        user.batches[user.idx].imgs[user.batches[user.idx].idx].markers[i] = marker; //this was just a move
+        user.batches[user.batchesIdxs[user.currentSet[setIdx]]].imgs[batchIdx].markers[i] = marker; //this was just a move
         exists = true;
       }
     });
     //else, this is a new marker
     if(!exists){
-      user.batches[user.idx].imgs[user.batches[user.idx].idx].markers.push(marker);
+      user.batches[user.batchesIdxs[user.currentSet[setIdx]]].imgs[batchIdx].markers.push(marker);
     }
   };
 
-  self.processMarker = function(marker){ //TODO do y
+  self.processMarker = function(marker){
 
     if (marker.type==='seg') {
       marker.xSecs = (marker.relToImg.x - imgConfig.margins.left + imgConfig[marker.type].w) * (imgConfig.secs / imgConfig.img.w);
@@ -154,10 +144,12 @@ function imgServer(){
     return marker
   };
 
-  self.compareToGS = function(user){
+  self.compareToGS = function(user){ //FIXME
+    var setIdx = Math.floor((user.idx) / user.batches.imgPerBatch);
+    var batchIdx = Math.floor((user.idx) % user.batches.imgPerBatch);
     //Step through each non deleted marker and check against GS markers.
-    user.batches[user.idx].imgs[user.batches[user.idx].idx].markers.forEach(function(marker,mIdx){
-      var matches = user.batches[user.idx].imgs[user.batches[user.idx].idx].meta.gsMarkers.map(function(gsMarker){
+    user.batches[user.batchesIdxs[user.currentSet[setIdx]]].imgs[batchIdx].markers.forEach(function(marker,mIdx){
+      var matches = user.batches[user.batchesIdxs[user.currentSet[setIdx]]].imgs[batchIdx].meta.gsMarkers.map(function(gsMarker){
         var posMatch = self.compare2Markers(gsMarker,marker);
         if (posMatch === 'match'){
           var confMatch = gsMarker.conf === marker.conf;
@@ -201,31 +193,36 @@ function imgServer(){
     }
   };
 
-  self.getMarkers = function (user){
-    return user.batches[user.idx].imgs[user.batches[user.idx].idx].markers;
-  };
-
-  self.getImage = function(user,inc) {
-    var msg = 'ok';
-    user.batches[user.idx].idx += inc; //FIXME fix inc greater than one
-    if (user.batches[user.idx].idx >= user.batches[user.idx].imgs.length) { //Need to get another batch
-      user.batches[user.idx].idx -= inc; //undo what we did
-      user.idx += 1;
-      if (user.idx >= user.batches.length){
-        user.idx=user.batches.length-1;
-        msg = 'lastEpoch'; //FIXME
+  self.getImageData = function(user,inc) {
+    user.idx += inc;
+    var maxSets = user.batches.numBatchs/user.batches.batchPerSet - 1;
+    if (user.idx >= user.batches.imgPerSet) { //10 images per set
+      console.log('Set complete');
+      user.setsCompleted = +1;
+      if (user.setsCompleted > maxSets) {
+        user.setsCompleted = -1;
+        console.log('User has finished all sets.');
+        user.idx -= inc;
+      } else {
+        user.batchesCompleted.push(user.batchesIdxs[user.currentSet]);
+        user.currentSet = user.currentSet.map(function (val) {
+          return val + user.batches.batchPerSet
+        });
+        user.idx -= inc;
       }
     }
-    else if (user.batches[user.idx].idx < 0) { //Need to get another batch
-      user.batches[user.idx].idx -= inc; //undo what we did
-      user.idx -= 1;
-      if (user.idx < 0){
-        user.idx=0;
-      }
-    }
-
-    if(user.idx===0 && user.batches[user.idx].idx===0){msg = 'firstEpoch';}
-    return user.batches[user.idx].imgs[user.batches[user.idx].idx];
+    var setIdx = Math.floor((user.idx) / user.batches.imgPerBatch);
+    var batchIdx = Math.floor((user.idx) % user.batches.imgPerBatch);
+    console.log(setIdx);
+    console.log(batchIdx);
+    console.log(user.currentSet[setIdx]);
+    console.log(user.batchesIdxs[user.currentSet[setIdx]]);
+    var dataOut = user.batches[user.batchesIdxs[user.currentSet[setIdx]]].imgs[batchIdx];
+    dataOut.idx = user.idx;
+    dataOut.idxMax = user.batches.imgPerSet-1;
+    dataOut.setsCompleted = user.setsCompleted;
+    dataOut.setsMax = maxSets;
+    return dataOut;
   };
 };
 
