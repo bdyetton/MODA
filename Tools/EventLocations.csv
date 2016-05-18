@@ -1,0 +1,4 @@
+epochNum,blockNum,annotatorID,annotatorEventIndex,startPixel,durationPixels,scoreConfidence
+5,0,asdasdasdasdasdasd,0,328.328125,249,high
+3,0,asdasdasdasdasdasd,2,525.328125,53,high
+2,0,asdasdasdasdasdasd,1,576.328125,250,med

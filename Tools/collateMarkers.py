@@ -4,7 +4,29 @@ from pprint import pprint
 import os
 import math
 import csv
-cwd = os.path.dirname(os.path.realpath(__file__))
+imgConfig = {
+    'secs': 25,
+    'sampleRate': 256,
+    'margins': {
+        'left': 70.0,
+        'top': 7,
+        'bottom': 45,
+        'right': 9},
+    'img': {
+        'h': 90,
+        'w': 900.0
+    },
+    'seg': {
+        'w': 3,
+        'h': None
+    },
+    'box': {
+        'w': None,
+        'h': None
+    }
+}
+
+secPerPx = imgConfig['secs'] / float(imgConfig['img']['w'])
 sampleRate = 256
 user = 'katherineduggan'
 with open('UserData_'+user) as userData:
