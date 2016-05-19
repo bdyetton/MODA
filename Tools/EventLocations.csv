@@ -1,4 +1,8 @@
-epochNum,blockNum,annotatorID,annotatorEventIndex,startPixel,durationPixels,scoreConfidence
-5,0,asdasdasdasdasdasd,0,328.328125,249,high
-3,0,asdasdasdasdasdasd,2,525.328125,53,high
-2,0,asdasdasdasdasdasd,1,576.328125,250,med
+epochNum,blockNum,annotatorID,annotatorEventIndex,startPercent,durationPercent,startSecs,durationSecs,scoreConfidence
+1,0,Testing1,1,0.004,0.498,0.1,12.45,med
+5,0,Testing1,0,0.004,0.996,0.1,24.9,high
+3,0,Testing1,3,0.004,0.1,0.1,2.5,low
+3,0,Testing1,4,0.302,0.104,7.55,2.6,low
+3,0,Testing1,5,0.602,0.102,15.049999999999999,2.55,high
+3,0,Testing1,6,0.896,0.106,22.400000000000002,2.65,low
+2,0,Testing1,2,0.502,0.498,12.55,12.45,med

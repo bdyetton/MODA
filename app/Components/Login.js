@@ -28,7 +28,7 @@ module.exports = React.createClass({
   getOtherUser: function() {
     var self = this;
     var userName = self.refs.username.getValue();
-    var password = self.refs.password.getValue();
+    var password = '*'//self.refs.password.getValue(); //TODO
     $.get('/api/getUser',{userData:{userName:userName,password:password,userType:'other'}},function(data){
       self.props.updatePage('score',data);
     });
@@ -48,8 +48,7 @@ module.exports = React.createClass({
   otherUserLogin: function(){
     return (<div style={{margin:'5px'}}>
       <rb.Row style={{margin:'0 5px 0px 5px','padding':'0px'}}>Username: <rb.Input ref='username' type='text' autoFocus onKeyDown={this.handleKeypress}></rb.Input></rb.Row>
-        <rb.Row style={{margin:'0 5px 0px 5px'}}>Password: <rb.Input ref='password' type='text' defaultValue='Not Checked Currently' onKeyDown={this.handleKeypress}></rb.Input></rb.Row>
-        <rb.Row style={{margin:'0 5px 20px 5px'}}><rb.Button ref='mTurkLogin'
+         <rb.Row style={{margin:'0 5px 20px 5px'}}><rb.Button ref='mTurkLogin'
                            onClick={this.getOtherUser}
                            value='Login'
           style={{width:'100%'}}>
@@ -57,6 +56,8 @@ module.exports = React.createClass({
         </rb.Button></rb.Row>
       </div>)
   },
+
+         /*<rb.Row style={{margin:'0 5px 0px 5px'}}>Password: <rb.Input ref='password' type='text' defaultValue='Not Checked Currently' onKeyDown={this.handleKeypress}></rb.Input></rb.Row>*/
 
   mTurkerLogin: function(){
       //window.location.href = "http://localhost:8080/?gameid=01523&assignmentId=123RVWYBAZW00EXAMPLE456RVWYBAZW00EXAMPLE&hitId=123RVWYBAZW00EXAMPLE&turkSubmitTo=https://www.mturk.com/&workerId=AZ3256EXAMPLE";
@@ -87,8 +88,8 @@ module.exports = React.createClass({
         </rb.Button>
       </rb.ButtonGroup>
       {this.state.userType==='other' ? this.otherUserLogin() : this.mTurkerLogin()}
-      {window.location.href}
+
       </div>)
   },
-
+      /*{window.location.href}*/
 });

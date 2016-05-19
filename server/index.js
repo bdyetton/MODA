@@ -22,31 +22,35 @@ app.get('/api/currentTime', cors(), function(req, res) {
   res.send({ time: new Date() });
 });
 
+app.get('/api/submitHit', cors(), function(req, res) {
+  res.send({ success: true });
+});
+
 app.get('/api/nextRemImage',cors(),function(req,res){
-    var img = imServ.getImageData(currentUsers[req.query.user],1);
-    res.send({image: img});
-    users.saveUser(currentUsers[req.query.user]);
+  var img = imServ.getImageData(currentUsers[req.query.user],1);
+  res.send({image: img});
+  users.saveUser(currentUsers[req.query.user]);
 });
 
 app.get('/api/previousRemImage',cors(),function(req,res){
-    var img = imServ.getImageData(currentUsers[req.query.user],-1);
-    res.send({image: img});
-    users.saveUser(currentUsers[req.query.user]);
+  var img = imServ.getImageData(currentUsers[req.query.user],-1);
+  res.send({image: img});
+  users.saveUser(currentUsers[req.query.user]);
 });
 
 app.get('/api/compareToGS',cors(),function(req,res){
-    var markers = imServ.compareToGS(currentUsers[req.query.user]);
-    res.send({markers: markers});
+  var markers = imServ.compareToGS(currentUsers[req.query.user]);
+  res.send({markers: markers});
 });
 
 app.get('/api/updateMarkerState',cors(),function(req,res){
-    imServ.updateMarkerState(currentUsers[req.query.user], req.query.marker);
-    res.send({success: true});
+  imServ.updateMarkerState(currentUsers[req.query.user], req.query.marker);
+  res.send({success: true});
 });
 
 app.get('/api/updateNoMakers',cors(),function(req,res){
-    imServ.updateNoMakers(currentUsers[req.query.user], req.query.noMarkers);
-    res.send({success: true});
+  imServ.updateNoMakers(currentUsers[req.query.user], req.query.noMarkers);
+  res.send({success: true});
 });
 
 app.get('/api/getUser',cors(),function(req,res){
@@ -104,10 +108,10 @@ app.get('/api/getUser',cors(),function(req,res){
 });
 
 app.route('/').get(function(req, res) {
-    res.header('Cache-Control', "max-age=60, must-revalidate, private");
-    res.sendFile('index.html', {
-        root: static_path
-    });
+  res.header('Cache-Control', "max-age=60, must-revalidate, private");
+  res.sendFile('index.html', {
+    root: static_path
+  });
 });
 
 function nocache(req, res, next) {
@@ -118,11 +122,11 @@ function nocache(req, res, next) {
 }
 
 app.use('/', express.static(static_path, {
-    maxage: 31557600
+  maxage: 31557600
 }));
 
 var server = app.listen(process.env.PORT || 5000, function () {
-    var host = server.address().address;
-    var port = server.address().port;
-    console.log('MODA App listening at http://%s:%s', host, port);
+  var host = server.address().address;
+  var port = server.address().port;
+  console.log('MODA App listening at http://%s:%s', host, port);
 });

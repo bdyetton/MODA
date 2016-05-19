@@ -73,14 +73,14 @@ function imgServer(){
   self.batches = [];
 
   self.init = function (){
-    var metaDataFileHandle = fs.readFileSync('./app/Assets/metaData.json');
+    var metaDataFileHandle = fs.readFileSync('./app/Assets/metaDataPhase1.json');
     self.batches = JSON.parse(metaDataFileHandle.toString('utf8'));
   };
   self.init();
 
   self.initUser = function(user,cb) {
     user.batches = clone(self.batches);
-    user.batchesIdxs = Array.apply(null, {length: user.batches.numBatches}).map(Number.call, Number);
+    user.batchesIdxs = Array.apply(null, {length: user.batches.batchMeta.numBatches}).map(Number.call, Number);
     user.batchesIdxs = shuffleArray(user.batchesIdxs);
     user.currentSet = [0,1];
     user.setsCompleted = 0;
@@ -105,8 +105,8 @@ function imgServer(){
   };
 
   self.updateNoMakers = function(user, noMarkers){
-    var setIdx = Math.floor((user.idx) / user.batches.imgPerBatch);
-    var batchIdx = Math.floor((user.idx) % user.batches.imgPerBatch);
+    var setIdx = Math.floor((user.idx) / user.batches.batchMeta.imgPerBatch);
+    var batchIdx = Math.floor((user.idx) % user.batches.batchMeta.imgPerBatch);
     user.batches[user.batchesIdxs[user.currentSet[setIdx]]].imgs[batchIdx].noMarkers = noMarkers;
   };
 
@@ -118,8 +118,8 @@ function imgServer(){
 
     //check if this marker exists in the server already
     var exists = false;
-    var setIdx = Math.floor((user.idx) / user.batches.imgPerBatch);
-    var batchIdx = Math.floor((user.idx) % user.batches.imgPerBatch);
+    var setIdx = Math.floor((user.idx) / user.batches.batchMeta.imgPerBatch);
+    var batchIdx = Math.floor((user.idx) % user.batches.batchMeta.imgPerBatch);
     user.batches[user.batchesIdxs[user.currentSet[setIdx]]].imgs[batchIdx].markers.forEach(function(currentMarker,i){
       if (currentMarker.markerIndex == marker.markerIndex){
         user.batches[user.batchesIdxs[user.currentSet[setIdx]]].imgs[batchIdx].markers[i] = marker; //this was just a move
@@ -133,20 +133,19 @@ function imgServer(){
   };
 
   self.processMarker = function(marker){
-
+    console.log(marker.xP);
     if (marker.type==='seg') {
-      marker.xSecs = (marker.relToImg.x - imgConfig.margins.left + imgConfig[marker.type].w) * (imgConfig.secs / imgConfig.img.w);
+      marker.xSecs = marker.xP*imgConfig.secs;
     } else if (marker.type==='box'){
-      marker.wSecs = secPerPx*marker.w;
-      marker.xSecs = secPerPx*(marker.x - imgConfig.margins.left);//FIXME check this
-
+      marker.wSecs = marker.wP*imgConfig.secs;
+      marker.xSecs = marker.xP*imgConfig.secs;
     }
     return marker
   };
 
   self.compareToGS = function(user){ //FIXME
-    var setIdx = Math.floor((user.idx) / user.batches.imgPerBatch);
-    var batchIdx = Math.floor((user.idx) % user.batches.imgPerBatch);
+    var setIdx = Math.floor((user.idx) / user.batches.batchMeta.imgPerBatch);
+    var batchIdx = Math.floor((user.idx) % user.batches.batchMeta.imgPerBatch);
     //Step through each non deleted marker and check against GS markers.
     user.batches[user.batchesIdxs[user.currentSet[setIdx]]].imgs[batchIdx].markers.forEach(function(marker,mIdx){
       var matches = user.batches[user.batchesIdxs[user.currentSet[setIdx]]].imgs[batchIdx].meta.gsMarkers.map(function(gsMarker){
@@ -195,31 +194,27 @@ function imgServer(){
 
   self.getImageData = function(user,inc) {
     user.idx += inc;
-    var maxSets = user.batches.numBatchs/user.batches.batchPerSet - 1;
-    if (user.idx >= user.batches.imgPerSet) { //10 images per set
+    var maxSets = user.batches.batchMeta.numBatchs/user.batches.batchMeta.batchPerSet - 1;
+    if (user.idx >= user.batches.batchMeta.imgPerSet) { //10 images per set
       console.log('Set complete');
       user.setsCompleted = +1;
       if (user.setsCompleted > maxSets) {
         user.setsCompleted = -1;
-        console.log('User has finished all sets.');
         user.idx -= inc;
       } else {
         user.batchesCompleted.push(user.batchesIdxs[user.currentSet]);
         user.currentSet = user.currentSet.map(function (val) {
-          return val + user.batches.batchPerSet
+          return val + user.batches.batchMeta.batchPerSet
         });
-        user.idx -= inc;
+        user.idx = 0;
       }
     }
-    var setIdx = Math.floor((user.idx) / user.batches.imgPerBatch);
-    var batchIdx = Math.floor((user.idx) % user.batches.imgPerBatch);
-    console.log(setIdx);
-    console.log(batchIdx);
-    console.log(user.currentSet[setIdx]);
-    console.log(user.batchesIdxs[user.currentSet[setIdx]]);
+    var setIdx = Math.floor((user.idx) / user.batches.batchMeta.imgPerBatch);
+    var batchIdx = Math.floor((user.idx) % user.batches.batchMeta.imgPerBatch);
+    console.log(user.batches[user.batchesIdxs[user.currentSet[setIdx]]].imgs[batchIdx].markers);
     var dataOut = user.batches[user.batchesIdxs[user.currentSet[setIdx]]].imgs[batchIdx];
     dataOut.idx = user.idx;
-    dataOut.idxMax = user.batches.imgPerSet-1;
+    dataOut.idxMax = user.batches.batchMeta.imgPerSet-1;
     dataOut.setsCompleted = user.setsCompleted;
     dataOut.setsMax = maxSets;
     return dataOut;

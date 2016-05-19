@@ -57,10 +57,16 @@ module.exports = React.createClass({
       self.setState({screenSizeValid: false});
       return false;
     } else if(widthOfPanel - 2*(pannelMargin+listMargin) < widthOfImgHighDpi)  {
-      self.setState({screenSizeValid: true, approxDpi:'low_dpi'});
+      self.setState({screenSizeValid: true, approxDpi:'low_dpi'},function(){
+        self.populateMarkers(self.state.imgMeta.markers);
+        self.populateGSMarkers(self.state.imgMeta.gsMarkers);
+      });
       return true;
     } else {
-      self.setState({screenSizeValid: true, approxDpi:'high_dpi'});
+      self.setState({screenSizeValid: true, approxDpi:'high_dpi'},function(){
+        self.populateMarkers(self.state.imgMeta.markers);
+        self.populateGSMarkers(self.state.imgMeta.gsMarkers);
+      });
       return true;
     }
   },
@@ -88,6 +94,7 @@ module.exports = React.createClass({
   },
 
   submitHit: function() {
+    var self = this;
     $.get('/api/submitHit', {user: this.props.userData.userName}, function(data) {
       self.getNextRemImage();
     });
@@ -131,7 +138,8 @@ module.exports = React.createClass({
   populateMarkers: function(markers) {
     var popMarkers = {};
     var self = this;
-    var scoreImg = $(this.refs.sigImg);
+    var scoreImg = $(self.refs.sigImg);
+    var offsetFromPannel = ReactDOM.findDOMNode(self.refs.sigImg).offsetLeft;
     if (markers != undefined) {
       markers.forEach(function (marker) {
         if (marker.deleted === 'true') {
@@ -142,8 +150,11 @@ module.exports = React.createClass({
             key={parseInt(marker.markerIndex)}
             markerIndex={parseInt(marker.markerIndex)}
             inited={marker.inited==='true'}
-            x={parseInt(marker.x)}
-            w={parseInt(marker.w)}
+            xP={parseFloat(marker.xP)}
+            wP={parseFloat(marker.wP)}
+            imageX={scoreImg.offset().left}
+            imageW={scoreImg.width()}
+            pannelX={offsetFromPannel}
             y={0}
             h={scoreImg.height()}
             conf={marker.conf}
@@ -163,8 +174,10 @@ module.exports = React.createClass({
   },
 
   populateGSMarkers: function(markers) {
+    var self = this;
     var popGSMarkers = {};
-    var scoreImg = $(this.refs.sigImg);
+    var scoreImg = $(self.refs.sigImg);
+    var offsetFromPannel = ReactDOM.findDOMNode(self.refs.sigImg).offsetLeft;
     if (markers != undefined) {
       markers.forEach(function (marker) {
         if (marker.type === 'box') {
@@ -173,8 +186,11 @@ module.exports = React.createClass({
               key={parseInt(marker.markerIndex)}
               conf={marker.conf}
               inited={true}
-              x={parseInt(marker.x)}
-              w={parseInt(marker.w)}
+              xP={parseFloat(marker.xP)}
+              wP={parseFloat(marker.wP)}
+              imageX={scoreImg.offset().left}
+              imageW={scoreImg.width()}
+              pannelX={offsetFromPannel}
               y={0}
               h={scoreImg.height()}
               gs={true}
@@ -202,7 +218,10 @@ module.exports = React.createClass({
         initAsResizing={{enable:true,direction:'x',event:e}}
         key={self.state.markerIndex}
         markerIndex={self.state.markerIndex}
-        x={e.pageX-scoreImg.offset().left+offsetFromPannel}
+        imageX={scoreImg.offset().left}
+        imageW={scoreImg.width()}
+        clickX={e.pageX}
+        pannelX={offsetFromPannel}
         y={0}
         h={scoreImg.height()}
         removeMarker={self.removeMarker}
@@ -265,7 +284,7 @@ module.exports = React.createClass({
               if(self.state.sme){
                 return window.location.href + (self.state.currentRemImage)}
               else{
-                return 'img/' + self.state.approxDpi + '/' + self.state.imgMeta.filename
+                return 'img/training1/' + self.state.approxDpi + '/' + self.state.imgMeta.filename
               }}()} alt='remImage' onMouseDown={this.addMarker} pointer-events='none'></img>
       </div>)
     } else {
@@ -313,7 +332,7 @@ module.exports = React.createClass({
                       : []}
                     {self.state.imgMeta.idx!==self.state.imgMeta.idxMax ?
                       <rb.Button bsStyle="primary" ref='next'
-                                   /*disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (markers.length>0 && self.state.confCounter===0) || self.state.showGSMarkers)}*/
+                                   disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (markers.length>0 && self.state.confCounter===0) || self.state.showGSMarkers)}
                                    onClick={self.getNextRemImage}>{'Next Epoch'}
                       </rb.Button> :
                       <rb.Button bsStyle="warning" ref='next'

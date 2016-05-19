@@ -16,7 +16,7 @@ for (dirpath, dirnames, filenames) in walk(mypath):
 for userFile in filenames: #colate markers, and collate batches
     with open('EventLocations.csv', 'wb') as eventLocCsvFile:
         eventLocCsvWriter = csv.writer(eventLocCsvFile)
-        eventLocCsvWriter.writerow(['epochNum', 'blockNum', 'annotatorID', 'annotatorEventIndex', 'startPixel', 'durationPixels', 'scoreConfidence'])
+        eventLocCsvWriter.writerow(['epochNum', 'blockNum', 'annotatorID', 'annotatorEventIndex', 'startPercent', 'durationPercent', 'startSecs', 'durationSecs', 'scoreConfidence'])
         with open('EpochViews.csv', 'wb') as epochCsvFile:
             epochCsvWriter = csv.writer(epochCsvFile)
             epochCsvWriter.writerow(['filename','epochNum','blockNum','annotatorID'])
@@ -32,7 +32,7 @@ for userFile in filenames: #colate markers, and collate batches
                             print marker
                             if marker['gs']=='true':
                                 continue
-                            eventLocCsvWriter.writerow([imgData['epoch'],batch,userData['userName'], marker['markerIndex'], marker['x'], marker['w'], marker['conf']])
+                            eventLocCsvWriter.writerow([imgData['epoch'],batch,userData['userName'], marker['markerIndex'], marker['xP'], marker['wP'],marker['xSecs'], marker['wSecs'], marker['conf']])
 
 epochCsvFile.close()
 eventLocCsvFile.close()

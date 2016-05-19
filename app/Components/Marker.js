@@ -11,8 +11,8 @@ module.exports = React.createClass({
       markerIndex:this.props.markerIndex,
       conf:this.props.conf || '',
       confActive:(this.props.confActive===undefined) ? true : this.props.confActive,
-      x:this.props.x || 0,
-      w:this.props.w || 0,
+      xP:this.props.xP || (this.props.clickX-this.props.imageX)/this.props.imageW,
+      wP:this.props.wP || this.props.w/this.props.imageW,
       type:'box',
       deleted:false,
       gs:this.props.gs || false,
@@ -37,9 +37,9 @@ module.exports = React.createClass({
 
   handleKey: function(event) {
     if (event.keyCode === 39) {
-      this.setState({x:this.state.x+1,keyTicker:this.state.keyTicker+1});
+      this.setState({xP:(this.state.xP*this.props.imageW+1)/this.props.imageW,keyTicker:this.state.keyTicker+1});
     } else if (event.keyCode === 37) {
-      this.setState({x:this.state.x-1,keyTicker:this.state.keyTicker+1});
+      this.setState({xP:(this.state.xP*this.props.imageW-1)/this.props.imageW,keyTicker:this.state.keyTicker+1});
     } else if (event.keyCode===51){
         this.updateConf('high');
       }
@@ -78,7 +78,9 @@ module.exports = React.createClass({
 
   updatePos: function(e, pos){
     var self=this;
-    self.setState({x:pos.position.left},function(){self.props.updateMarkerState(self.state)});
+    self.setState({xP:(pos.position.left-self.props.pannelX)/self.props.imageW},function(){
+      self.props.updateMarkerState(self.state)
+    });
   },
 
   updateSize: function(dir,size){
@@ -90,7 +92,7 @@ module.exports = React.createClass({
         self.removeMarker();
       }
     }
-    self.setState({w:size.width},function(){self.props.updateMarkerState(self.state)});
+    self.setState({wP:size.width/self.props.imageW},function(){self.props.updateMarkerState(self.state)});
   },
 
   getColor: function(){
@@ -116,7 +118,11 @@ module.exports = React.createClass({
       </div>;
 
     var initialProps={
-        start:{x:self.state.x, y:0, width:self.state.w, height:self.props.h},
+        start:{
+          x:self.state.xP*self.props.imageW+self.props.pannelX,
+          y:0,
+          width:self.state.wP*self.props.imageW,
+          height:self.props.h},
         minWidth:5,
         isResizable:{x: !self.state.gs, y: false, xy: false},
         initAsResizing: this.state.inited ? {enable: false} : self.props.initAsResizing,
