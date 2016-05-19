@@ -7,12 +7,13 @@ from os import walk
 
 data = {}
 
-mypath = '../build/img/training1/low_dpi'
+mypath = '../build/img/training2/900'
 data['batchMeta'] = {
-    'numBatches':10,
+    'numBatches':12,
     'imgPerSet':10,
     'batchPerSet':2,
     'imgPerBatch':5,
+    'subjects':3
 }
 
 # mypath = '../build/img/training1/test'
@@ -58,7 +59,7 @@ for image in filenames:
     data[subID][blcIdx]['imgs'][imgIdx]['markers'] = []
     data[subID][blcIdx]['imgs'][imgIdx]['noMarkers'] = False
     data[subID][blcIdx]['imgs'][imgIdx]['prac'] = False
-    data[subID][blcIdx]['imgs'][imgIdx]['id'] = 'phase1_prac'
+    data[subID][blcIdx]['imgs'][imgIdx]['phase'] = 'training2'
 
 batchIdx = 0
 dataOut = {}
@@ -73,7 +74,7 @@ for subID in data:
         batchIdx += 1
 
 
-with open('../app/Assets/metaDataPhase1.json', 'wb') as fp:
+with open('../app/Assets/metaDataTraining2.json', 'wb') as fp:
     pprint(data)
     pprint(dataOut)
     json.dump(dataOut, fp)

@@ -73,7 +73,7 @@ function imgServer(){
   self.batches = [];
 
   self.init = function (){
-    var metaDataFileHandle = fs.readFileSync('./app/Assets/metaDataPhase1.json');
+    var metaDataFileHandle = fs.readFileSync('./app/Assets/metaDataTraining2.json');
     self.batches = JSON.parse(metaDataFileHandle.toString('utf8'));
   };
   self.init();
@@ -194,13 +194,13 @@ function imgServer(){
 
   self.getImageData = function(user,inc) {
     user.idx += inc;
-    var maxSets = user.batches.batchMeta.numBatchs/user.batches.batchMeta.batchPerSet - 1;
+    var maxSets = user.batches.batchMeta.numBatches/user.batches.batchMeta.batchPerSet;
     if (user.idx >= user.batches.batchMeta.imgPerSet) { //10 images per set
-      console.log('Set complete');
-      user.setsCompleted = +1;
-      if (user.setsCompleted > maxSets) {
-        user.setsCompleted = -1;
-        user.idx -= inc;
+      user.setsCompleted += 1;
+      if (user.setsCompleted >= maxSets) {
+        user.setsCompleted = maxSets
+        console.log('All sets complete');
+        user.idx -= inc
       } else {
         user.batchesCompleted.push(user.batchesIdxs[user.currentSet]);
         user.currentSet = user.currentSet.map(function (val) {

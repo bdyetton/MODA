@@ -39,14 +39,17 @@ module.exports = React.createClass({
         <p>You task is to find <b>spindles</b> in brainwaves recorded from sleeping subjects.</p>
           <p>
             You will identify exactly where the spindles begin and end by drawing a
-            colored bounding box around them. Here is an example of a window containing
-            two spindles (underlined in green). Not all windows will contain spindles.
+            colored bounding box around them. Not all windows will contain spindles.
           </p>
-            <img src="https://www.marketingcloud.com/blog/wp-content/uploads/2014/06/long_or_short.jpg" alt="Mountain View">
-            </img>
+            THIS IS A PLACEHOLDER: PRESS CLOSE TO BEGIN SCORING
         </div>
     )
   },
+              /*
+              Here is an example of a window containing
+            two spindles (underlined in green).
+              <img src="https://www.marketingcloud.com/blog/wp-content/uploads/2014/06/long_or_short.jpg" alt="Mountain View">
+            </img>*/
 
   page2: function(){
     return (<div>

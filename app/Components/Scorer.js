@@ -23,7 +23,7 @@ module.exports = React.createClass({
       msg:this.props.image.msg,
       showGSMarkers: false,
       screenSizeValid: true,
-      approxDpi: 'low_dpi',
+      screenRes: '900',
       confCounter:0,
       showInst: this.props.showInstructions,
       widthOfImg: 900
@@ -51,19 +51,36 @@ module.exports = React.createClass({
   checkScreen: function(){
     var self=this;
     var widthOfPanel = ReactDOM.findDOMNode(self.refs.grandPanel).offsetWidth;
-    var widthOfImgLowDpi = 900;
-    var widthOfImgHighDpi = 1463;
-    if (widthOfPanel - 2*(pannelMargin+listMargin) < widthOfImgLowDpi) {
+    var availableSpace = widthOfPanel - 2*(pannelMargin+listMargin) - 20; //20 for padding
+    if (availableSpace < 900) {
       self.setState({screenSizeValid: false});
       return false;
-    } else if(widthOfPanel - 2*(pannelMargin+listMargin) < widthOfImgHighDpi)  {
-      self.setState({screenSizeValid: true, approxDpi:'low_dpi'},function(){
+    } else if(availableSpace < 1013)  {
+      self.setState({screenSizeValid: true, screenRes:'900'},function(){
+        self.populateMarkers(self.state.imgMeta.markers);
+        self.populateGSMarkers(self.state.imgMeta.gsMarkers);
+      });
+      return true;
+    } else if(availableSpace < 1125)  {
+      self.setState({screenSizeValid: true, screenRes:'1013'},function(){
+        self.populateMarkers(self.state.imgMeta.markers);
+        self.populateGSMarkers(self.state.imgMeta.gsMarkers);
+      });
+      return true;
+    } else if(availableSpace < 1238)  {
+      self.setState({screenSizeValid: true, screenRes:'1125'},function(){
+        self.populateMarkers(self.state.imgMeta.markers);
+        self.populateGSMarkers(self.state.imgMeta.gsMarkers);
+      });
+      return true;
+    } else if(availableSpace < 1406)  {
+      self.setState({screenSizeValid: true, screenRes:'1238'},function(){
         self.populateMarkers(self.state.imgMeta.markers);
         self.populateGSMarkers(self.state.imgMeta.gsMarkers);
       });
       return true;
     } else {
-      self.setState({screenSizeValid: true, approxDpi:'high_dpi'},function(){
+      self.setState({screenSizeValid: true, screenRes:'1406'},function(){
         self.populateMarkers(self.state.imgMeta.markers);
         self.populateGSMarkers(self.state.imgMeta.gsMarkers);
       });
@@ -199,7 +216,7 @@ module.exports = React.createClass({
         }
       })};
       this.setState({
-        gsMarkers: popGSMarkers,
+        gsMarkers: popGSMarkers
       });
   },
 
@@ -215,7 +232,7 @@ module.exports = React.createClass({
     e.persist();
     if (self.state.markerType==='box') {
       var newMarker = <Marker
-        initAsResizing={{enable:true,direction:'x',event:e}}
+        initAsResizing={{enable:true, direction:'x', event:e}}
         key={self.state.markerIndex}
         markerIndex={self.state.markerIndex}
         imageX={scoreImg.offset().left}
@@ -277,14 +294,14 @@ module.exports = React.createClass({
       return [marker]
     });
     if (self.state.screenSizeValid){
-      var imgAndMarkers =  (<div className='row channels' style={{position:'relative', margin:'20px'}}>
+      var imgAndMarkers =  (<div className='row channels' style={{position:'relative', margin:'20px', paddingBottom:'25px'}}>
         {markers}
         {self.state.showGSMarkers ? gsMarkers : []}
-        <img ref='sigImg' src={function(){
+        <img ref='sigImg' style={{border:'1px solid #DCDCDC'}} src={function(){
               if(self.state.sme){
                 return window.location.href + (self.state.currentRemImage)}
               else{
-                return 'img/training1/' + self.state.approxDpi + '/' + self.state.imgMeta.filename
+                return 'img/' + self.state.imgMeta.phase + '/' + self.state.screenRes + '/' + self.state.imgMeta.filename
               }}()} alt='remImage' onMouseDown={this.addMarker} pointer-events='none'></img>
       </div>)
     } else {
@@ -299,16 +316,15 @@ module.exports = React.createClass({
               <div className='pull-left' style={{position:'relative',top:'-36px'}}>
                 <Instructions showInst={self.state.showInst} openInst={self.openInst} closeInst={self.closeInst}/>
               </div>
-              <div className='pull-right' style={{color:'rgb(102, 255, 102)', position:'relative' ,top:'-30px',marginLeft:'5px'}}>{'Epoch '+ (self.state.imgMeta.idx+1) + ' of ' + (self.state.imgMeta.idxMax+1)}</div>
+              <div className='pull-right' style={{color:'rgb(102, 255, 102)', position:'relative' ,top:'-30px',marginLeft:'15px'}}>{'Epoch '+ (self.state.imgMeta.idx+1) + ' of ' + (self.state.imgMeta.idxMax+1)}</div>
+              <div className='pull-right' style={{color:'orange', position:'relative' ,top:'-30px',marginLeft:'5px'}}>{'HITs Complete: '+ (self.state.imgMeta.setsCompleted)}</div>
               {JSON.parse(self.state.imgMeta.prac) ?
                 <div className='pull-right' style={{color:'rgb(102, 255, 102)', position:'relative' ,top:'-30px'}}>Practice Mode:</div>
                 : [] }
            </div>}>
           <rb.ListGroup fill style={{margin:listMargin+'px'}}>
-            <rb.ListGroupItem style={{marginBottom:'80px', marginTop:'80px'}}>
+            <rb.ListGroupItem style={{marginBottom:'20px', marginTop:'20px'}}>
               {imgAndMarkers}
-            </rb.ListGroupItem>
-            <rb.ListGroupItem>
               <div className='row' style={{position:'relative',textAlign:'center'}}>
                 <rb.ButtonToolbar>
                   <rb.ButtonGroup className='pull-left'>
@@ -330,15 +346,16 @@ module.exports = React.createClass({
                       <rb.Button bsStyle='warning' //TODO make custom style
                                  onClick={self.compareToGS}>Toggle correct markers</rb.Button>
                       : []}
-                    {self.state.imgMeta.idx!==self.state.imgMeta.idxMax ?
-                      <rb.Button bsStyle="primary" ref='next'
-                                   disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (markers.length>0 && self.state.confCounter===0) || self.state.showGSMarkers)}
-                                   onClick={self.getNextRemImage}>{'Next Epoch'}
-                      </rb.Button> :
-                      <rb.Button bsStyle="warning" ref='next'
-                                   disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (markers.length>0 && self.state.confCounter===0) || self.state.showGSMarkers)}
-                                   onClick={self.submitHit}>{'Submit Completed HIT'}
-                      </rb.Button>}
+                    {self.state.imgMeta.setsCompleted !== self.state.imgMeta.setsMax ?
+                      self.state.imgMeta.idx!==self.state.imgMeta.idxMax ?
+                        <rb.Button bsStyle="primary" ref='next'
+                                     disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (markers.length>0 && self.state.confCounter===0) || self.state.showGSMarkers)}
+                                     onClick={self.getNextRemImage}>{'Next Epoch'}
+                        </rb.Button> :
+                        <rb.Button bsStyle="warning" ref='next'
+                                     disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (markers.length>0 && self.state.confCounter===0) || self.state.showGSMarkers)}
+                                     onClick={self.submitHit}>{'Submit Completed HIT'}
+                        </rb.Button> : <p style={{color:'red'}}>All available HITs complete. Thank You!</p>}
                   </rb.ButtonGroup>
                 </rb.ButtonToolbar>
               </div>
