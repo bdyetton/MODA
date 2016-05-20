@@ -27,7 +27,10 @@ module.exports = React.createClass({
 
   componentDidMount: function() {
     setTimeout(function() {
-      ReactDOM.findDOMNode(this.refs['Marker'+ this.props.markerIndex]).focus();
+      var markerRef = this.refs['Marker'+ this.props.markerIndex];
+      if (markerRef !== undefined) {
+        ReactDOM.findDOMNode(markerRef).focus();
+      }
     }.bind(this), 0);
   },
 
@@ -71,6 +74,7 @@ module.exports = React.createClass({
   removeMarker: function(){
     var self = this;
     self.setState({deleted:true},function(){
+      self.updateConf('');
       self.props.updateMarkerState(self.state);
       self.props.removeMarker(self.props.markerIndex);
     })

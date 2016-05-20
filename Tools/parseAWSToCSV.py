@@ -13,13 +13,14 @@ imgData = {}
 for (dirpath, dirnames, filenames) in walk(mypath):
     break
 
-for userFile in filenames: #colate markers, and collate batches
-    with open('EventLocations.csv', 'wb') as eventLocCsvFile:
-        eventLocCsvWriter = csv.writer(eventLocCsvFile)
-        eventLocCsvWriter.writerow(['epochNum', 'blockNum', 'annotatorID', 'annotatorEventIndex', 'startPercent', 'durationPercent', 'startSecs', 'durationSecs', 'scoreConfidence'])
-        with open('EpochViews.csv', 'wb') as epochCsvFile:
-            epochCsvWriter = csv.writer(epochCsvFile)
-            epochCsvWriter.writerow(['filename','epochNum','blockNum','annotatorID'])
+
+with open('EventLocations.csv', 'wb') as eventLocCsvFile:
+    eventLocCsvWriter = csv.writer(eventLocCsvFile)
+    eventLocCsvWriter.writerow(['epochNum', 'blockNum', 'annotatorID', 'annotatorEventIndex', 'startPercent', 'durationPercent', 'startSecs', 'durationSecs', 'scoreConfidence'])
+    with open('EpochViews.csv', 'wb') as epochCsvFile:
+        epochCsvWriter = csv.writer(epochCsvFile)
+        epochCsvWriter.writerow(['filename','epochNum','blockNum','annotatorID'])
+        for userFile in filenames: #colate markers, and collate batches
             with open(mypath + '/' + userFile) as userFileHandle:
                 userData = yaml.safe_load(userFileHandle)
                 for batch in userData['batches']:
@@ -30,7 +31,7 @@ for userFile in filenames: #colate markers, and collate batches
                         epochCsvWriter.writerow([imgData['filename'],imgData['epoch'],batch,userData['userName']])
                         for marker in imgData['markers']:
                             print marker
-                            if marker['gs']=='true':
+                            if marker['gs'] == 'true' or marker['deleted'] == 'true':
                                 continue
                             eventLocCsvWriter.writerow([imgData['epoch'],batch,userData['userName'], marker['markerIndex'], marker['xP'], marker['wP'],marker['xSecs'], marker['wSecs'], marker['conf']])
 

@@ -36,12 +36,15 @@ module.exports = React.createClass({
     return (
       <div>
       <h4><i>You must read these instructions at least once.</i></h4>
-        <p>You task is to find <b>spindles</b> in brainwaves recorded from sleeping subjects.</p>
+        <p>Welcome to the Beta version of MODA. You task is to find <b>spindles</b> in brainwaves recorded from sleeping subjects.</p>
           <p>
-            You will identify exactly where the spindles begin and end by drawing a
-            colored bounding box around them. Not all windows will contain spindles.
+            Score spindles by drawing boxes around them. Rate your confidence.
+            If there are no spindles in that epoch then click the corresponding button below the signal.
+            There are 60 epochs in total broken down into 6 sets (HITs) of 10 epochs.
+            If you have any trouble at at, then just refresh the browser and log back in.
+            Your data is saved automatically, so you wont loose any work.
           </p>
-            THIS IS A PLACEHOLDER: PRESS CLOSE TO BEGIN SCORING
+            PRESS CLOSE TO BEGIN SCORING
         </div>
     )
   },
@@ -70,7 +73,16 @@ module.exports = React.createClass({
         Instructions
         </rb.Button>
 
-        <rb.Modal show={this.props.showInst} onHide={this.props.closeInst} bsSize="large" aria-labelledby="contained-modal-title-lg">
+        <rb.Modal show={this.props.showInst} onHide={this.props.closeInst} style={{
+                width: '400px',
+                height: '50px',
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                marginTop: '-25px',
+                marginLeft: '-200px',
+                padding: '20px;'}}
+                  bsSize="large" aria-labelledby="contained-modal-title-lg">
           <rb.Modal.Header closeButton>
             <rb.Modal.Title>Welcome to the Massive Online Data Annotation Tool</rb.Modal.Title>
           </rb.Modal.Header>

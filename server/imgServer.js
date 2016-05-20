@@ -130,10 +130,10 @@ function imgServer(){
     if(!exists){
       user.batches[user.batchesIdxs[user.currentSet[setIdx]]].imgs[batchIdx].markers.push(marker);
     }
+    return self.getImageData(user,0);
   };
 
   self.processMarker = function(marker){
-    console.log(marker.xP);
     if (marker.type==='seg') {
       marker.xSecs = marker.xP*imgConfig.secs;
     } else if (marker.type==='box'){
@@ -198,7 +198,7 @@ function imgServer(){
     if (user.idx >= user.batches.batchMeta.imgPerSet) { //10 images per set
       user.setsCompleted += 1;
       if (user.setsCompleted >= maxSets) {
-        user.setsCompleted = maxSets
+        user.setsCompleted = maxSets;
         console.log('All sets complete');
         user.idx -= inc
       } else {
@@ -211,7 +211,6 @@ function imgServer(){
     }
     var setIdx = Math.floor((user.idx) / user.batches.batchMeta.imgPerBatch);
     var batchIdx = Math.floor((user.idx) % user.batches.batchMeta.imgPerBatch);
-    console.log(user.batches[user.batchesIdxs[user.currentSet[setIdx]]].imgs[batchIdx].markers);
     var dataOut = user.batches[user.batchesIdxs[user.currentSet[setIdx]]].imgs[batchIdx];
     dataOut.idx = user.idx;
     dataOut.idxMax = user.batches.batchMeta.imgPerSet-1;

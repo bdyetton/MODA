@@ -48,6 +48,12 @@ module.exports = React.createClass({
     }
   },
 
+  redrawMarkers: function(){
+    var self = this;
+    self.populateMarkers(self.state.imgMeta.markers);
+    self.populateGSMarkers(self.state.imgMeta.gsMarkers);
+  },
+
   checkScreen: function(){
     var self=this;
     var widthOfPanel = ReactDOM.findDOMNode(self.refs.grandPanel).offsetWidth;
@@ -57,32 +63,32 @@ module.exports = React.createClass({
       return false;
     } else if(availableSpace < 1013)  {
       self.setState({screenSizeValid: true, screenRes:'900'},function(){
-        self.populateMarkers(self.state.imgMeta.markers);
-        self.populateGSMarkers(self.state.imgMeta.gsMarkers);
+        self.populateMarkers([]);
+        setTimeout(self.redrawMarkers, 0);
       });
       return true;
     } else if(availableSpace < 1125)  {
       self.setState({screenSizeValid: true, screenRes:'1013'},function(){
-        self.populateMarkers(self.state.imgMeta.markers);
-        self.populateGSMarkers(self.state.imgMeta.gsMarkers);
+        self.populateMarkers([]);
+        setTimeout(self.redrawMarkers, 0);
       });
       return true;
     } else if(availableSpace < 1238)  {
       self.setState({screenSizeValid: true, screenRes:'1125'},function(){
-        self.populateMarkers(self.state.imgMeta.markers);
-        self.populateGSMarkers(self.state.imgMeta.gsMarkers);
+        self.populateMarkers([]);
+        setTimeout(self.redrawMarkers, 0);
       });
       return true;
     } else if(availableSpace < 1406)  {
       self.setState({screenSizeValid: true, screenRes:'1238'},function(){
-        self.populateMarkers(self.state.imgMeta.markers);
-        self.populateGSMarkers(self.state.imgMeta.gsMarkers);
+        self.populateMarkers([]);
+        setTimeout(self.redrawMarkers, 0);
       });
       return true;
     } else {
       self.setState({screenSizeValid: true, screenRes:'1406'},function(){
-        self.populateMarkers(self.state.imgMeta.markers);
-        self.populateGSMarkers(self.state.imgMeta.gsMarkers);
+        self.populateMarkers([]);
+        setTimeout(self.redrawMarkers, 100);
       });
       return true;
     }
@@ -135,6 +141,8 @@ module.exports = React.createClass({
     $.get('/api/updateMarkerState', {marker:markerData, user: this.props.userData.userName}, function(data){
       if (!data.success){
         console.log('Error saving marker');
+      } else{
+        self.setState({imgMeta:data.imgData})
       }
     }).fail(function(xhr, textStatus, errorThrown){
       console.log('Error saving marker');
@@ -330,8 +338,9 @@ module.exports = React.createClass({
                   <rb.ButtonGroup className='pull-left'>
                     <rb.Button bsStyle="primary"
                                ref='previous'
-                               onClick={self.getPreviousRemImage}
-                               disabled={self.state.msg == 'firstEpoch'}> {self.state.imgMeta.idx == 0 ? 'This is the first epoch' : 'Previous Epoch'}
+                               disabled={parseInt(self.state.imgMeta.idx)===0}
+                               onClick={self.getPreviousRemImage}>
+                      {self.state.imgMeta.idx == 0 ? 'This is the first epoch' : 'Previous Epoch'}
                     </rb.Button>
                   </rb.ButtonGroup>
                   <rb.ButtonGroup style={{textAlign:'center', position:'absolute', left:'50%', top: '50%',  transform: 'translateY(-50%) translateX(-50%)'}}>
