@@ -233,6 +233,7 @@ module.exports = React.createClass({
   },
 
   addMarker: function(e) {
+    if (JSON.parse(this.state.imgMeta.noMarkers)){return;}
     var self = this;
     if (e.button !== 0) return;
     var scoreImg = $(this.refs.sigImg);
@@ -338,7 +339,7 @@ module.exports = React.createClass({
                   <rb.ButtonGroup className='pull-left'>
                     <rb.Button bsStyle="primary"
                                ref='previous'
-                               disabled={parseInt(self.state.imgMeta.idx)===0}
+                               disabled={parseInt(self.state.imgMeta.idx)===0 || self.state.confCounter > 0}
                                onClick={self.getPreviousRemImage}>
                       {self.state.imgMeta.idx == 0 ? 'This is the first epoch' : 'Previous Epoch'}
                     </rb.Button>
@@ -358,11 +359,11 @@ module.exports = React.createClass({
                     {self.state.imgMeta.setsCompleted !== self.state.imgMeta.setsMax ?
                       self.state.imgMeta.idx!==self.state.imgMeta.idxMax ?
                         <rb.Button bsStyle="primary" ref='next'
-                                     disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (markers.length>0 && self.state.confCounter===0) || self.state.showGSMarkers)}
+                                     disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (markers.length>0 && self.state.confCounter <= 0) || self.state.showGSMarkers)}
                                      onClick={self.getNextRemImage}>{'Next Epoch'}
                         </rb.Button> :
                         <rb.Button bsStyle="warning" ref='next'
-                                     disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (markers.length>0 && self.state.confCounter===0) || self.state.showGSMarkers)}
+                                     disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (markers.length>0 && self.state.confCounter <= 0) || self.state.showGSMarkers)}
                                      onClick={self.submitHit}>{'Submit Completed HIT'}
                         </rb.Button> : <p style={{color:'red'}}>All available HITs complete. Thank You!</p>}
                   </rb.ButtonGroup>

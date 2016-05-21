@@ -6,7 +6,7 @@ import yaml
 import csv
 from os import walk
 
-mypath = 'DownloadedUserData'
+mypath = 'DownloadedUserData/Training2/'
 numImgPerBatch = 5
 imgData = {}
 

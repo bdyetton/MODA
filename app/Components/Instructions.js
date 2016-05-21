@@ -54,12 +54,13 @@ module.exports = React.createClass({
               <img src="https://www.marketingcloud.com/blog/wp-content/uploads/2014/06/long_or_short.jpg" alt="Mountain View">
             </img>*/
 
+      //  <rb.ResponsiveEmbed a16by9>
+      //  <embed type="image/svg+xml" src="https://www.youtube.com/embed/FavUpD_IjVY"/>
+      //</rb.ResponsiveEmbed>
+
   page2: function(){
     return (<div>
       <h4>Watch the following short video to learn how to detect spindles in sleeping brainwaves</h4>
-      <rb.ResponsiveEmbed a16by9>
-        <embed type="image/svg+xml" src="https://www.youtube.com/embed/FavUpD_IjVY"/>
-      </rb.ResponsiveEmbed>
     </div>)
   },
 

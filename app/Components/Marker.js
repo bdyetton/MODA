@@ -40,9 +40,9 @@ module.exports = React.createClass({
 
   handleKey: function(event) {
     if (event.keyCode === 39) {
-      this.setState({xP:(this.state.xP*this.props.imageW+1)/this.props.imageW,keyTicker:this.state.keyTicker+1});
+      this.setState({xP:(this.state.xP*this.props.imageW+1)/this.props.imageW, keyTicker:this.state.keyTicker+1});
     } else if (event.keyCode === 37) {
-      this.setState({xP:(this.state.xP*this.props.imageW-1)/this.props.imageW,keyTicker:this.state.keyTicker+1});
+      this.setState({xP:(this.state.xP*this.props.imageW-1)/this.props.imageW, keyTicker:this.state.keyTicker+1});
     } else if (event.keyCode===51){
         this.updateConf('high');
       }
@@ -96,7 +96,7 @@ module.exports = React.createClass({
         self.removeMarker();
       }
     }
-    self.setState({wP:size.width/self.props.imageW},function(){self.props.updateMarkerState(self.state)});
+    self.setState({wP:size.width/self.props.imageW}, function(){self.props.updateMarkerState(self.state)});
   },
 
   getColor: function(){
