@@ -13,7 +13,12 @@ module.exports = React.createClass({
     if ('workerId' in mTurkLoginData){
       mTurkLoginData.userName=mTurkLoginData.workerId;
       mTurkLoginData.userType='mturker';
-      this.setState({mTurkLoginData:mTurkLoginData},this.parseMturkLogin)
+      if (mTurkLoginData.assignmentId==='ASSIGNMENT_ID_NOT_AVAILABLE')
+      {
+        this.parsePreviewLogin();
+      } else {
+        this.setState({mTurkLoginData: mTurkLoginData}, this.parseMturkLogin)
+      }
     }
   },
 
@@ -30,6 +35,15 @@ module.exports = React.createClass({
     var userName = self.refs.username.getValue();
     var password = '*'//self.refs.password.getValue(); //TODO
     $.get('/api/getUser',{userData:{userName:userName,password:password,userType:'other'}},function(data){
+      self.props.updatePage('score',data);
+    });
+  },
+
+  parsePreviewLogin: function() {
+  var self = this;
+  var userName = 'preview';
+  var password = '*'//self.refs.password.getValue(); //TODO
+    $.get('/api/getUser',{userData:{userName:userName,password:password,userType:'preview'}},function(data){
       self.props.updatePage('score',data);
     });
   },

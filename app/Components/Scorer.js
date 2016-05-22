@@ -131,18 +131,15 @@ module.exports = React.createClass({
         }
       } else {
         self.setState({HITsComplete:true, showSubmit:false});
-        console.log(self.props.userData);
         var postAddress = self.props.userData.turkSubmitTo + '/mturk/externalSubmit?assignmentID=' + self.props.userData.assignmentId;
-        console.log(postAddress)
+        //console.log(postAddress)
         //$.post(postAddress,{assignmentId:self.props.userData.assignmentId},'jsonp')
         $.ajax({
           url: postAddress,
           data: {assignmentId:self.props.userData.assignmentId},
           type: 'POST',
           dataType:'jsonp',
-          success: function(resp, resp2, resp3) { console.log('good'); console.log(resp); console.log(resp2); console.log(resp3) },
-          error: function(resp, resp2, resp3, resp4) { console.log('fail'); console.log(resp); console.log(resp2); console.log(resp3); console.log(resp4) },
-      });
+         });
       }
     });
   },
@@ -395,7 +392,7 @@ module.exports = React.createClass({
                       : []}
                     {self.state.imgMeta.idx!==self.state.imgMeta.idxMax ?
                         <rb.Button bsStyle="primary" ref='next'
-                                     /*disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (markers.length>0 && self.state.confCounter <= 0) || self.state.showGSMarkers) || self.state.HITsComplete}*/
+                                     /*disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (markers.length>0 && self.state.confCounter <= 0) || self.state.showGSMarkers) || self.state.HITsComplete || self.props.userData.userType==='preview'}*/
                                      onClick={self.getNextRemImage}>{'Next Epoch'}
                         </rb.Button> :
                         <rb.Button bsStyle="warning" ref='next'
