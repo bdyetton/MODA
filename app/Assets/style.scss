@@ -349,3 +349,16 @@ label {
     color: #428bca;
     margin:10px;
 }
+
+.modal-dialog {
+   position: absolute;
+   top:150px;
+   z-index: 10040;
+   overflow: auto;
+   overflow-y: auto;
+}
+
+.thank-you-text {
+  color: red;
+  font-size: 24pt;
+}

@@ -9,12 +9,7 @@ module.exports = React.createClass({
 
   updatePage: function(page,data){
     if (page==='score'){
-      this.setState({userData:data.userData, showInstructions:data.createdUser, image:data.image});}
-    else if(page==='instructions'){
-
-    }
-    else{
-
+      this.setState({userData:data.userData, showInstructions:data.createdUser, image:data.image});
     }
     this.setState({page:page})
   },

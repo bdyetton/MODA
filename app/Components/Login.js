@@ -4,7 +4,7 @@ var URI = require('urijs');
 module.exports = React.createClass({
   displayName: 'Login',
   getInitialState: function() {
-    return {loggedIn: false,userType:'other'};
+    return {loggedIn: false, userType:'other'};
   },
 
   componentWillMount: function(){
@@ -88,8 +88,8 @@ module.exports = React.createClass({
         </rb.Button>
       </rb.ButtonGroup>
       {this.state.userType==='other' ? this.otherUserLogin() : this.mTurkerLogin()}
-
+      {window.location.href}
       </div>)
   },
-      /*{window.location.href}*/
+
 });

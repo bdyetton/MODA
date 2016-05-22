@@ -74,15 +74,7 @@ module.exports = React.createClass({
         Instructions
         </rb.Button>
 
-        <rb.Modal show={this.props.showInst} onHide={this.props.closeInst} style={{
-                width: '400px',
-                height: '50px',
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                marginTop: '-25px',
-                marginLeft: '-200px',
-                padding: '20px;'}}
+        <rb.Modal show={this.props.showInst} onHide={this.props.closeInst}
                   bsSize="large" aria-labelledby="contained-modal-title-lg">
           <rb.Modal.Header closeButton>
             <rb.Modal.Title>Welcome to the Massive Online Data Annotation Tool</rb.Modal.Title>

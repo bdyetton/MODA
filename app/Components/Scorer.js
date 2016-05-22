@@ -1,5 +1,6 @@
 var Stager = require('./Stager');
 var Marker = require('./Marker');
+var SubmitHIT = require('./submitHIT');
 var Instructions = require('./Instructions');
 var rb = require('react-bootstrap');
 var pannelMargin = 10;
@@ -26,7 +27,9 @@ module.exports = React.createClass({
       screenRes: '900',
       confCounter:0,
       showInst: this.props.showInstructions,
-      widthOfImg: 900
+      widthOfImg: 900,
+      showSubmit: false,
+      HITsComplete: false
     };
   },
 
@@ -119,7 +122,23 @@ module.exports = React.createClass({
   submitHit: function() {
     var self = this;
     $.get('/api/submitHit', {user: this.props.userData.userName}, function(data) {
-      self.getNextRemImage();
+      if (self.props.userData.userType==='Other') { ///FIXME
+        self.getNextRemImage();
+        if (self.state.imgMeta.setsCompleted === self.state.imgMeta.setsMax){
+          self.setState({HITsComplete:true, showSubmit:false});
+        } else {
+          self.setState({showSubmit:false});
+        }
+      } else {
+        self.setState({HITsComplete:true, showSubmit:false});
+        var MturkPostData = self.props.userData.mTurkLoginData;
+        $.post('https://workersandbox.mturk.com/mturk/externalSubmit',MturkPostData, function(resp){
+          if (!resp.success){
+            console.log('Error saving meta');
+          }
+          console.log(resp)
+        })
+      }
     });
   },
 
@@ -294,6 +313,15 @@ module.exports = React.createClass({
     this.setState({showInst:false});
   },
 
+  openSubmit: function(){
+    this.setState({showSubmit:true});
+  },
+
+  closeSubmit: function(){
+    this.setState({showSubmit:false});
+  },
+
+
   render: function () {
     var self = this;
     var markers = $.map(this.state.markers, function(marker, index) {
@@ -321,7 +349,7 @@ module.exports = React.createClass({
       <div className='container' style={{textAlign:'center', width:'95%', position:'absolute', left:'50%', top: '50%',  transform: 'translateY(-50%) translateX(-50%)'}}>
         <rb.Panel bsStyle="primary" className="grand-panel" ref='grandPanel' textAlign='center' header={
             <div>
-              <h4>MODA: Massive Online Data Annotation</h4>
+             <h4>MODA: Massive Online Data Annotation</h4>
               <div className='pull-left' style={{position:'relative',top:'-36px'}}>
                 <Instructions showInst={self.state.showInst} openInst={self.openInst} closeInst={self.closeInst}/>
               </div>
@@ -333,13 +361,17 @@ module.exports = React.createClass({
            </div>}>
           <rb.ListGroup fill style={{margin:listMargin+'px'}}>
             <rb.ListGroupItem style={{marginBottom:'20px', marginTop:'20px'}}>
-              {imgAndMarkers}
+              {self.state.HITsComplete ?
+                self.props.userData.userType==='other' ?
+                  <p className='thank-you-text'>All HITs complete, Thank You!</p> : <p className='thank-you-text'>HIT complete, Thank You! Return to Mturk to select more</p>
+                : imgAndMarkers}
+              {self.state.showSubmit ? <SubmitHIT showSubmit={self.state.showSubmit} closeSubmit={self.closeSubmit} submitHit={self.submitHit}/> : []}
               <div className='row' style={{position:'relative',textAlign:'center'}}>
                 <rb.ButtonToolbar>
                   <rb.ButtonGroup className='pull-left'>
                     <rb.Button bsStyle="primary"
                                ref='previous'
-                               disabled={parseInt(self.state.imgMeta.idx)===0 || self.state.confCounter > 0}
+                               disabled={parseInt(self.state.imgMeta.idx)===0 || self.state.confCounter > 0 || self.state.HITsComplete}
                                onClick={self.getPreviousRemImage}>
                       {self.state.imgMeta.idx == 0 ? 'This is the first epoch' : 'Previous Epoch'}
                     </rb.Button>
@@ -349,23 +381,22 @@ module.exports = React.createClass({
                               disabled={markers.length!==0}
                               checked={JSON.parse(self.state.imgMeta.noMarkers)}
                               label={'No spindles in epoch'}
-                              onChange={self.setNoMarkers}/>
+                              onClick={self.setNoMarkers}/>
                   </rb.ButtonGroup>
                   <rb.ButtonGroup className='pull-right'>
                     {self.state.imgMeta.prac==='true' ?
                       <rb.Button bsStyle='warning' //TODO make custom style
                                  onClick={self.compareToGS}>Toggle correct markers</rb.Button>
                       : []}
-                    {self.state.imgMeta.setsCompleted !== self.state.imgMeta.setsMax ?
-                      self.state.imgMeta.idx!==self.state.imgMeta.idxMax ?
+                    {self.state.imgMeta.idx!==self.state.imgMeta.idxMax ?
                         <rb.Button bsStyle="primary" ref='next'
-                                     disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (markers.length>0 && self.state.confCounter <= 0) || self.state.showGSMarkers)}
+                                     /*disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (markers.length>0 && self.state.confCounter <= 0) || self.state.showGSMarkers) || self.state.HITsComplete}*/
                                      onClick={self.getNextRemImage}>{'Next Epoch'}
                         </rb.Button> :
                         <rb.Button bsStyle="warning" ref='next'
-                                     disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (markers.length>0 && self.state.confCounter <= 0) || self.state.showGSMarkers)}
-                                     onClick={self.submitHit}>{'Submit Completed HIT'}
-                        </rb.Button> : <p style={{color:'red'}}>All available HITs complete. Thank You!</p>}
+                                     /*disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (markers.length>0 && self.state.confCounter <= 0) || self.state.showGSMarkers) || self.state.HITsComplete}*/
+                                     onClick={self.openSubmit}>{'Submit Completed HIT'}
+                        </rb.Button>}
                   </rb.ButtonGroup>
                 </rb.ButtonToolbar>
               </div>
