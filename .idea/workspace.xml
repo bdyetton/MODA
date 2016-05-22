@@ -2,17 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e305a046-6328-4772-80fc-a659578f2d34" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/448c34a56d699c29117adc64c43affeb.woff2" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/46661d6d65debc63884004fed6e37e5c.svg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/bundle.635ba60f6d7e4c55c635.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/bundle.635ba60f6d7e4c55c635.js.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/e18bbf611f2a2e43afc071aa2f4e1512.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/f4769f9bdb7466be65088239c12046d1.eot" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/fa2772327f55d8198301fdb8bcfc8158.woff" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/index.html" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Components/Content.js" afterPath="$PROJECT_DIR$/app/Components/Content.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Components/Scorer.js" afterPath="$PROJECT_DIR$/app/Components/Scorer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/refreshMODA" afterPath="$PROJECT_DIR$/refreshMODA" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="simple-webpack-react-starter.iws" />
@@ -38,8 +28,8 @@
       <file leaf-file-name="Scorer.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Components/Scorer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.50416666">
-              <caret line="140" column="11" selection-start-line="140" selection-start-column="11" selection-end-line="140" selection-end-column="11" />
+            <state vertical-scroll-proportion="0.42916667">
+              <caret line="136" column="83" selection-start-line="136" selection-start-column="83" selection-end-line="136" selection-end-column="83" />
               <folding />
             </state>
           </provider>
@@ -924,8 +914,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Components/Scorer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.50416666">
-          <caret line="140" column="11" selection-start-line="140" selection-start-column="11" selection-end-line="140" selection-end-column="11" />
+        <state vertical-scroll-proportion="0.42916667">
+          <caret line="136" column="83" selection-start-line="136" selection-start-column="83" selection-end-line="136" selection-end-column="83" />
           <folding />
         </state>
       </provider>
