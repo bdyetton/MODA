@@ -132,9 +132,9 @@ module.exports = React.createClass({
       } else {
         self.setState({HITsComplete:true, showSubmit:false});
         console.log(self.props.userData);
-        var postAddress = self.props.userData.turkSubmitTo + '/mturk/externalSubmit?' + self.props.userData.assignmentId;
+        var postAddress = self.props.userData.turkSubmitTo + '/mturk/externalSubmit?assignmentID=' + self.props.userData.assignmentId;
         console.log(postAddress)
-        $.post('https://workersandbox.mturk.com/mturk/externalSubmit?',{}, function(resp){
+        $.post(postAddress,{}, function(resp){
           if (!resp.success){
             console.log('Error saving meta');
           }
