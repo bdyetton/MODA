@@ -135,7 +135,7 @@ module.exports = React.createClass({
         //console.log(postAddress)
         //$.post(postAddress,{assignmentId:self.props.userData.assignmentId},'jsonp')
         $.ajax({
-          url: self.props.userData.turkSubmitTo + '/mturk/externalSubmit,
+          url: self.props.userData.turkSubmitTo + '/mturk/externalSubmit',
           data: {assignmentId:self.props.userData.assignmentId},
           type: 'POST',
           success: function(resp, resp2, resp3) { console.log('good'); console.log(resp); console.log(resp2); console.log(resp3) },
