@@ -132,12 +132,13 @@ module.exports = React.createClass({
       } else {
         self.setState({HITsComplete:true, showSubmit:false});
         var MturkPostData = self.props.userData.mTurkLoginData;
-        $.post('https://workersandbox.mturk.com/mturk/externalSubmit',MturkPostData, function(resp){
+        console.log(MturkPostData)
+        $.post('https://workersandbox.mturk.com/mturk/externalSubmit?',MturkPostData, function(resp){
           if (!resp.success){
             console.log('Error saving meta');
           }
           console.log(resp)
-        })
+        },'jsonp')
       }
     });
   },
