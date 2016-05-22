@@ -134,11 +134,11 @@ module.exports = React.createClass({
         console.log(self.props.userData);
         var postAddress = self.props.userData.turkSubmitTo + '/mturk/externalSubmit?assignmentID=' + self.props.userData.assignmentId;
         console.log(postAddress)
-        $.post(postAddress,{}, function(resp){
+        $.post(postAddress,{assignmentId:self.props.userData.assignmentId}, function(resp){
+          console.log(resp)
           if (!resp.success){
             console.log('Error saving meta');
           }
-          console.log(resp)
         },'jsonp')
       }
     });
