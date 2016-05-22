@@ -137,7 +137,7 @@ module.exports = React.createClass({
         $.ajax({
           url: self.props.userData.turkSubmitTo + '/mturk/externalSubmit',
           data: {assignmentId:self.props.userData.assignmentId},
-          type: 'POST',
+          type: 'GET',
           success: function(resp, resp2, resp3) { console.log('good'); console.log(resp); console.log(resp2); console.log(resp3) },
           error: function(resp, resp2, resp3, resp4) { console.log('fail'); console.log(resp); console.log(resp2); console.log(resp3); console.log(resp4) },
       });
