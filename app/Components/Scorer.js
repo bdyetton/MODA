@@ -134,7 +134,15 @@ module.exports = React.createClass({
         console.log(self.props.userData);
         var postAddress = self.props.userData.turkSubmitTo + '/mturk/externalSubmit?assignmentID=' + self.props.userData.assignmentId;
         console.log(postAddress)
-        $.post(postAddress,{assignmentId:self.props.userData.assignmentId},'jsonp')
+        //$.post(postAddress,{assignmentId:self.props.userData.assignmentId},'jsonp')
+        $.ajax({
+          url: postAddress,
+          data: {assignmentId:self.props.userData.assignmentId},
+          type: 'POST',
+          dataType:'jsonp',
+          success: function(resp, resp2, resp3) { console.log('good'); console.log(resp); console.log(resp2); console.log(resp3) },
+          error: function(resp, resp2, resp3, resp4) { console.log('fail'); console.log(resp); console.log(resp2); console.log(resp3); console.log(resp4) },
+      });
       }
     });
   },

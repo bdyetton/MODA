@@ -69,7 +69,7 @@ module.exports = React.createClass({
 
   render: function () {
     var self=this;
-    console.log(window.location.href)
+    console.log(window.location.href);
     return (<div className='bs-callout bs-callout-primary'
                  style={{'textAlign':'center', position:'absolute', left:'50%', top: '50%',  transform: 'translateY(-50%) translateX(-50%)'}}>
         <h4>Please Login to MODA</h4>
