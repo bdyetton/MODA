@@ -131,9 +131,8 @@ module.exports = React.createClass({
         }
       } else {
         self.setState({HITsComplete:true, showSubmit:false});
-        var MturkPostData = self.props.userData.mTurkLoginData;
-        console.log(MturkPostData)
-        var postAddress = 'https://workersandbox.mturk.com/mturk/externalSubmit?' + self.props.userData.mTurkLoginData.assignmentId;
+        console.log(this.props.userData);
+        var postAddress = self.props.userData.turkSubmitTo + '/mturk/externalSubmit?' + self.props.userData.assignmentId;
         console.log(postAddress)
         $.post('https://workersandbox.mturk.com/mturk/externalSubmit?',{}, function(resp){
           if (!resp.success){
