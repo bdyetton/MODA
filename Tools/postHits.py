@@ -17,9 +17,9 @@ print boto.Version  # 2.29.1
 print mturk.get_account_balance()  # [$10,000.00]
 
 url = "https://fierce-inlet-44115.herokuapp.com/"
-title = "Testing, do not accept hit"
+title = "Find patterns in sleeping brainwaves"
 description = "Find patterns in recordings of the sleeping brain! Help science understand sleep and its memory benefits"
-keywords = ["sleep", "scoring", "MODA", "psych","annotation"]
+keywords = ["sleep", "scoring", "MODA", "psych", "annotation"]
 frame_height = 800  # the height of the iframe holding the external hit
 amount = .01
 
