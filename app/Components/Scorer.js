@@ -61,7 +61,6 @@ module.exports = React.createClass({
     var self=this;
     var widthOfPanel = ReactDOM.findDOMNode(self.refs.grandPanel).offsetWidth;
     var availableSpace = widthOfPanel - 2*(pannelMargin+listMargin) - 20; //20 for padding
-    console.log(availableSpace);
     if (availableSpace < 900) {
       self.setState({screenSizeValid: false});
       return false;
@@ -177,6 +176,7 @@ module.exports = React.createClass({
     var popMarkers = {};
     var self = this;
     var scoreImg = $(self.refs.sigImg);
+    var numMarkers=0;
     var offsetFromPannel = ReactDOM.findDOMNode(self.refs.sigImg).offsetLeft;
     if (markers != undefined) {
       markers.forEach(function (marker) {
@@ -184,6 +184,7 @@ module.exports = React.createClass({
           return;
         }
         if (marker.type==='box') {
+          numMarkers = numMarkers + 1;
           popMarkers[marker.markerIndex] = <Marker
             key={parseInt(marker.markerIndex)}
             markerIndex={parseInt(marker.markerIndex)}
@@ -207,6 +208,7 @@ module.exports = React.createClass({
       })}
       this.setState({
         markers: popMarkers,
+        numMarkers:numMarkers,
         confCounter: 0
       });
   },
@@ -273,6 +275,7 @@ module.exports = React.createClass({
     markers[self.state.markerIndex]=newMarker;
     this.setState({
       markers: markers,
+      numMarkers:self.state.numMarkers+1,
       confCounter: self.state.confCounter+1,
       markerIndex: self.state.markerIndex+1,
       imgMeta:$.extend(this.state.imgMeta,{noMarkers: false})
@@ -292,7 +295,7 @@ module.exports = React.createClass({
   removeMarker: function(index){
     var markers = this.state.markers;
     delete markers[index];
-    this.setState({markers:markers});
+    this.setState({markers:markers, numMarkers:self.state.numMarkers-1});
   },
 
   //changeStage: function(stage){
@@ -315,9 +318,8 @@ module.exports = React.createClass({
     this.setState({showSubmit:false});
   },
 
-
-  render: function () {
-    var self = this;
+  drawImageAndMarkers: function(){
+      var self = this;
     var markers = $.map(this.state.markers, function(marker, index) {
       return [marker]
     });
@@ -325,7 +327,7 @@ module.exports = React.createClass({
       return [marker]
     });
     if (self.state.screenSizeValid){
-      var imgAndMarkers =  (<div className='row channels' style={{position:'relative', margin:'20px', paddingBottom:'25px'}}>
+      return (<div className='row channels' style={{position:'relative', margin:'20px', paddingBottom:'25px'}}>
         {markers}
         {self.state.showGSMarkers ? gsMarkers : []}
         <img ref='sigImg' style={{border:'1px solid #DCDCDC'}} src={function(){
@@ -336,9 +338,50 @@ module.exports = React.createClass({
               }}()} alt='remImage' onMouseDown={this.addMarker} pointer-events='none'></img>
       </div>)
     } else {
-      var imgAndMarkers = (<p style={{color:'#F00'}}>ERROR: Your screen size is too small for valid scoring, please increase your screen resolution or move to a larger device</p>)
+      return (<p style={{color:'#F00'}}>ERROR: Your screen size is too small for valid scoring, please increase your browser window size, screen resolution, or move to a larger device</p>)
     }
-    console.log(self.state.imgMeta.prac);
+  },
+
+  drawButtons: function(){
+    var self = this;
+    return (<rb.ButtonToolbar>
+              <rb.ButtonGroup className='pull-left'>
+                <rb.Button bsStyle="primary"
+                           ref='previous'
+                           disabled={parseInt(self.state.imgMeta.idx)===0 || self.state.confCounter > 0 || self.state.HITsComplete}
+                           onClick={self.getPreviousRemImage}>
+                  {self.state.imgMeta.idx == 0 ? 'This is the first epoch' : 'Previous Epoch'}
+                </rb.Button>
+              </rb.ButtonGroup>
+              <rb.ButtonGroup style={{textAlign:'center', position:'absolute', left:'50%', top: '50%',  transform: 'translateY(-50%) translateX(-50%)'}}>
+                <rb.Input type="checkbox" ref='noMarkers'
+                          disabled={self.state.numMarkers!==0}
+                          checked={JSON.parse(self.state.imgMeta.noMarkers)}
+                          label={'No spindles in epoch'}
+                          onClick={self.setNoMarkers}/>
+              </rb.ButtonGroup>
+              <rb.ButtonGroup className='pull-right'>
+                {self.state.imgMeta.prac==='true' ?
+                  <rb.Button bsStyle='warning' //TODO make custom style
+                             onClick={self.compareToGS}>Toggle correct markers</rb.Button>
+                  : []}
+                {self.state.imgMeta.idx!==self.state.imgMeta.idxMax ?
+                    <rb.Button bsStyle="primary" ref='next'
+                                 disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (self.state.numMarkers>0 && self.state.confCounter <= 0) || self.state.showGSMarkers) || self.state.HITsComplete || self.props.userData.userType==='preview'}
+                                 onClick={self.getNextRemImage}>{'Next Epoch'}
+                    </rb.Button> :
+                    <rb.Button bsStyle="warning" ref='next'
+                                 disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (self.state.numMarkers>0 && self.state.confCounter <= 0) || self.state.showGSMarkers) || self.state.HITsComplete}
+                                 onClick={self.openSubmit}>{'Submit Completed HIT'}
+                    </rb.Button>}
+              </rb.ButtonGroup>
+            </rb.ButtonToolbar>)
+  },
+
+
+  render: function () {
+    var self = this;
+
     return (
       <div className='container' style={{textAlign:'center', width:'95%', position:'absolute', left:'50%', top: '50%',  transform: 'translateY(-50%) translateX(-50%)'}}>
         <rb.Panel bsStyle="primary" className="grand-panel" ref='grandPanel' textAlign='center' header={
@@ -358,41 +401,10 @@ module.exports = React.createClass({
               {self.state.HITsComplete ?
                 self.props.userData.userType==='other' ?
                   <p className='thank-you-text'>All HITs complete, Thank You!</p> : <p className='thank-you-text'>HIT complete, Thank You! Return to Mturk to select more</p>
-                : imgAndMarkers}
+                : self.drawImageAndMarkers()}
               {self.state.showSubmit ? <SubmitHIT showSubmit={self.state.showSubmit} closeSubmit={self.closeSubmit} submitHit={self.submitHit} userData={self.props.userData}/> : []}
               <div className='row' style={{position:'relative',textAlign:'center'}}>
-                <rb.ButtonToolbar>
-                  <rb.ButtonGroup className='pull-left'>
-                    <rb.Button bsStyle="primary"
-                               ref='previous'
-                               disabled={parseInt(self.state.imgMeta.idx)===0 || self.state.confCounter > 0 || self.state.HITsComplete}
-                               onClick={self.getPreviousRemImage}>
-                      {self.state.imgMeta.idx == 0 ? 'This is the first epoch' : 'Previous Epoch'}
-                    </rb.Button>
-                  </rb.ButtonGroup>
-                  <rb.ButtonGroup style={{textAlign:'center', position:'absolute', left:'50%', top: '50%',  transform: 'translateY(-50%) translateX(-50%)'}}>
-                    <rb.Input type="checkbox" ref='noMarkers'
-                              disabled={markers.length!==0}
-                              checked={JSON.parse(self.state.imgMeta.noMarkers)}
-                              label={'No spindles in epoch'}
-                              onClick={self.setNoMarkers}/>
-                  </rb.ButtonGroup>
-                  <rb.ButtonGroup className='pull-right'>
-                    {self.state.imgMeta.prac==='true' ?
-                      <rb.Button bsStyle='warning' //TODO make custom style
-                                 onClick={self.compareToGS}>Toggle correct markers</rb.Button>
-                      : []}
-                    {self.state.imgMeta.idx!==self.state.imgMeta.idxMax ?
-                        <rb.Button bsStyle="primary" ref='next'
-                                     disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (markers.length>0 && self.state.confCounter <= 0) || self.state.showGSMarkers) || self.state.HITsComplete || self.props.userData.userType==='preview'}
-                                     onClick={self.getNextRemImage}>{'Next Epoch'}
-                        </rb.Button> :
-                        <rb.Button bsStyle="warning" ref='next'
-                                     disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (markers.length>0 && self.state.confCounter <= 0) || self.state.showGSMarkers) || self.state.HITsComplete}
-                                     onClick={self.openSubmit}>{'Submit Completed HIT'}
-                        </rb.Button>}
-                  </rb.ButtonGroup>
-                </rb.ButtonToolbar>
+                {self.drawButtons()}
               </div>
             </rb.ListGroupItem>
           </rb.ListGroup>

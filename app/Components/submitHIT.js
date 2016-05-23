@@ -4,6 +4,7 @@ module.exports = React.createClass({
   displayName: 'SubmitHIT',
 
   componentDidMount: function(){
+    var self = this;
     $( "#mturk_form" ).submit(function( event ) {
       //alert( "Handler for .submit() called." );
       self.props.submitHit();
