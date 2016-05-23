@@ -359,7 +359,7 @@ module.exports = React.createClass({
                 self.props.userData.userType==='other' ?
                   <p className='thank-you-text'>All HITs complete, Thank You!</p> : <p className='thank-you-text'>HIT complete, Thank You! Return to Mturk to select more</p>
                 : imgAndMarkers}
-              {self.state.showSubmit ? <SubmitHIT showSubmit={self.state.showSubmit} closeSubmit={self.closeSubmit} submitHit={self.submitHit}/> : []}
+              {self.state.showSubmit ? <SubmitHIT showSubmit={self.state.showSubmit} closeSubmit={self.closeSubmit} submitHit={self.submitHit} userData={self.props.userData}/> : []}
               <div className='row' style={{position:'relative',textAlign:'center'}}>
                 <rb.ButtonToolbar>
                   <rb.ButtonGroup className='pull-left'>
