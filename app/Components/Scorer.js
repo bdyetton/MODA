@@ -29,7 +29,8 @@ module.exports = React.createClass({
       showInst: this.props.showInstructions,
       widthOfImg: 900,
       showSubmit: false,
-      HITsComplete: false
+      HITsComplete: false,
+      numMarkers: 0
     };
   },
 
