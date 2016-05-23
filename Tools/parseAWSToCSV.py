@@ -6,7 +6,8 @@ import yaml
 import csv
 from os import walk
 
-mypath = 'DownloadedUserData/Training2/'
+currentPhase = 'BenTesting/'
+mypath = 'DownloadedUserData/'+currentPhase
 numImgPerBatch = 5
 imgData = {}
 
@@ -14,10 +15,10 @@ for (dirpath, dirnames, filenames) in walk(mypath):
     break
 
 
-with open('EventLocations.csv', 'wb') as eventLocCsvFile:
+with open(mypath+'EventLocations.csv', 'wb') as eventLocCsvFile:
     eventLocCsvWriter = csv.writer(eventLocCsvFile)
     eventLocCsvWriter.writerow(['epochNum', 'blockNum', 'annotatorID', 'annotatorEventIndex', 'startPercent', 'durationPercent', 'startSecs', 'durationSecs', 'scoreConfidence'])
-    with open('EpochViews.csv', 'wb') as epochCsvFile:
+    with open(mypath+'EpochViews.csv', 'wb') as epochCsvFile:
         epochCsvWriter = csv.writer(epochCsvFile)
         epochCsvWriter.writerow(['filename','epochNum','blockNum','annotatorID'])
         for userFile in filenames: #colate markers, and collate batches

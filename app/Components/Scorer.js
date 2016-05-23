@@ -122,20 +122,8 @@ module.exports = React.createClass({
 
   submitHit: function() {
     var self = this;
-    var url = self.props.userData.turkSubmitTo + '/mturk/externalSubmit';
-    url = url + "?assignmentId=" + self.props.userData.assignmentId +
-                 "&hitId=" + self.props.userData.hitId +
-                 "&workerId=" + self.props.userData.workerId;
-    $.ajax({
-      url: url,
-      data: {assignmentId:self.props.userData.assignmentId},
-      type: 'POST',
-      success: function(resp) { console.log('good');},
-      error: function(resp, err) { console.log('fail'); console.log(resp); console.log(err);}
-    });
-
     $.get('/api/submitHit', {user: this.props.userData.userName}, function(data) {
-      if (self.props.userData.userType==='Other') { ///FIXME
+      if (self.props.userData.userType==='other') {
         self.getNextRemImage();
         if (self.state.imgMeta.setsCompleted === self.state.imgMeta.setsMax){
           self.setState({HITsComplete:true, showSubmit:false});
@@ -144,9 +132,6 @@ module.exports = React.createClass({
         }
       } else {
         self.setState({HITsComplete:true, showSubmit:false});
-        var postAddress = self.props.userData.turkSubmitTo + '/mturk/externalSubmit?assignmentID=' + self.props.userData.assignmentId;
-        //console.log(postAddress)
-        //$.post(postAddress,{assignmentId:self.props.userData.assignmentId},'jsonp')
       }
     });
   },
@@ -399,11 +384,11 @@ module.exports = React.createClass({
                       : []}
                     {self.state.imgMeta.idx!==self.state.imgMeta.idxMax ?
                         <rb.Button bsStyle="primary" ref='next'
-                                     /*disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (markers.length>0 && self.state.confCounter <= 0) || self.state.showGSMarkers) || self.state.HITsComplete || self.props.userData.userType==='preview'}*/
+                                     disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (markers.length>0 && self.state.confCounter <= 0) || self.state.showGSMarkers) || self.state.HITsComplete || self.props.userData.userType==='preview'}
                                      onClick={self.getNextRemImage}>{'Next Epoch'}
                         </rb.Button> :
                         <rb.Button bsStyle="warning" ref='next'
-                                     /*disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (markers.length>0 && self.state.confCounter <= 0) || self.state.showGSMarkers) || self.state.HITsComplete}*/
+                                     disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (markers.length>0 && self.state.confCounter <= 0) || self.state.showGSMarkers) || self.state.HITsComplete}
                                      onClick={self.openSubmit}>{'Submit Completed HIT'}
                         </rb.Button>}
                   </rb.ButtonGroup>

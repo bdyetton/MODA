@@ -115,7 +115,7 @@ function imgServer(){
       user.markerIndex = marker.markerIndex;
     }
     marker = self.processMarker(marker); //convert px to secs (adds xSecs field)
-
+    console.log(marker.conf);
     //check if this marker exists in the server already
     var exists = false;
     var setIdx = Math.floor((user.idx) / user.batches.batchMeta.imgPerBatch);
