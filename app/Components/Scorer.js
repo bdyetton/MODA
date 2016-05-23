@@ -122,10 +122,12 @@ module.exports = React.createClass({
 
   submitHit: function() {
     var self = this;
-    var nonSecure = "http://workersandbox.mturk.com";
-    var secure = self.props.userData.turkSubmitTo;
+    var url = self.props.userData.turkSubmitTo + '/mturk/externalSubmit';
+    url = url + "?assignmentId=" + self.props.userData.assignmentId +
+                 "&hitId=" + self.props.userData.hitId +
+                 "&workerId=" + self.props.userData.workerId;
     $.ajax({
-      url: nonSecure + '/mturk/externalSubmit',
+      url: url,
       data: {assignmentId:self.props.userData.assignmentId},
       type: 'POST',
       success: function(resp) { console.log('good');},
