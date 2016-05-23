@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e305a046-6328-4772-80fc-a659578f2d34" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Components/submitHIT.js" afterPath="$PROJECT_DIR$/app/Components/submitHIT.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="simple-webpack-react-starter.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,8 +38,8 @@
       <file leaf-file-name="submitHIT.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Components/submitHIT.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.20625">
-              <caret line="11" column="8" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="8" />
+            <state vertical-scroll-proportion="0.5625">
+              <caret line="30" column="99" selection-start-line="30" selection-start-column="99" selection-end-line="30" selection-end-column="99" />
               <folding />
             </state>
           </provider>
@@ -945,8 +946,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Components/submitHIT.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.20625">
-          <caret line="11" column="8" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="8" />
+        <state vertical-scroll-proportion="0.5625">
+          <caret line="30" column="99" selection-start-line="30" selection-start-column="99" selection-end-line="30" selection-end-column="99" />
           <folding />
         </state>
       </provider>
