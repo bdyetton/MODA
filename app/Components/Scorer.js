@@ -122,6 +122,14 @@ module.exports = React.createClass({
 
   submitHit: function() {
     var self = this;
+    $.ajax({
+      url: self.props.userData.turkSubmitTo + '/mturk/externalSubmit',
+      data: {assignmentId:self.props.userData.assignmentId},
+      type: 'POST',
+      success: function(resp) { console.log('good');},
+      error: function(resp, err) { console.log('fail'); console.log(resp); console.log(err);}
+    });
+
     $.get('/api/submitHit', {user: this.props.userData.userName}, function(data) {
       if (self.props.userData.userType==='Other') { ///FIXME
         self.getNextRemImage();
@@ -135,13 +143,6 @@ module.exports = React.createClass({
         var postAddress = self.props.userData.turkSubmitTo + '/mturk/externalSubmit?assignmentID=' + self.props.userData.assignmentId;
         //console.log(postAddress)
         //$.post(postAddress,{assignmentId:self.props.userData.assignmentId},'jsonp')
-        $.ajax({
-          url: self.props.userData.turkSubmitTo + '/mturk/externalSubmit',
-          data: {assignmentId:self.props.userData.assignmentId},
-          type: 'POST',
-          success: function(resp) { console.log('good');},
-          error: function(resp, err) { console.log('fail'); console.log(resp); console.log(err);}
-        });
       }
     });
   },
