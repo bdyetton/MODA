@@ -8,7 +8,7 @@ module.exports = React.createClass({
     $( "#mturk_form" ).submit(function( event ) {
       //alert( "Handler for .submit() called." );
       self.props.submitHit();
-      console.log(event)
+      console.log(event);
       //event.preventDefault();
     });
   },
@@ -29,7 +29,7 @@ module.exports = React.createClass({
                   method="post"
                   id="mturk_form"
                   action={self.props.userData.turkSubmitTo + "/mturk/externalSubmit?assignmentId=" + self.props.userData.assignmentId}>
-              <input type="hidden" value=={self.props.userData.assignmentId} name="assignmentId" id={self.props.userData.assignmentId}/>
+              <input type="hidden" value={self.props.userData.assignmentId} name="assignmentId" id={self.props.userData.assignmentId}/>
               <rb.Input type="submit" style={{width:'70%', float: "left"}}/>
               <rb.Button onClick={self.props.closeSubmit}>Cancel</rb.Button>
             </form>
