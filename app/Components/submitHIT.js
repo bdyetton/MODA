@@ -29,7 +29,9 @@ module.exports = React.createClass({
                   method="post"
                   id="mturk_form"
                   action={self.props.userData.turkSubmitTo + "/mturk/externalSubmit?assignmentId=" + self.props.userData.assignmentId}>
-              <input type="hidden" value={self.props.userData.assignmentId} name="assignmentId" id={self.props.userData.assignmentId}/>
+              <input type="hidden" value={self.props.userData.assignmentId} name="assignmentId" id="assignmentId"/>
+              <input type="hidden" value={self.props.userData.workerId} name="workerId" id="workerId"/>
+              <input type="hidden" value={self.props.userData.hitId} name="hitId" id="hitId"/>
               <rb.Input type="submit" style={{width:'70%', float: "left"}}/>
               <rb.Button onClick={self.props.closeSubmit}>Cancel</rb.Button>
             </form>
