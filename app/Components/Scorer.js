@@ -3,6 +3,8 @@ var Marker = require('./Marker');
 var SubmitHIT = require('./submitHIT');
 var Instructions = require('./Instructions');
 var rb = require('react-bootstrap');
+var pannelMargin = 10;
+var listMargin = 15;
 module.exports = React.createClass({
   displayName: 'Scorer',
 
@@ -57,8 +59,6 @@ module.exports = React.createClass({
 
   checkScreen: function(){
     var self=this;
-    var pannelMargin = 10;
-    var listMargin = 15;
     var widthOfPanel = ReactDOM.findDOMNode(self.refs.grandPanel).offsetWidth;
     var availableSpace = widthOfPanel - 2*(pannelMargin+listMargin) - 20; //20 for padding
     console.log(availableSpace);
