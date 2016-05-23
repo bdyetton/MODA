@@ -296,7 +296,7 @@ module.exports = React.createClass({
   removeMarker: function(index){
     var markers = this.state.markers;
     delete markers[index];
-    this.setState({markers:markers, numMarkers:self.state.numMarkers-1});
+    this.setState({markers:markers, numMarkers:this.state.numMarkers-1});
   },
 
   //changeStage: function(stage){

@@ -28,7 +28,7 @@ module.exports = React.createClass({
             <form name="mturk_form"
                   method="post"
                   id="mturk_form"
-                  action={self.props.userData.turkSubmitTo + "/mturk/externalSubmit&assignmentId=" + self.props.userData.assignmentId}>
+                  action={self.props.userData.turkSubmitTo + "/mturk/externalSubmit?assignmentId=" + self.props.userData.assignmentId}>
               <input type="hidden" value='' name="assignmentId" id={self.props.userData.assignmentId}/>
               <rb.Input type="submit" style={{width:'70%', float: "left"}}/>
               <rb.Button onClick={self.props.closeSubmit}>Cancel</rb.Button>
