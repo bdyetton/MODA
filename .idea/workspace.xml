@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e305a046-6328-4772-80fc-a659578f2d34" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Components/Scorer.js" afterPath="$PROJECT_DIR$/app/Components/Scorer.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Components/submitHIT.js" afterPath="$PROJECT_DIR$/app/Components/submitHIT.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="simple-webpack-react-starter.iws" />
@@ -25,21 +25,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Scorer.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Scorer.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Components/Scorer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.36695278">
+            <state vertical-scroll-proportion="-12.214286">
               <caret line="127" column="61" selection-start-line="127" selection-start-column="61" selection-end-line="127" selection-end-column="61" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="submitHIT.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="submitHIT.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Components/submitHIT.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="14" column="26" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
+            <state vertical-scroll-proportion="0.35625">
+              <caret line="19" column="26" selection-start-line="19" selection-start-column="26" selection-end-line="19" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -144,7 +144,6 @@
         <option value="$PROJECT_DIR$/app/Components/Marker.js" />
         <option value="$PROJECT_DIR$/.babelrc" />
         <option value="$PROJECT_DIR$/node_modules/react-resizable-and-movable/node_modules/react-resizable-box/lib/index.js" />
-        <option value="$PROJECT_DIR$/app/Components/submitHIT.js" />
         <option value="$PROJECT_DIR$/app/Assets/style.scss" />
         <option value="$PROJECT_DIR$/app/Components/Instructions.js" />
         <option value="$PROJECT_DIR$/Tools/postHits.py" />
@@ -155,6 +154,7 @@
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/server/index.js" />
         <option value="$PROJECT_DIR$/app/Components/Scorer.js" />
+        <option value="$PROJECT_DIR$/app/Components/submitHIT.js" />
       </list>
     </option>
   </component>
@@ -921,18 +921,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Components/submitHIT.js">
+    <entry file="file://$PROJECT_DIR$/app/Components/Scorer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="26" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
+        <state vertical-scroll-proportion="-12.214286">
+          <caret line="127" column="61" selection-start-line="127" selection-start-column="61" selection-end-line="127" selection-end-column="61" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Components/Scorer.js">
+    <entry file="file://$PROJECT_DIR$/app/Components/submitHIT.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36695278">
-          <caret line="127" column="61" selection-start-line="127" selection-start-column="61" selection-end-line="127" selection-end-column="61" />
+        <state vertical-scroll-proportion="0.35625">
+          <caret line="19" column="26" selection-start-line="19" selection-start-column="26" selection-end-line="19" selection-end-column="26" />
           <folding />
         </state>
       </provider>

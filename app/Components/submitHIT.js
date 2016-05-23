@@ -12,6 +12,11 @@ module.exports = React.createClass({
           </rb.Modal.Header>
           <rb.Modal.Body>
             Once this HIT is submitted you will not be able to edit spindle markers.
+            <form name="mturk_form" method="post" id="mturk_form" action="http://workersandbox.mturk.com/mturk/externalSubmit">
+              <input type="hidden" value='' name="assignmentId" id="assignmentId"/>
+              <input type="hidden" value="my_data" name="data" id="data"/>
+              <input type="submit" value="Send to MTurk"/>
+            </form>
           </rb.Modal.Body>
           <rb.Modal.Footer>
             <rb.Button onClick={this.props.submitHit}>Confirm Submission</rb.Button>
