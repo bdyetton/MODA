@@ -9,7 +9,7 @@ module.exports = React.createClass({
       //alert( "Handler for .submit() called." );
       self.props.submitHit();
       console.log(event)
-      event.preventDefault();
+      //event.preventDefault();
     });
   },
 
