@@ -25,6 +25,7 @@ module.exports = React.createClass({
             Once this HIT is submitted you will not be able to edit spindle markers.
           </rb.Modal.Body>
           <rb.Modal.Footer>
+            {self.props.userData.userType==='mturker' ?
             <form name="mturk_form"
                   method="post"
                   id="mturk_form"
@@ -34,7 +35,11 @@ module.exports = React.createClass({
               <input type="hidden" value={self.props.userData.hitId} name="hitId" id="hitId"/>
               <rb.Input type="submit" style={{width:'70%', float: "left"}}/>
               <rb.Button onClick={self.props.closeSubmit}>Cancel</rb.Button>
-            </form>
+            </form> :
+            <div>
+              <rb.Button onClick={self.props.closeSubmit}>Cancel</rb.Button>
+              <rb.Button onClick={self.props.submitHit}>Submit</rb.Button>
+            </div>}
           </rb.Modal.Footer>
         </rb.Modal>
     );

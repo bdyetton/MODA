@@ -350,12 +350,13 @@ label {
     margin:10px;
 }
 
-.modal-dialog-inst {
-   position: absolute;
-   top:50px;
-   z-index: 10040;
-   overflow: auto;
-   overflow-y: auto;
+.modal-dialog{
+    position: relative;
+    display: table; //This is important
+    overflow-y: auto;
+    overflow-x: auto;
+    width: auto;
+    min-width: 300px;
 }
 
 .thank-you-text {

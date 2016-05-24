@@ -10,6 +10,12 @@ module.exports = React.createClass({
     };
   },
 
+  componentWillMount: function(){
+    $('#myModal').on('show.bs.modal', function () {
+      $('.modal-content').css('height',$( window ).height()*0.9);
+    });
+  },
+
   nextPage: function(){
     this.changePage(1)
   },
@@ -35,14 +41,15 @@ module.exports = React.createClass({
   page1: function() {
     return (
       <div>
-        <h4>Welcome, thanks for helping us out. Please read the following instructions <i>at least once.</i></h4>
+        <h4>Welcome, thanks for helping us out. Please read the following img/instructions <i>at least once.</i></h4>
         <p className='std-para'>
             You task is to find <b>sleep spindles</b> in brainwaves recorded from sleeping subjects.
             You will identify spindles by drawing boxes around them, and then reporting how confident
             you are about the identification. Here is an example of a window containing two spindles
             (underlined in green). <b>Not all windows will contain spindles.</b>
           </p>
-          <img src="instruction/twoSpindles.jpg" alt="Example of two spindles"></img>
+          <img src="img/instruction/page1.png" alt="Example of two spindles"></img>
+          <br/><br/>
           {this.props.userData.userType=='other' ? <p className='std-para'>
             Your data is saved automatically, so you won't lose any work. When you leave and log back in
             using the same username, it will return to where you left off. If you experience any problems with
@@ -63,7 +70,8 @@ module.exports = React.createClass({
         You will be presented with EEG data that measures the brain activity of a person that is in stage 2 sleep. The
         goal is to identify patterns in the data that are known as Sleep Spindles.
       </p>
-      <img src="instruction/spindleAndK.jpg" alt="Example of a spindle and K-complex"></img>
+      <img src="img/instruction/page2.png" alt="Example of a spindle and K-complex"></img>
+      <br/>
       <p className='std-para'>
         <b>Figure 1 (source: wikipedia):</b> An example of a sleep spindle and a K-complex. These features are seen in the EEG during
         stage 2 sleep. Note that over time (moving to the right in the horizontal axis) a change in voltage of the
@@ -99,7 +107,7 @@ module.exports = React.createClass({
         wave might be so close to the spindle that it changes the shape of the sleep spindle. A certain amount of
         deformation in the shape of sleep spindle (ie the axis of spindle is not completely flat) is ok (Figure 2).
       </p>
-      <img src="instruction/shapeOfSpindle.jpg" alt="Shape of spindle example"></img>
+      <img src="img/instruction/page3.png" alt="Shape of spindle example"></img>
       <p className='std-para'>
         <b>Figure 2:</b> Shape of the spindle (underlined in red) is acceptable in the first three examples, but not the
         fourth or fifth. Note that the third spindle shape is changed slightly because of other waves.
@@ -119,13 +127,13 @@ module.exports = React.createClass({
         important that the spindle appears as a 'burst'; of waves that are slightly faster (closer together) than the waves
         around it (Figure 4).
       </p>
-      <img src="instruction/SpeedSpindle.jpg" alt="speed of spindle waves explanation"></img>
+      <img src="img/instruction/page4a.png" alt="speed of spindle waves explanation"></img>
       <p className='std-para'>
         <b>Figure 3:</b> Estimating the speed of the spindle by counting the number of waves. In this enlarged
         picture, it is easy to see there are between 6 and 7 waves in 0.5 seconds, which is equal to 13 cycles per
         seconds. This is within the 12-14 cycle per second range of sleep spindles.
       </p>
-      <img src="instruction/speedSpindleExamples.jpg" alt="speed of spindle waves examples"></img>
+      <img src="img/instruction/page4b.png" alt="speed of spindle waves examples"></img>
       <p className='std-para'>
         <b>Figure 4:</b> The first two examples are appropriate speeds for a sleep spindle. The third example is too
         slow, and the fourth example too fast (too many cycles per second) to be a sleep spindle. Notice that
@@ -142,7 +150,7 @@ module.exports = React.createClass({
         Most commonly, spindles are around 0.5 to 1.0 seconds in length (duration), but can be as short as 0.4
         seconds and as long as 2.5 seconds (Figure 5).
       </p>
-      <img src="instruction/durationSpindle.jpg" alt="duration of spindle explanation"></img>
+      <img src="img/instruction/page5.png" alt="duration of spindle explanation"></img>
       <p className='std-para'>
         <b>Figure 5:</b> Example spindles of different durations. The second example could be considered one single
         long spindle, but there are slow segments in the middle, and in this case, it has been considered three
@@ -189,7 +197,7 @@ module.exports = React.createClass({
           <br/>If the spindle runs into the end or beginning of the window, just draw the bounding box right up to the edge
           of the window.
       </p>
-      <img src="instruction/HowTo.jpg" alt="duration of spindle explanation"></img>
+      <img src="img/instruction/page7.png" alt="duration of spindle explanation"></img>
       <p className='std-para'>
         <b>Figure 6:</b> Use your mouse to draw a bounding box around the spindle. The size of the bounding box
         can be changed by clicking on the middle or on the edges of the box and dragging. In this case, the
@@ -206,12 +214,20 @@ module.exports = React.createClass({
       <p className='std-para'>
         Here are some examples of spindles (underlined in green), to help you understand what you should be looking for.
       </p>
-      <img src="instruction/ex1.jpg" alt="example"></img>
-      <img src="instruction/ex2.jpg" alt="example"></img>
-      <img src="instruction/ex3.jpg" alt="example"></img>
-      <img src="instruction/ex4.jpg" alt="example"></img>
-      <img src="instruction/ex5.jpg" alt="example"></img>
-      <img src="instruction/ex6.jpg" alt="example"></img>
+      <img src="img/instruction/ex1.png" alt="example"></img>
+      <img src="img/instruction/ex2.png" alt="example"></img>
+      <img src="img/instruction/ex3.png" alt="example"></img>
+      <img src="img/instruction/ex4.png" alt="example"></img>
+      <img src="img/instruction/ex5.png" alt="example"></img>
+      <img src="img/instruction/ex6.png" alt="example"></img>
+      <img src="img/instruction/ex7.png" alt="example"></img>
+      <img src="img/instruction/ex8.png" alt="example"></img>
+      <img src="img/instruction/ex9.png" alt="example"></img>
+      <img src="img/instruction/ex10.png" alt="example"></img>
+      <img src="img/instruction/ex11.png" alt="example"></img>
+      <img src="img/instruction/ex12.png" alt="example"></img>
+      <img src="img/instruction/ex13.png" alt="example"></img>
+      <img src="img/instruction/ex14.png" alt="example"></img>
       <p className='std-para's>
       <b>Figure 7:</b> Here are some examples of sleep spindles, indicated with a green bar below them. These are
         the events you will want to identify by drawing a bounding box around them with your mouse. There
@@ -254,21 +270,21 @@ module.exports = React.createClass({
         Instructions
         </rb.Button>
         {this.props.showInst ?
-        <rb.Modal dataBackdrop="static" id='instructions' className='inst' show={this.props.showInst} onHide={this.props.closeInst}
+        <rb.Modal className='myModal' dataBackdrop="static" id='img/instructions' className='inst' show={this.props.showInst} onHide={this.props.closeInst}
                   bsSize="large" aria-labelledby="contained-modal-title-lg">
           <rb.Modal.Header closeButton={this.state.instComplete}>
             <rb.Modal.Title>Instructions</rb.Modal.Title>
           </rb.Modal.Header>
-          <rb.Modal.Body style={{height:'600px'}}>
+          <rb.Modal.Body >
             {this['page'+this.state.page]()}
           </rb.Modal.Body>
-          <rb.Modal.Footer style={{bottom:0}}>
+          <rb.Modal.Footer>
             <rb.Button disabled={this.state.page===1} onClick={this.previousPage}>Back</rb.Button>
             <rb.Button disabled={this.state.page===10} onClick={this.nextPage}>Next</rb.Button>
-            <rb.Button dataToggle="tooltip" title='Please read all instructions' disabled={!this.state.instComplete} onClick={this.props.closeInst}>Close</rb.Button>
+            <rb.Button dataToggle="tooltip" title='Please read all img/instructions' disabled={!this.state.instComplete} onClick={this.props.closeInst}>Close</rb.Button>
           </rb.Modal.Footer>
         </rb.Modal> : []}
-        <a data-controls-modal="instructions"
+        <a data-controls-modal="img/instructions"
          data-backdrop="static"
          data-keyboard="false"
          href="#"/>
@@ -277,3 +293,6 @@ module.exports = React.createClass({
     );
   }
 });
+
+//style={{bottom:0}}
+//style={{height:'30pc'}}

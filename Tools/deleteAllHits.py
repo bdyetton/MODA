@@ -15,11 +15,11 @@ mturk = boto.mturk.connection.MTurkConnection(
 
 print boto.Version  # 2.29.1
 print mturk.get_account_balance()  # [$10,000.00]
-titleToRemove = 'hi'
+titleToRemove = 'Find patterns in sleeping brainwaves'
 
 allHits = mturk.get_all_hits()
 for hit in allHits:
-    print hit.Title
-    if hit.Titile == titleToRemove:
+    if hit.Title == titleToRemove:
+        print 'deleting'
         mturk.disable_hit(hit.HITId)
 

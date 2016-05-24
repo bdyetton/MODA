@@ -1,11 +1,14 @@
+# -*- coding: utf-8 -*-
 __author__ = 'ben'
 import os
 import boto.mturk.connection
+from boto.mturk.qualification import PercentAssignmentsApprovedRequirement, Qualifications, Requirement
+
 
 sandbox_host = 'mechanicalturk.sandbox.amazonaws.com'
 real_host = 'mechanicalturk.amazonaws.com'
-print os.environ['AWS_SECRET_ACCESS_KEY']
-print os.environ['AWS_ACCESS_KEY_ID']
+sandbox_qaul = '3OFCXZK7I1YMQQ45Q5LPJ2OOHCHK93'
+real_qual = '3OFCXZK7I1YMQQ45Q5LPJ2OOHCHK93' #FIXME
 mturk = boto.mturk.connection.MTurkConnection(
     aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
     aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'],
@@ -24,6 +27,11 @@ frame_height = 800  # the height of the iframe holding the external hit
 amount = .01
 
 questionform = boto.mturk.question.ExternalQuestion(url, frame_height)
+quals = Qualifications()
+
+quals.add(Requirement('00000000000000000040', 'GreaterThanOrEqualTo', '100')) #'Worker_​NumberHITsApproved'
+quals.add(Requirement('000000000000000000L0', 'GreaterThanOrEqualTo', '95')) #'Worker_​PercentHITsApproved'
+quals.add(Requirement(sandbox_qaul, 'DoesNotExist'))
 
 create_hit_result = mturk.create_hit(
     title=title,
@@ -31,6 +39,7 @@ create_hit_result = mturk.create_hit(
     keywords=keywords,
     question=questionform,
     reward=boto.mturk.price.Price(amount=amount),
+    qualifications=quals,
     response_groups=('Minimal', 'HITDetail'),  # I don't know what response groups are
 )
 
