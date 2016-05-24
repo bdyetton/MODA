@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e305a046-6328-4772-80fc-a659578f2d34" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Components/Instructions.js" afterPath="$PROJECT_DIR$/app/Components/Instructions.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Components/Login.js" afterPath="$PROJECT_DIR$/app/Components/Login.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Components/Scorer.js" afterPath="$PROJECT_DIR$/app/Components/Scorer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tools/parseAWSToCSV.py" afterPath="$PROJECT_DIR$/Tools/parseAWSToCSV.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Assets/style.scss" afterPath="$PROJECT_DIR$/app/Assets/style.scss" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="simple-webpack-react-starter.iws" />
@@ -29,11 +26,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Scorer.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Scorer.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Components/Scorer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="391" column="93" selection-start-line="391" selection-start-column="93" selection-end-line="391" selection-end-column="93" />
+            <state vertical-scroll-proportion="0.375">
+              <caret line="390" column="81" selection-start-line="390" selection-start-column="81" selection-end-line="390" selection-end-column="81" />
               <folding />
             </state>
           </provider>
@@ -49,11 +46,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Login.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Login.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Components/Login.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.22083333">
-              <caret line="15" column="14" selection-start-line="15" selection-start-column="14" selection-end-line="15" selection-end-column="14" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="14" column="40" selection-start-line="14" selection-start-column="40" selection-end-line="14" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -64,13 +61,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="33" column="91" selection-start-line="33" selection-start-column="91" selection-end-line="33" selection-end-column="91" />
-              <folding>
-                <marker date="1464042394203" expanded="true" signature="423:1675" placeholder="&lt;xml/&gt;" />
-                <marker date="1464042394203" expanded="true" signature="607:733" placeholder="&lt;xml/&gt;" />
-                <marker date="1464042394203" expanded="true" signature="744:871" placeholder="&lt;xml/&gt;" />
-                <marker date="1464042394203" expanded="true" signature="882:1655" placeholder="&lt;xml/&gt;" />
-                <marker date="1464042394203" expanded="true" signature="912:1626" placeholder="&lt;xml/&gt;" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -108,8 +99,8 @@
       <file leaf-file-name="style.scss" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Assets/style.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="350" column="1" selection-start-line="350" selection-start-column="1" selection-end-line="350" selection-end-column="1" />
+            <state vertical-scroll-proportion="-20.37037">
+              <caret line="365" column="1" selection-start-line="365" selection-start-column="1" selection-end-line="365" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -870,28 +861,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Components/submitHIT.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="33" column="91" selection-start-line="33" selection-start-column="91" selection-end-line="33" selection-end-column="91" />
-          <folding>
-            <marker date="1464042394203" expanded="true" signature="423:1675" placeholder="&lt;xml/&gt;" />
-            <marker date="1464042394203" expanded="true" signature="607:733" placeholder="&lt;xml/&gt;" />
-            <marker date="1464042394203" expanded="true" signature="744:871" placeholder="&lt;xml/&gt;" />
-            <marker date="1464042394203" expanded="true" signature="882:1655" placeholder="&lt;xml/&gt;" />
-            <marker date="1464042394203" expanded="true" signature="912:1626" placeholder="&lt;xml/&gt;" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/imgServer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="112" column="50" selection-start-line="112" selection-start-column="50" selection-end-line="112" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Tools/postHits.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -908,14 +877,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Assets/style.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="350" column="1" selection-start-line="350" selection-start-column="1" selection-end-line="350" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Tools/deleteAllHits.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -926,10 +887,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/Components/submitHIT.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="33" column="91" selection-start-line="33" selection-start-column="91" selection-end-line="33" selection-end-column="91" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Components/Instructions.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="22" column="35" selection-start-line="22" selection-start-column="35" selection-end-line="22" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Components/Login.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="40" selection-start-line="14" selection-start-column="40" selection-end-line="14" selection-end-column="40" />
           <folding />
         </state>
       </provider>
@@ -942,18 +919,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Components/Scorer.js">
+    <entry file="file://$PROJECT_DIR$/server/imgServer.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="391" column="93" selection-start-line="391" selection-start-column="93" selection-end-line="391" selection-end-column="93" />
+          <caret line="112" column="50" selection-start-line="112" selection-start-column="50" selection-end-line="112" selection-end-column="50" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Components/Login.js">
+    <entry file="file://$PROJECT_DIR$/app/Assets/style.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22083333">
-          <caret line="15" column="14" selection-start-line="15" selection-start-column="14" selection-end-line="15" selection-end-column="14" />
+        <state vertical-scroll-proportion="-20.37037">
+          <caret line="365" column="1" selection-start-line="365" selection-start-column="1" selection-end-line="365" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Components/Scorer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.375">
+          <caret line="390" column="81" selection-start-line="390" selection-start-column="81" selection-end-line="390" selection-end-column="81" />
           <folding />
         </state>
       </provider>
