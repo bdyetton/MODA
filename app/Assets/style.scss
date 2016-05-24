@@ -350,9 +350,9 @@ label {
     margin:10px;
 }
 
-.modal-dialog {
+.modal-dialog-inst {
    position: absolute;
-   top:150px;
+   top:50px;
    z-index: 10040;
    overflow: auto;
    overflow-y: auto;
@@ -361,4 +361,8 @@ label {
 .thank-you-text {
   color: red;
   font-size: 24pt;
+}
+
+.std-para {
+  font-size: 12pt;
 }

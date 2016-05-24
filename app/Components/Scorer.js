@@ -238,7 +238,7 @@ module.exports = React.createClass({
               />;
           });
         }
-      })};
+      })}
       this.setState({
         gsMarkers: popGSMarkers
       });
@@ -351,14 +351,14 @@ module.exports = React.createClass({
                            ref='previous'
                            disabled={parseInt(self.state.imgMeta.idx)===0 || self.state.confCounter > 0 || self.state.HITsComplete}
                            onClick={self.getPreviousRemImage}>
-                  {self.state.imgMeta.idx == 0 ? 'This is the first epoch' : 'Previous Epoch'}
+                  {self.state.imgMeta.idx == 0 ? 'This is the first window' : 'Previous Epoch'}
                 </rb.Button>
               </rb.ButtonGroup>
               <rb.ButtonGroup style={{textAlign:'center', position:'absolute', left:'50%', top: '50%',  transform: 'translateY(-50%) translateX(-50%)'}}>
                 <rb.Input type="checkbox" ref='noMarkers'
                           disabled={self.state.numMarkers!==0}
                           checked={JSON.parse(self.state.imgMeta.noMarkers)}
-                          label={'No spindles in epoch'}
+                          label={'No spindles in window'}
                           onClick={self.setNoMarkers}/>
               </rb.ButtonGroup>
               <rb.ButtonGroup className='pull-right'>
@@ -369,7 +369,7 @@ module.exports = React.createClass({
                 {self.state.imgMeta.idx!==self.state.imgMeta.idxMax ?
                     <rb.Button bsStyle="primary" ref='next'
                                  disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (self.state.numMarkers>0 && self.state.confCounter <= 0) || self.state.showGSMarkers) || self.state.HITsComplete || self.props.userData.userType==='preview'}
-                                 onClick={self.getNextRemImage}>{'Next Epoch'}
+                                 onClick={self.getNextRemImage}>{'Next Window'}
                     </rb.Button> :
                     <rb.Button bsStyle="warning" ref='next'
                                  disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (self.state.numMarkers>0 && self.state.confCounter <= 0) || self.state.showGSMarkers) || self.state.HITsComplete}
@@ -389,9 +389,9 @@ module.exports = React.createClass({
             <div>
              <h4>MODA: Massive Online Data Annotation</h4>
               <div className='pull-left' style={{position:'relative',top:'-36px'}}>
-                <Instructions showInst={self.state.showInst} openInst={self.openInst} closeInst={self.closeInst}/>
+                <Instructions userData={self.props.userData} showInst={self.state.showInst && self.props.userData.userType!=='preview'} openInst={self.openInst} closeInst={self.closeInst}/>
               </div>
-              <div className='pull-right' style={{color:'rgb(102, 255, 102)', position:'relative' ,top:'-30px',marginLeft:'15px'}}>{'Epoch '+ (self.state.imgMeta.idx+1) + ' of ' + (self.state.imgMeta.idxMax+1)}</div>
+              <div className='pull-right' style={{color:'rgb(102, 255, 102)', position:'relative' ,top:'-30px',marginLeft:'15px'}}>{'Window '+ (self.state.imgMeta.idx+1) + ' of ' + (self.state.imgMeta.idxMax+1)}</div>
               <div className='pull-right' style={{color:'orange', position:'relative' ,top:'-30px',marginLeft:'5px'}}>{'HITs Complete: '+ (self.state.imgMeta.setsCompleted)}</div>
               {JSON.parse(self.state.imgMeta.prac) ?
                 <div className='pull-right' style={{color:'rgb(102, 255, 102)', position:'relative' ,top:'-30px'}}>Practice Mode:</div>
@@ -414,6 +414,3 @@ module.exports = React.createClass({
     );
   }
 });
-
-//<p>Now logged in as {self.props.user}</p><p>Epoch ID: {self.state.currentRemImage}</p>
-//<Stager stage={self.state.stage} changeStage={self.changeStage}/>

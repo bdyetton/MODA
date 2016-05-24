@@ -6,7 +6,7 @@ import yaml
 import csv
 from os import walk
 
-currentPhase = 'BenTesting/'
+currentPhase = 'Training2/'
 mypath = 'DownloadedUserData/'+currentPhase
 numImgPerBatch = 5
 imgData = {}
@@ -34,7 +34,7 @@ with open(mypath+'EventLocations.csv', 'wb') as eventLocCsvFile:
                             print marker
                             if marker['gs'] == 'true' or marker['deleted'] == 'true':
                                 continue
-                            eventLocCsvWriter.writerow([imgData['epoch'],batch,userData['userName'], marker['markerIndex'], marker['xP'], marker['wP'],marker['xSecs'], marker['wSecs'], marker['conf']])
+                            eventLocCsvWriter.writerow([imgData['epoch'], batch, userData['userName'], marker['markerIndex'], marker['xP'], marker['wP'],marker['xSecs'], marker['wSecs'], marker['conf']])
 
 epochCsvFile.close()
 eventLocCsvFile.close()

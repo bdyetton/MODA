@@ -13,6 +13,7 @@ module.exports = React.createClass({
     if ('workerId' in mTurkLoginData){
       mTurkLoginData.userName=mTurkLoginData.workerId;
       mTurkLoginData.userType='mturker';
+      debugger
       if (mTurkLoginData.assignmentId==='ASSIGNMENT_ID_NOT_AVAILABLE')
       {
         this.parsePreviewLogin();
