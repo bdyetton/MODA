@@ -10,7 +10,7 @@ module.exports = React.createClass({
   componentWillMount: function(){
     var query = URI.parse(window.location.href);
     var mTurkLoginData = URI.parseQuery(query.query);
-    if ('workerId' in mTurkLoginData){
+    if ('assignmentId' in mTurkLoginData){
       mTurkLoginData.userName=mTurkLoginData.workerId;
       mTurkLoginData.userType='mturker';
       if (mTurkLoginData.assignmentId==='ASSIGNMENT_ID_NOT_AVAILABLE')
