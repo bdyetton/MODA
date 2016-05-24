@@ -379,20 +379,24 @@ module.exports = React.createClass({
             </rb.ButtonToolbar>)
   },
 
+  checkForPreview: function() {
+      return (self.props.userData.userType === 'preview' ?
+        <div style={{position:'relative', left:'50%', width:'800px', transform: 'translateX(-50%)'}}>
+          <p className='std-para'><h4>You are <b style={{color:'red'}}>preveiwing</b> this HIT. Click accept above.</h4>
+            <br/><br/>
+            In this task you will draw boxes around particular patterns (<i>sleep spindles</i>)
+            in brainwaves recorded from sleeping subjects. You must first read the instructions
+            and a complete short practice round before HITs will be approved. <br/><br/></p>
+        </div>
+        : [])
+  },
 
   render: function () {
     var self = this;
 
     return (
       <div className='container' style={{textAlign:'center', width:'95%', position:'absolute', left:'50%', top: '50%',  transform: 'translateY(-50%) translateX(-50%)'}}>
-        {self.props.userData.userType==='preview' ? <div style={{position:'relative', left:'50%', width:'800px', transform: 'translateX(-50%)'}}><p className='std-para'>You are <b style={{color:'red'}}>preveiwing</b> this HIT. Click accept above.
-          <br/><br/>
-          In this task you will draw boxes around particular patterns (<i>sleep spindles</i>)
-          in brainwaves recorded from sleeping subjects. You must first read the instructions
-          and a complete short practice round before HITs will be approved. <br/><br/></p></div>
-          : []
-
-        }
+        {self.checkForPreview()}
         <rb.Panel bsStyle="primary" className="grand-panel" ref='grandPanel' textAlign='center' header={
             <div>
              <h4>MODA: Massive Online Data Annotation</h4>
