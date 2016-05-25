@@ -2,8 +2,273 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e305a046-6328-4772-80fc-a659578f2d34" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/index.js" afterPath="$PROJECT_DIR$/server/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/80dpiIn-130dpiOut.7z" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/80dpiIn-80dpiOut.7z" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig001.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig002.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig003.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig004.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig005.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig006.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig007.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig008.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig009.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig010.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig011.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig012.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig013.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig014.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig015.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig016.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig017.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig018.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig019.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig020.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig021.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig022.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig023.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig024.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig025.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig026.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig027.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig028.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig029.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig030.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig031.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig032.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig033.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig034.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig035.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig036.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig037.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig038.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig039.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig040.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig041.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig042.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig043.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig044.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig045.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig046.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig047.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub1/fig049.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig001.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig002.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig003.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig004.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig005.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig006.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig007.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig008.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig009.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig010.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig011.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig012.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig013.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig014.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig015.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig016.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig017.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig018.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig019.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig020.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig021.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig022.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig023.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig024.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig025.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig026.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig027.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig028.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig029.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig030.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig031.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig032.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig033.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig034.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig035.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig036.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig037.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig038.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig039.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig040.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig041.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig042.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig043.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig044.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig045.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig046.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig047.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig049.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig050.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig051.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig052.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig053.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub2/fig054.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub3/fig001.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub3/fig002.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub3/fig003.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub3/fig004.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub3/fig005.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub3/fig006.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub3/fig007.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub3/fig008.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub3/fig009.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub3/fig010.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub3/fig011.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub3/fig012.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub3/fig013.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub3/fig014.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub3/fig015.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub3/fig016.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub3/fig017.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub3/fig018.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub3/fig019.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub3/fig020.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub3/fig021.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub3/fig022.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub3/fig023.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub3/fig024.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub3/fig025.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub3/fig026.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub3/fig027.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig001.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig002.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig003.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig004.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig005.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig006.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig007.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig008.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig009.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig010.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig011.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig012.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig013.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig014.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig015.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig016.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig017.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig018.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig019.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig020.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig021.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig022.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig023.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig024.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig025.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig026.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig027.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig028.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig029.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig030.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig031.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig032.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig033.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig034.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig035.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig036.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig037.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig038.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig039.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig040.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig041.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig042.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig043.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig044.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig045.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig046.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig047.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig049.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig050.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig051.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig052.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig053.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig054.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub4/fig055.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig001.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig002.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig003.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig004.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig005.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig006.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig007.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig008.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig009.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig010.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig011.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig012.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig013.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig014.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig015.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig016.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig017.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig018.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig019.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig020.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig021.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig022.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig023.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig024.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig025.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig026.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig027.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig028.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig029.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig030.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig031.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig032.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig033.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig034.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig035.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig036.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig037.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig038.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig039.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig040.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig041.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig042.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig043.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig044.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig045.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig046.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig047.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig048.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig049.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig050.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig051.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig052.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig053.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig054.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig055.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig056.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig057.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig058.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig059.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig060.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig061.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig062.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig063.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig064.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig065.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig066.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig067.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig068.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig069.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig070.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig071.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig072.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig073.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig074.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Old REM Images/Sub5/fig075.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tests/content_test.js" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Components/Content.js" afterPath="$PROJECT_DIR$/app/Components/Content.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Components/Instructions.js" afterPath="$PROJECT_DIR$/app/Components/Instructions.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Components/Marker.js" afterPath="$PROJECT_DIR$/app/Components/Marker.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Components/Scorer.js" afterPath="$PROJECT_DIR$/app/Components/Scorer.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="simple-webpack-react-starter.iws" />
@@ -26,11 +291,41 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Scorer.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Scorer.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Components/Scorer.js">
           <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.54375">
+              <caret line="62" column="28" selection-start-line="62" selection-start-column="28" selection-end-line="62" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MatchBox.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Components/MatchBox.js">
+          <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="390" column="13" selection-start-line="390" selection-start-column="13" selection-end-line="390" selection-end-column="13" />
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Marker.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Components/Marker.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-106.71429">
+              <caret line="166" column="26" selection-start-line="166" selection-start-column="17" selection-end-line="166" selection-end-column="26" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Content.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Components/Content.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="27" column="34" selection-start-line="27" selection-start-column="34" selection-end-line="27" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -40,27 +335,17 @@
         <entry file="file://$PROJECT_DIR$/server/index.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
+              <caret line="57" column="3" selection-start-line="57" selection-start-column="3" selection-end-line="57" selection-end-column="3" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="package.json" pinned="false" current-in-tab="true">
+      <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.84887457">
-              <caret line="83" column="1" selection-start-line="83" selection-start-column="1" selection-end-line="83" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="imgServer.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/imgServer.js">
-          <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="107" column="53" selection-start-line="107" selection-start-column="53" selection-end-line="107" selection-end-column="53" />
+              <caret line="83" column="1" selection-start-line="83" selection-start-column="1" selection-end-line="83" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -71,36 +356,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="41" column="19" selection-start-line="41" selection-start-column="19" selection-end-line="41" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Login.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Components/Login.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="14" column="38" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="38" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="style.scss" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Assets/style.scss">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.222222">
-              <caret line="352" column="14" selection-start-line="352" selection-start-column="14" selection-end-line="352" selection-end-column="14" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Instructions.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Components/Instructions.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="50" column="15" selection-start-line="50" selection-start-column="15" selection-end-line="50" selection-end-column="15" />
               <folding />
             </state>
           </provider>
@@ -120,10 +375,7 @@
         <option value="$PROJECT_DIR$/Tools/EventLocations.csv" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/Tools/parseFolderOfImagesToMetaJson.py" />
-        <option value="$PROJECT_DIR$/app/Components/Marker.js" />
         <option value="$PROJECT_DIR$/.babelrc" />
-        <option value="$PROJECT_DIR$/node_modules/react-resizable-and-movable/node_modules/react-resizable-box/lib/index.js" />
-        <option value="$PROJECT_DIR$/app/Components/Content.js" />
         <option value="$PROJECT_DIR$/server/mturk.js" />
         <option value="$PROJECT_DIR$/refreshMODA" />
         <option value="$PROJECT_DIR$/server/imgServer.js" />
@@ -131,12 +383,18 @@
         <option value="$PROJECT_DIR$/Tools/deleteAllHits.py" />
         <option value="$PROJECT_DIR$/Tools/postHits.py" />
         <option value="$PROJECT_DIR$/Tools/parseAWSToCSV.py" />
-        <option value="$PROJECT_DIR$/app/Components/Scorer.js" />
-        <option value="$PROJECT_DIR$/app/Components/Instructions.js" />
         <option value="$PROJECT_DIR$/app/Assets/style.scss" />
         <option value="$PROJECT_DIR$/app/Components/submitHIT.js" />
         <option value="$PROJECT_DIR$/server/index.js" />
         <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/app/Components/ConfidenceBox.js" />
+        <option value="$PROJECT_DIR$/node_modules/react-resizable-box/lib/index.js" />
+        <option value="$PROJECT_DIR$/node_modules/react-resizable-and-movable/node_modules/react-resizable-box/lib/index.js" />
+        <option value="$PROJECT_DIR$/app/Components/Content.js" />
+        <option value="$PROJECT_DIR$/app/Components/Marker.js" />
+        <option value="$PROJECT_DIR$/node_modules/react-resizable-and-movable/lib/index.js" />
+        <option value="$PROJECT_DIR$/app/Components/Instructions.js" />
+        <option value="$PROJECT_DIR$/app/Components/Scorer.js" />
       </list>
     </option>
   </component>
@@ -149,7 +407,7 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="1600" />
-    <option name="width" value="1338" />
+    <option name="width" value="1320" />
     <option name="height" value="1080" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
@@ -175,6 +433,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -190,20 +450,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="MODA" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="simple-webpack-react-starter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MODA" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="server" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -257,10 +503,22 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="simple-webpack-react-starter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MODA" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -490,7 +748,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1600" y="0" width="1338" height="1080" extended-state="0" />
+    <frame x="1600" y="0" width="1320" height="1080" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -498,20 +756,20 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17889221" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18133536" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32928064" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32928064" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -530,21 +788,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/Components/Login.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="34" column="4" selection-start-line="34" selection-start-column="4" selection-end-line="34" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/imgServer.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -638,35 +881,28 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Tools/EpochViews.csv">
-      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-3.2142856">
           <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Tools/EventLocations.csv">
       <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tools/EventLocations.csv">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.64285713">
           <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="40" />
         </state>
       </provider>
+      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build/img/testing1/high_dpi/e1-b1-01-04-0009-smp287001.gif">
       <provider selected="true" editor-type-id="images">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/react-resizable-and-movable/lib/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="164" column="36" selection-start-line="164" selection-start-column="36" selection-end-line="164" selection-end-column="36" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/react-resizable-and-movable/package.json">
@@ -739,27 +975,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/react-resizable-and-movable/node_modules/react-resizable-box/lib/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3375">
-          <caret line="236" column="39" selection-start-line="236" selection-start-column="39" selection-end-line="236" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Components/ConfidenceBox.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.357142">
-          <caret line="13" column="17" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Components/Marker.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.6842103">
-          <caret line="18" column="41" selection-start-line="18" selection-start-column="41" selection-end-line="18" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/App.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -795,18 +1010,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Components/Content.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="27" column="2" selection-start-line="27" selection-start-column="2" selection-end-line="27" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Tools/deleteAllHits.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="21" column="34" selection-start-line="21" selection-start-column="34" selection-end-line="21" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -814,7 +1021,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.39375">
           <caret line="26" column="65" selection-start-line="26" selection-start-column="65" selection-end-line="26" selection-end-column="65" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -822,7 +1028,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.029166667">
           <caret line="51" column="39" selection-start-line="51" selection-start-column="39" selection-end-line="51" selection-end-column="48" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -830,7 +1035,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.35729167">
           <caret line="33" column="8" selection-start-line="33" selection-start-column="8" selection-end-line="33" selection-end-column="39" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -838,25 +1042,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.40416667">
           <caret line="33" column="50" selection-start-line="33" selection-start-column="50" selection-end-line="33" selection-end-column="50" />
-          <folding>
-            <element signature="e#43#52#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Components/Instructions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="50" column="15" selection-start-line="50" selection-start-column="15" selection-end-line="50" selection-end-column="15" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Assets/style.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.222222">
+        <state vertical-scroll-proportion="0.0">
           <caret line="352" column="14" selection-start-line="352" selection-start-column="14" selection-end-line="352" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -864,7 +1056,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="14" column="38" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="38" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -884,10 +1075,48 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Components/Scorer.js">
+    <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="390" column="13" selection-start-line="390" selection-start-column="13" selection-end-line="390" selection-end-column="13" />
+          <caret line="83" column="1" selection-start-line="83" selection-start-column="1" selection-end-line="83" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Components/ConfidenceBox.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.1875">
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-resizable-box/lib/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7875">
+          <caret line="75" column="44" selection-start-line="75" selection-start-column="44" selection-end-line="75" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Components/Content.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="27" column="34" selection-start-line="27" selection-start-column="34" selection-end-line="27" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-resizable-and-movable/node_modules/react-resizable-box/lib/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="74" column="19" selection-start-line="74" selection-start-column="19" selection-end-line="74" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-resizable-and-movable/lib/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="57" column="5" selection-start-line="57" selection-start-column="5" selection-end-line="57" selection-end-column="5" />
           <folding />
         </state>
       </provider>
@@ -895,15 +1124,39 @@
     <entry file="file://$PROJECT_DIR$/server/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
+          <caret line="57" column="3" selection-start-line="57" selection-start-column="3" selection-end-line="57" selection-end-column="3" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
+    <entry file="file://$PROJECT_DIR$/app/Components/Instructions.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.84887457">
-          <caret line="83" column="1" selection-start-line="83" selection-start-column="1" selection-end-line="83" selection-end-column="1" />
+        <state vertical-scroll-proportion="0.4875">
+          <caret line="261" column="33" selection-start-line="261" selection-start-column="33" selection-end-line="261" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Components/Marker.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-106.71429">
+          <caret line="166" column="26" selection-start-line="166" selection-start-column="17" selection-end-line="166" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Components/MatchBox.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Components/Scorer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.54375">
+          <caret line="62" column="28" selection-start-line="62" selection-start-column="28" selection-end-line="62" selection-end-column="28" />
           <folding />
         </state>
       </provider>

@@ -41,7 +41,7 @@ module.exports = React.createClass({
   page1: function() {
     return (
       <div>
-        <h4>Welcome, thanks for helping us out. Please read the following img/instructions <i>at least once.</i></h4>
+        <h4>Welcome, thanks for helping us out. Please read the following instructions <i style={{color:'red'}}>at least once.</i></h4>
         <p className='std-para'>
             You task is to find <b>sleep spindles</b> in brainwaves recorded from sleeping subjects.
             You will identify spindles by drawing boxes around them, and then reporting how confident
@@ -85,13 +85,14 @@ module.exports = React.createClass({
       <h4>Definition of a Sleep Spindle:</h4>
       <p className='std-para'>
         For the purpose of this study, we are defining a sleep spindle based on five important characteristics:
-        <br/>
-        <ol>
+        <br/></p>
+        <ol className='std-para'>
           <li>Shape </li>
           <li>Speed (frequency of oscillation) </li>
           <li>Duration </li>
           <li>Height </li>
         </ol>
+      <p className='std-para'>
         Most importantly, the combination of these characteristics should make the spindle very distinct from
         its surroundings.
       </p>
@@ -177,8 +178,8 @@ module.exports = React.createClass({
       <h4>How to identify sleep spindles:</h4>
       <p className='std-para'>
           To draw a bounding box around the spindles, you need to left click and drag with the mouse around the
-          spindle. A menu then appears where you can select how confident you are about the spindle identification:
-          <ul><br/>
+          spindle. A menu then appears where you can select how confident you are about the spindle identification:</p>
+          <ul className='std-para'>
             <li><b>High: &quot;</b>I am sure that this is a sleep spindle. It meets all of the criteria of shape, speed, duration and
             height and is very distinct from the surrounding waves.&quot;</li>
             <li><b>Medium: &quot;</b>I would bet that this is a spindle, although I am not completely sure because one of the
@@ -187,6 +188,7 @@ module.exports = React.createClass({
             <li><b>Low: &quot;</b>I think this could be a spindle, but I am not positive. Two or more of the criteria are not
             perfect. It would be best to have someone have a second look at this.&quot;</li>
           </ul>
+      <p className='std-para'>
           You must assign a confidence score to each spindle identification.
           Accuracy is important, so be sure to size the bounding box so that it only includes the spindles, not
           surrounding EEG waves. <br/>You can resize and move the bounding box (Figure 6) by clicking in the middle or
@@ -250,9 +252,34 @@ module.exports = React.createClass({
         The goal is to very accurately identify the spindles. Try as best you can to identify where the spindle
         begins and ends. <b>Quality is more important that quantity.</b>
         <br/><br/>
-        And most importantly, <b style={{color:'red'}}>Thank you for you help!</b>
+
+        If you want to <b>score faster</b>, then try using the keyboard:</p>
+        <ul className='std-para'>
+          <li>'1' Key: Set current marker as High Confidence.</li>
+          <li>'2' Key: Set current marker as Med Confidence.</li>
+          <li>'3' Key: Set current marker as Low Confidence.</li>
+          <li>'Left Arrow' Key: Nudge current marker back in time</li>
+          <li>'Right Arrow' Key: Nudge current marker forward in time</li>
+          <li>'Delete' Key: Remove current marker</li>
+          <p style={{fontSize:'0pt'}}><br/></p>
+          <li>'s' Key: Set epoch as no markers. All markers must be removed first.</li>
+          <li>'q' Key: Go to previous window.</li>
+          <li>'e' Key: Go to next window.</li>
+
+        </ul>
+
+      <p className='std-para'>
+        These instrcutions can be opened at any time by clicking on the instructions button in the top left corner.
+        <br/><br/>
+        Finnaly and most importantly, <b style={{color:'red'}}>Thank you for you help!</b>
       </p>
     </div>)
+  },
+
+  closeInst: function(){
+    //if(this.state.instComplete) {
+      this.props.closeInst()
+    //}
   },
 
   render: function() {
@@ -261,6 +288,8 @@ module.exports = React.createClass({
       <div>
         <rb.Button
           bsStyle="primary"
+          dataBackdrop="static"
+          dataKeyboard="false"
           onClick={function(){
               self.setRead();
               self.props.openInst();
@@ -270,8 +299,15 @@ module.exports = React.createClass({
         Instructions
         </rb.Button>
         {this.props.showInst ?
-        <rb.Modal className='myModal' dataBackdrop="static" id='img/instructions' className='inst' show={this.props.showInst} onHide={this.props.closeInst}
-                  bsSize="large" aria-labelledby="contained-modal-title-lg">
+        <rb.Modal show={false} className='myModal'
+                  id='img/instructions'
+                  className='inst'
+                  dataControlsModal="myModal"
+                  dataBackdrop="static"
+                  dataKeyboard={false}
+                  show={this.props.showInst}
+                  onHide={this.closeInst}
+                  bsSize="large">
           <rb.Modal.Header closeButton={this.state.instComplete}>
             <rb.Modal.Title>Instructions</rb.Modal.Title>
           </rb.Modal.Header>
@@ -279,9 +315,10 @@ module.exports = React.createClass({
             {this['page'+this.state.page]()}
           </rb.Modal.Body>
           <rb.Modal.Footer>
+            <p className='pull-left' style={{fontSize:'12pt'}}>Page {this.state.page} of 10</p>
             <rb.Button disabled={this.state.page===1} onClick={this.previousPage}>Back</rb.Button>
             <rb.Button disabled={this.state.page===10} onClick={this.nextPage}>Next</rb.Button>
-            <rb.Button dataToggle="tooltip" title='Please read all img/instructions' disabled={!this.state.instComplete} onClick={this.props.closeInst}>Close</rb.Button>
+            <rb.Button dataToggle="tooltip" title='Please read all img/instructions' disabled={!this.state.instComplete} onClick={this.closeInst}>Close</rb.Button>
           </rb.Modal.Footer>
         </rb.Modal> : []}
         <a data-controls-modal="img/instructions"

@@ -36,7 +36,37 @@ module.exports = React.createClass({
 
   componentDidMount: function(){
     window.addEventListener('resize', this.checkScreen);
+    window.addEventListener("keydown", this.handleKey, true);
     this.checkScreenWithTimeout();
+  },
+
+  handleKey: function(event) {
+    var self = this;
+    if (event.keyCode === 81) { //q pressed
+      if(!(parseInt(self.state.imgMeta.idx)===0 ||
+        self.state.confCounter > 0 ||
+        self.state.HITsComplete)) {
+        this.getPreviousRemImage();
+      }
+    } else if (event.keyCode === 69) { //e pressed
+      if (!(!(JSON.parse(self.state.imgMeta.noMarkers) ||
+        (self.state.numMarkers>0 && self.state.confCounter <= 0) ||
+        self.state.showGSMarkers) ||
+        self.state.HITsComplete ||
+        self.state.imgMeta.idx==self.state.imgMeta.idxMax ||
+        self.props.userData.userType==='preview'
+        )) {
+        this.getNextRemImage();
+      }
+    } else if (event.keyCode === 83) { //s pressed
+      if (self.state.numMarkers === 0) {
+        this.setNoMarkers();
+      }
+    } else {
+      return;//Do nothing, let event propagate
+    }
+    event.stopPropagation();
+    event.preventDefault();
   },
 
   checkScreenWithTimeout: function(){
@@ -51,6 +81,7 @@ module.exports = React.createClass({
       return false;
     }
   },
+
 
   redrawMarkers: function(){
     var self = this;
@@ -283,7 +314,7 @@ module.exports = React.createClass({
     });
   },
 
-  setNoMarkers: function(e){
+  setNoMarkers: function(){
     var self = this;
     if(self.state.imgMeta.noMarkers){
       self.setState({imgMeta:$.extend(self.state.imgMeta,{noMarkers: false})}, self.updateNoMakers);
@@ -395,7 +426,7 @@ module.exports = React.createClass({
     var self = this;
 
     return (
-      <div className='container' style={{textAlign:'center', width:'95%', position:'absolute', left:'50%', top: '50%',  transform: 'translateY(-50%) translateX(-50%)'}}>
+      <div onKeyDown={this.handleKey} className='container' style={{textAlign:'center', width:'95%', position:'absolute', left:'50%', top: '50%',  transform: 'translateY(-50%) translateX(-50%)'}}>
         {self.checkForPreview()}
         <rb.Panel bsStyle="primary" className="grand-panel" ref='grandPanel' textAlign='center' header={
             <div>

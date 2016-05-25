@@ -26,12 +26,16 @@ module.exports = React.createClass({
   },
 
   componentDidMount: function() {
-    setTimeout(function() {
+    this.timer = setTimeout(function() {
       var markerRef = this.refs['Marker'+ this.props.markerIndex];
       if (markerRef !== undefined) {
         ReactDOM.findDOMNode(markerRef).focus();
       }
     }.bind(this), 0);
+  },
+
+  componentWillUnmount () {
+    clearTimeout(this.timer);
   },
 
   onResizeStop: function(width){
@@ -94,6 +98,7 @@ module.exports = React.createClass({
         self.setState({inited:true});
       } else{
         self.removeMarker();
+        return
       }
     }
     self.setState({wP:size.width/self.props.imageW}, function(){self.props.updateMarkerState(self.state)});
@@ -160,7 +165,10 @@ module.exports = React.createClass({
     return (<div ref={'Marker'+ this.props.markerIndex}
                  tabIndex='0'
                  onKeyDown={this.handleKey}>
-      <ResizableAndMovable key={'ResizableAndMovable'+ this.state.keyTicker} {...initialProps} clickEvent={this.props.clickEvent}/>
+      <ResizableAndMovable
+        key={'ResizableAndMovable'+ this.state.keyTicker}
+        {...initialProps}
+        clickEvent={this.props.clickEvent}/>
     </div>)
   }
 });

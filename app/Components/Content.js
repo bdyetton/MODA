@@ -35,7 +35,6 @@ module.exports = React.createClass({
   render: function () {
     var self = this;
     var browser = get_browser();
-    console.log(browser)
     if (browser.name==='IE') {
       return (<p className='thank-you-text'>'Internet Explorer is not supported yet. DO NO ACCEPT HIT.
         Supported browsers are firefox, chrome and safari. Edge and Opera are untested'</p>)
