@@ -119,6 +119,9 @@ function imgServer(){
     var exists = false;
     var setIdx = Math.floor((user.idx) / user.batches.batchMeta.imgPerBatch);
     var batchIdx = Math.floor((user.idx) % user.batches.batchMeta.imgPerBatch);
+    console.log('Writing Server Side:');
+    console.log(marker.markerIndex);
+    console.log(marker.conf);
     user.batches[user.batchesIdxs[user.currentSet[setIdx]]].imgs[batchIdx].markers.forEach(function(currentMarker,i){
       if (currentMarker.markerIndex == marker.markerIndex){
         user.batches[user.batchesIdxs[user.currentSet[setIdx]]].imgs[batchIdx].markers[i] = marker; //this was just a move

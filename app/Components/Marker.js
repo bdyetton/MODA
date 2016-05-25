@@ -22,6 +22,10 @@ module.exports = React.createClass({
   },
 
   componentWillMount: function(){
+    console.log('Mounting:');
+        console.log(this.props.markerIndex);
+    console.log(this.props.conf);
+
     if(!this.state.gs){this.props.updateMarkerState(this.state)};
   },
 
@@ -67,11 +71,15 @@ module.exports = React.createClass({
 
 
   updateConf: function(conf){
+    var self = this;
     if (this.state.conf===''){
       this.props.decrementConfCounter();
     }
     this.setState({conf:conf, confActive:false},function(){
-      this.props.updateMarkerState(this.state);
+      console.log('Writing Client Side:')
+      console.log(conf);
+      console.log(self.state.markerIndex)
+      this.props.updateMarkerState(self.state);
     });
   },
 
