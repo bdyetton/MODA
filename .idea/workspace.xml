@@ -2,7 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e305a046-6328-4772-80fc-a659578f2d34" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/448c34a56d699c29117adc64c43affeb.woff2" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/46661d6d65debc63884004fed6e37e5c.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/bundle.afb6726c1a30445ee736.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/bundle.afb6726c1a30445ee736.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/e18bbf611f2a2e43afc071aa2f4e1512.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/f4769f9bdb7466be65088239c12046d1.eot" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/fa2772327f55d8198301fdb8bcfc8158.woff" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/index.html" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Components/Marker.js" afterPath="$PROJECT_DIR$/app/Components/Marker.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Components/Scorer.js" afterPath="$PROJECT_DIR$/app/Components/Scorer.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/index.js" afterPath="$PROJECT_DIR$/server/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="simple-webpack-react-starter.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -24,11 +35,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Scorer.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Scorer.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Components/Scorer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="182" column="2" selection-start-line="182" selection-start-column="2" selection-end-line="182" selection-end-column="2" />
+            <state vertical-scroll-proportion="0.37083334">
+              <caret line="184" column="84" selection-start-line="184" selection-start-column="84" selection-end-line="184" selection-end-column="84" />
               <folding />
             </state>
           </provider>
@@ -52,7 +63,7 @@
         <entry file="file://$PROJECT_DIR$/app/Components/Marker.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-18.0">
-              <caret line="76" column="28" selection-start-line="76" selection-start-column="28" selection-end-line="76" selection-end-column="28" />
+              <caret line="76" column="26" selection-start-line="76" selection-start-column="26" selection-end-line="76" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -80,11 +91,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.375">
-              <caret line="50" column="31" selection-start-line="50" selection-start-column="31" selection-end-line="50" selection-end-column="31" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="69" column="24" selection-start-line="69" selection-start-column="24" selection-end-line="69" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -147,10 +158,10 @@
         <option value="$PROJECT_DIR$/app/Components/Content.js" />
         <option value="$PROJECT_DIR$/node_modules/react-resizable-and-movable/lib/index.js" />
         <option value="$PROJECT_DIR$/app/Components/Instructions.js" />
-        <option value="$PROJECT_DIR$/app/Components/Scorer.js" />
-        <option value="$PROJECT_DIR$/app/Components/Marker.js" />
         <option value="$PROJECT_DIR$/server/imgServer.js" />
         <option value="$PROJECT_DIR$/server/index.js" />
+        <option value="$PROJECT_DIR$/app/Components/Marker.js" />
+        <option value="$PROJECT_DIR$/app/Components/Scorer.js" />
       </list>
     </option>
   </component>
@@ -900,14 +911,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Components/Scorer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="182" column="2" selection-start-line="182" selection-start-column="2" selection-end-line="182" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Components/MatchBox.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -917,14 +920,6 @@
             <marker date="1459664859230" expanded="true" signature="209:388" placeholder="&lt;xml/&gt;" />
             <marker date="1459664859230" expanded="true" signature="255:377" placeholder="&lt;xml/&gt;" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Components/Marker.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-18.0">
-          <caret line="76" column="28" selection-start-line="76" selection-start-column="28" selection-end-line="76" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -938,8 +933,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/server/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.375">
-          <caret line="50" column="31" selection-start-line="50" selection-start-column="31" selection-end-line="50" selection-end-column="31" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="69" column="24" selection-start-line="69" selection-start-column="24" selection-end-line="69" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Components/Marker.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-18.0">
+          <caret line="76" column="26" selection-start-line="76" selection-start-column="26" selection-end-line="76" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Components/Scorer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.37083334">
+          <caret line="184" column="84" selection-start-line="184" selection-start-column="84" selection-end-line="184" selection-end-column="84" />
           <folding />
         </state>
       </provider>

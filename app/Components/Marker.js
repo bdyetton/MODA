@@ -69,12 +69,12 @@ module.exports = React.createClass({
 
   updateConf: function(conf){
     var self = this;
-    if (this.state.conf===''){
-      this.props.decrementConfCounter();
+    if (self.state.conf===''){
+      self.props.decrementConfCounter();
     }
-    this.setState({conf:conf, confActive:false},function(){
+    self.setState({conf:conf, confActive:false},function(){
       console.log('writing client side: ', this.props.markerIndex, ' ', conf, ' and at state ',self.state.conf);
-      this.props.updateMarkerState(self.state);
+      self.props.updateMarkerState(self.state);
     });
   },
 

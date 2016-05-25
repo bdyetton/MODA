@@ -32,23 +32,23 @@ app.get('/api/submitHit', cors(), function(req, res) {
 
 app.get('/api/nextRemImage',cors(),function(req,res){
   var img = imServ.getImageData(currentUsers[req.query.user],1);
-  res.send({image: img});
+  res.send({success: true, image: img});
   users.saveUser(currentUsers[req.query.user]);
 });
 
 app.get('/api/previousRemImage',cors(),function(req,res){
   var img = imServ.getImageData(currentUsers[req.query.user],-1);
-  res.send({image: img});
+  res.send({success: true, image: img});
   users.saveUser(currentUsers[req.query.user]);
 });
 
 app.get('/api/compareToGS',cors(),function(req,res){
   var markers = imServ.compareToGS(currentUsers[req.query.user]);
-  res.send({markers: markers});
+  res.send({success: true, markers: markers});
 });
 
 app.get('/api/updateMarkerState',cors(),function(req,res){
-  console.log(req.query.marker)
+  console.log(req.query.marker);
   var imgData = imServ.updateMarkerState(currentUsers[req.query.user], req.query.marker);
   res.send({success: true, imgData:imgData});
 });
@@ -67,6 +67,7 @@ app.get('/api/getUser',cors(),function(req,res){
       currentUsers[userData.userName] = userData;
       out.userName = userData.userName;
       out.userData = req.query.userData;
+      out.success= true;
       out.image = imServ.getImageData(currentUsers[userData.userName], 0);
       out.image.markerIndex = currentUsers[userData.userName].markerIndex;
       res.send(out);
@@ -80,6 +81,7 @@ app.get('/api/getUser',cors(),function(req,res){
             out.createdUser = true;
             out.userName = currentUsers[userData.userName].name;
             out.userData = req.query.userData;
+            out.success= true;
             out.image = imServ.getImageData(currentUsers[userData.userName], 0);
             console.log(out.image.markers);
             out.image.markerIndex = currentUsers[userData.userName].markerIndex;
@@ -91,6 +93,7 @@ app.get('/api/getUser',cors(),function(req,res){
             out.userName = 'Invalid User *Slothmode Enabled*';
             out.login = true;
             out.sme = true;
+            out.success= true;
             out.createdUser = false;
             console.log(err);
             res.send(out);
@@ -104,6 +107,7 @@ app.get('/api/getUser',cors(),function(req,res){
         out.login = true;
         out.sme = true;
         out.createdUser = false;
+        out.success= true;
         console.log(err);
         res.send(out);
       }
