@@ -2,7 +2,7 @@
 __author__ = 'ben'
 import os
 import boto.mturk.connection
-from boto.mturk.qualification import PercentAssignmentsApprovedRequirement, Qualifications, Requirement
+from boto.mturk.qualification import LocaleRequirement, Qualifications, Requirement
 
 
 sandbox_host = 'mechanicalturk.sandbox.amazonaws.com'
@@ -24,23 +24,29 @@ title = "Find patterns in sleeping brainwaves"
 description = "Find patterns in recordings of the sleeping brain! Help science understand sleep and its memory benefits"
 keywords = ["sleep", "scoring", "MODA", "psych", "annotation"]
 frame_height = 800  # the height of the iframe holding the external hit
-amount = .01
+amount = .13
+num2post = 3
 
 questionform = boto.mturk.question.ExternalQuestion(url, frame_height)
 quals = Qualifications()
 
-quals.add(Requirement('00000000000000000040', 'GreaterThanOrEqualTo', '100')) #'Worker_​NumberHITsApproved'
+#quals.add(Requirement('00000000000000000040', 'GreaterThanOrEqualTo', '100')) #'Worker_​NumberHITsApproved'
 quals.add(Requirement('000000000000000000L0', 'GreaterThanOrEqualTo', '95')) #'Worker_​PercentHITsApproved'
+#quals.add(LocaleRequirement('In', ['US','IN'])) #locale
+#quals.add(LocaleRequirement('EqualTo', 'IN')) #locale
 quals.add(Requirement(sandbox_qaul, 'DoesNotExist'))
 
-create_hit_result = mturk.create_hit(
-    title=title,
-    description=description,
-    keywords=keywords,
-    question=questionform,
-    reward=boto.mturk.price.Price(amount=amount),
-    qualifications=quals,
-    response_groups=('Minimal', 'HITDetail'),  # I don't know what response groups are
-)
+for i in range(0, num2post):
+    create_hit_result = mturk.create_hit(
+        title=title,
+        description=description,
+        keywords=keywords,
+        question=questionform,
+        reward=boto.mturk.price.Price(amount=amount),
+        qualifications=quals,
+        response_groups=('Minimal', 'HITDetail'),  # I don't know what response groups are
+    )
+    print create_hit_result
+print 'Posted '+ str(i+1) + ' HITS'
 
-print create_hit_result
+
