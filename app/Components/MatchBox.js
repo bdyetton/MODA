@@ -6,7 +6,7 @@ module.exports = React.createClass({
   render: function () {
     var self = this;
     return (<div>
-      {self.props.match===undefined ? [] : <div className='arrow_box_container'>
+      {(self.props.match===undefined || self.props.match==='hide') ? [] : <div className='arrow_box_container'>
         <div className={"arrow_box_top " + [self.props.match ? " match" : '']}>
           {this.props.matchMessage}
         </div>

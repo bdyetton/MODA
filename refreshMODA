@@ -1,5 +1,5 @@
 npm run-script build
 git add -A
 git commit -m 'autoPost'
-git push dev master
+git push heroku master
 python Tools/postHits.py

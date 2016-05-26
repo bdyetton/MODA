@@ -30,7 +30,8 @@ module.exports = React.createClass({
       widthOfImg: 900,
       showSubmit: false,
       HITsComplete: false,
-      numMarkers: 0
+      numMarkers: 0,
+      numGSMarkers:0
     };
   },
 
@@ -176,6 +177,8 @@ module.exports = React.createClass({
       }).fail(function (xhr, textStatus, errorThrown) {
         console.log('Error comparing markers to gs');
       });
+    } else {
+        self.redrawMarkers()
     }
   },
 
@@ -210,6 +213,7 @@ module.exports = React.createClass({
     var self = this;
     var scoreImg = $(self.refs.sigImg);
     var numMarkers=0;
+    var markersCorrect=0;
     var offsetFromPannel = ReactDOM.findDOMNode(self.refs.sigImg).offsetLeft;
     if (markers != undefined) {
       markers.forEach(function (marker) {
@@ -217,6 +221,9 @@ module.exports = React.createClass({
           return;
         }
         numMarkers = numMarkers + 1;
+        if (marker.match){
+          markersCorrect += 1;
+        }
         popMarkers[marker.markerIndex] = <Marker
           key={parseInt(marker.markerIndex)}
           markerIndex={parseInt(marker.markerIndex)}
@@ -233,13 +240,14 @@ module.exports = React.createClass({
           decrementConfCounter={self.decrementConfCounter}
           removeMarker={self.removeMarker}
           updateMarkerState={self.updateMarkerState}
-          match={marker.match}
+          match={self.state.showGSMarkers ? marker.match : 'hide'}
           matchMessage={marker.matchMessage}
           />;
       })}
       this.setState({
         markers: popMarkers,
         numMarkers:numMarkers,
+        markersCorrect:markersCorrect,
         confCounter: 0
       });
   },
@@ -247,10 +255,12 @@ module.exports = React.createClass({
   populateGSMarkers: function(markers) {
     var self = this;
     var popGSMarkers = {};
+    var numGSMarkers=0;
     var scoreImg = $(self.refs.sigImg);
     var offsetFromPannel = ReactDOM.findDOMNode(self.refs.sigImg).offsetLeft;
     if (markers != undefined) {
         markers.forEach(function (marker) {
+          numGSMarkers = numGSMarkers + 1;
           popGSMarkers[marker.markerIndex] = <Marker
             key={parseInt(marker.markerIndex)}
             markerIndex={parseInt(marker.markerIndex)}
@@ -269,11 +279,10 @@ module.exports = React.createClass({
         });
     }
     this.setState({
-      gsMarkers: popGSMarkers
+      gsMarkers: popGSMarkers,
+      numGSMarkers: numGSMarkers
     });
   },
-
-
 
   decrementConfCounter: function(){
     this.setState({confCounter:this.state.confCounter-1});
@@ -330,10 +339,6 @@ module.exports = React.createClass({
     this.setState({markers:markers, numMarkers:this.state.numMarkers-1});
   },
 
-  //changeStage: function(stage){
-  //  this.setState({imgMeta:$.extend(this.state.imgMeta,{stage: stage})},this.updateImgMeta);
-  //},
-
   openInst: function(){
     this.setState({showInst:true});
   },
@@ -361,8 +366,8 @@ module.exports = React.createClass({
 
     if (self.state.screenSizeValid){
       return (<div className='row channels' style={{position:'relative', margin:'20px', paddingBottom:'45px'}}>
-        {markers}
         {self.state.showGSMarkers ? gsMarkers : []}
+        {markers}
         <img ref='sigImg' style={{border:'1px solid #DCDCDC'}} src={function(){
               if(self.state.sme){
                 return window.location.href + (self.state.currentRemImage)}
@@ -377,6 +382,18 @@ module.exports = React.createClass({
 
   drawButtons: function(){
     var self = this;
+    var nextDisNorm = !(JSON.parse(self.state.imgMeta.noMarkers) ||  //there must be a marker, or no markers set
+        (self.state.numMarkers>0 && self.state.confCounter <= 0)) || //All the markers have a conf set
+         self.state.HITsComplete || //must not be completed HIT
+         self.props.userData.userType==='preview'; //must not be preview mode
+    var nextDisPrac = !(JSON.parse(self.state.imgMeta.noMarkers) ||  //there must be a marker, or no markers set
+        (self.state.numMarkers>0 && self.state.confCounter <= 0)) ||
+         (self.state.markersCorrect!==self.state.numGSMarkers) ||
+         self.state.HITsComplete || //must not be completed HIT
+         self.props.userData.userType==='preview'; //must not be preview mode
+
+    var nextDis = self.state.imgMeta.prac ? nextDisPrac : nextDisNorm;
+
     return (<rb.ButtonToolbar>
               <rb.ButtonGroup className='pull-left'>
                 <rb.Button bsStyle="primary"
@@ -400,11 +417,11 @@ module.exports = React.createClass({
                   : []}
                 {self.state.imgMeta.idx!==self.state.imgMeta.idxMax ?
                     <rb.Button bsStyle="primary" ref='next'
-                                 disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (self.state.numMarkers>0 && self.state.confCounter <= 0) || self.state.showGSMarkers) || self.state.HITsComplete || self.props.userData.userType==='preview'}
+                                 disabled={nextDis}
                                  onClick={self.getNextRemImage}>{'Next Window'}
                     </rb.Button> :
-                    <rb.Button bsStyle="warning" ref='next'
-                                 disabled={!(JSON.parse(self.state.imgMeta.noMarkers) || (self.state.numMarkers>0 && self.state.confCounter <= 0) || self.state.showGSMarkers) || self.state.HITsComplete}
+                    <rb.Button bsStyle="warning" ref='submitHit'
+                                 disabled={nextDis}
                                  onClick={self.openSubmit}>{'Submit Completed HIT'}
                     </rb.Button>}
               </rb.ButtonGroup>
@@ -458,6 +475,10 @@ module.exports = React.createClass({
               </div>
             </rb.ListGroupItem>
           </rb.ListGroup>
+          <p className='std-para'>You are currently in <b style={{color:'orange'}}>practice mode.</b>
+            Please mark spindles by drawing boxes around them. Check you accuracy with the toggle/check button.
+            Position and width must be correct and confidence must be set for each marker before moving to the
+            next window. Note that some windows will not contain spindles.</p>
         </rb.Panel>
       </div>
     );
