@@ -184,7 +184,6 @@ module.exports = React.createClass({
     var self = this;
     var d = new Date();
     markerData.timeStamp = d.getTime();
-    console.log('Right before GET: ', markerData.markerIndex, ' ', markerData.conf);
     $.get('/api/updateMarkerState', {marker:markerData, user: this.props.userData.userName}, function(data){
       if (!data.success){
         console.log('Error saving marker');

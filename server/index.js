@@ -48,7 +48,6 @@ app.get('/api/compareToGS',cors(),function(req,res){
 });
 
 app.get('/api/updateMarkerState',cors(),function(req,res){
-  console.log(req)
   var imgData = imServ.updateMarkerState(currentUsers[req.query.user], req.query.marker);
   res.send({success: true, imgData:imgData});
 });
