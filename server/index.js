@@ -3,7 +3,7 @@ var express= require('express');
 var compression = require('compression');
 var path = require('path');
 var cors = require('cors');
-var mturk = require('./mturk');
+var mturk = require('mturk-api');
 var mturk= new mturk;
 var usr = require('./user');
 var users = new usr;
@@ -26,7 +26,7 @@ app.get('/api/currentTime', cors(), function(req, res) {
 });
 
 app.get('/api/submitHit', cors(), function(req, res) {
-  mturk.approveHIT(currentUsers[req.query.user]);
+  //mturk.approveHIT(currentUsers[req.query.user]);
   res.send({ success: true });
 });
 
