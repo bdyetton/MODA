@@ -74,7 +74,6 @@ module.exports = React.createClass({
     if (ReactDOM.findDOMNode(self.refs.sigImg).offsetWidth>0) {
       if(self.checkScreen()) {
         self.populateMarkers(self.props.image.markers);
-        self.populateGSMarkers(self.props.image.gsMarkers);
       }
     } else {
       setTimeout(this.checkScreenWithTimeout, 0);
@@ -134,8 +133,7 @@ module.exports = React.createClass({
     $.get('/api/previousRemImage', {user: this.props.userData.userName}, function(data){
       self.setState({ imgMeta: data.image, showGSMarkers: false},
         function(){
-          self.populateMarkers(data.image.markers);
-          self.populateGSMarkers(data.image.gsMarkers);
+          self.redrawMarkers()
         });
     });
   },
@@ -145,8 +143,7 @@ module.exports = React.createClass({
     $.get('/api/nextRemImage', {user: this.props.userData.userName}, function(data) {
       self.setState({ imgMeta: data.image, showGSMarkers: false},
         function(){
-          self.populateMarkers(data.image.markers);
-          self.populateGSMarkers(data.image.gsMarkers);
+          self.redrawMarkers()
         });
     });
   },
@@ -173,7 +170,8 @@ module.exports = React.createClass({
     self.setState({showGSMarkers:!showGS});
     if (!showGS) {
       $.get('/api/compareToGS', {user: this.props.userData.userName}, function (data) {
-        self.populateMarkers(data.image.markers);
+        self.populateMarkers(data.markers);
+        self.populateGSMarkers(self.state.imgMeta.gsMarkers);
       }).fail(function (xhr, textStatus, errorThrown) {
         console.log('Error comparing markers to gs');
       });
@@ -217,28 +215,26 @@ module.exports = React.createClass({
         if (marker.deleted === 'true') {
           return;
         }
-        if (marker.type==='box') {
-          numMarkers = numMarkers + 1;
-          popMarkers[marker.markerIndex] = <Marker
-            key={parseInt(marker.markerIndex)}
-            markerIndex={parseInt(marker.markerIndex)}
-            inited={marker.inited==='true'}
-            xP={parseFloat(marker.xP)}
-            wP={parseFloat(marker.wP)}
-            imageX={scoreImg.offset().left}
-            imageW={scoreImg.width()}
-            pannelX={offsetFromPannel}
-            y={0}
-            h={scoreImg.height()}
-            conf={marker.conf}
-            confActive={marker.confActive==='true'}
-            decrementConfCounter={self.decrementConfCounter}
-            removeMarker={self.removeMarker}
-            updateMarkerState={self.updateMarkerState}
-            match={marker.match}
-            matchMessage={marker.matchMessage}
-            />;
-        }
+        numMarkers = numMarkers + 1;
+        popMarkers[marker.markerIndex] = <Marker
+          key={parseInt(marker.markerIndex)}
+          markerIndex={parseInt(marker.markerIndex)}
+          inited={marker.inited==='true'}
+          xP={parseFloat(marker.xP)}
+          wP={parseFloat(marker.wP)}
+          imageX={scoreImg.offset().left}
+          imageW={scoreImg.width()}
+          pannelX={offsetFromPannel}
+          y={0}
+          h={scoreImg.height()}
+          conf={marker.conf}
+          confActive={marker.confActive==='true'}
+          decrementConfCounter={self.decrementConfCounter}
+          removeMarker={self.removeMarker}
+          updateMarkerState={self.updateMarkerState}
+          match={marker.match}
+          matchMessage={marker.matchMessage}
+          />;
       })}
       this.setState({
         markers: popMarkers,
@@ -253,29 +249,30 @@ module.exports = React.createClass({
     var scoreImg = $(self.refs.sigImg);
     var offsetFromPannel = ReactDOM.findDOMNode(self.refs.sigImg).offsetLeft;
     if (markers != undefined) {
-      markers.forEach(function (marker) {
-        if (marker.type === 'box') {
-          markers.forEach(function (marker) {
-            popGSMarkers[marker.markerIndex] = <Marker
-              key={parseInt(marker.markerIndex)}
-              conf={marker.conf}
-              inited={true}
-              xP={parseFloat(marker.xP)}
-              wP={parseFloat(marker.wP)}
-              imageX={scoreImg.offset().left}
-              imageW={scoreImg.width()}
-              pannelX={offsetFromPannel}
-              y={0}
-              h={scoreImg.height()}
-              gs={true}
-              />;
-          });
-        }
-      })}
-      this.setState({
-        gsMarkers: popGSMarkers
-      });
+        markers.forEach(function (marker) {
+          popGSMarkers[marker.markerIndex] = <Marker
+            key={parseInt(marker.markerIndex)}
+            markerIndex={parseInt(marker.markerIndex)}
+            conf={marker.conf}
+            inited={true}
+            xP={parseFloat(marker.xP)}
+            wP={parseFloat(marker.wP)}
+            deleted={false}
+            imageX={scoreImg.offset().left}
+            imageW={scoreImg.width()}
+            pannelX={offsetFromPannel}
+            y={0}
+            h={scoreImg.height()}
+            gs={true}
+            />;
+        });
+    }
+    this.setState({
+      gsMarkers: popGSMarkers
+    });
   },
+
+
 
   decrementConfCounter: function(){
     this.setState({confCounter:this.state.confCounter-1});
@@ -360,8 +357,9 @@ module.exports = React.createClass({
     var gsMarkers = $.map(this.state.gsMarkers, function(marker, index) {
       return [marker]
     });
+
     if (self.state.screenSizeValid){
-      return (<div className='row channels' style={{position:'relative', margin:'20px', paddingBottom:'25px'}}>
+      return (<div className='row channels' style={{position:'relative', margin:'20px', paddingBottom:'45px'}}>
         {markers}
         {self.state.showGSMarkers ? gsMarkers : []}
         <img ref='sigImg' style={{border:'1px solid #DCDCDC'}} src={function(){
@@ -395,9 +393,9 @@ module.exports = React.createClass({
                           onClick={self.setNoMarkers}/>
               </rb.ButtonGroup>
               <rb.ButtonGroup className='pull-right'>
-                {self.state.imgMeta.prac==='true' ?
+                {JSON.parse(self.state.imgMeta.prac) ?
                   <rb.Button bsStyle='warning' //TODO make custom style
-                             onClick={self.compareToGS}>Toggle correct markers</rb.Button>
+                             onClick={self.compareToGS}>Toggle/Check correct markers</rb.Button>
                   : []}
                 {self.state.imgMeta.idx!==self.state.imgMeta.idxMax ?
                     <rb.Button bsStyle="primary" ref='next'
@@ -437,10 +435,15 @@ module.exports = React.createClass({
                 <Instructions userData={self.props.userData} showInst={self.state.showInst && self.props.userData.userType!=='preview'} openInst={self.openInst} closeInst={self.closeInst}/>
               </div>
               <div className='pull-right' style={{color:'rgb(102, 255, 102)', position:'relative' ,top:'-30px',marginLeft:'15px'}}>{'Window '+ (self.state.imgMeta.idx+1) + ' of ' + (self.state.imgMeta.idxMax+1)}</div>
-              <div className='pull-right' style={{color:'orange', position:'relative' ,top:'-30px',marginLeft:'5px'}}>{'HITs Complete: '+ (self.state.imgMeta.setsCompleted)}</div>
               {JSON.parse(self.state.imgMeta.prac) ?
-                <div className='pull-right' style={{color:'rgb(102, 255, 102)', position:'relative' ,top:'-30px'}}>Practice Mode:</div>
-                : [] }
+                <div className='pull-right'
+                     style={{color:'orange', position:'relative' ,top:'-30px'}}><b>Practice Mode:</b>
+                </div> :
+                <div className='pull-right'
+                     style={{color:'orange', position:'relative' ,top:'-30px',marginLeft:'5px'}}>
+                     {'HITs Complete: '+ (self.state.imgMeta.setsCompleted)}
+                </div>
+              }
            </div>}>
           <rb.ListGroup fill style={{margin:listMargin+'px'}}>
             <rb.ListGroupItem style={{marginBottom:'20px', marginTop:'20px'}}>

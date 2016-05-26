@@ -1,5 +1,7 @@
 var path = require('path');
 var fs = require('fs');
+var phases = ['practice','phase1'];
+
 
 // Returns a random integer between min (included) and max (excluded)
 // Using Math.round() will give you a non-uniform distribution!
@@ -42,8 +44,10 @@ var imgConfig = { //THIS DATA NEEDS TO BE UPDATED! //TODO break out into a file
 };
 
 var matchThreshs = {
-  wDiffThresh:0.5,
-  xDiffThresh:0.5
+  wDiffThreshLow:0.5,
+  xDiffThreshLow:0.5,
+  wDiffThreshHigh:0.15,
+  xDiffThreshHigh:0.1
 };
 
 var secPerPx = (imgConfig.secs / imgConfig.img.w);
@@ -70,44 +74,42 @@ function imgServer(){
   var self = this;
   self.batchSize = 5;
   self.folderLengthMap = {};
-  self.batches = [];
-
-  self.init = function (){
-    var metaDataFileHandle = fs.readFileSync('./app/Assets/metaDataTraining2.json');
-    self.batches = JSON.parse(metaDataFileHandle.toString('utf8'));
-  };
-  self.init();
+  self.batches = {};
+  phases.forEach(function(phase) {
+    var metaDataFileHandle = fs.readFileSync('./app/Assets/metaData' + phase + '.json');
+    self.batches[phase] = JSON.parse(metaDataFileHandle.toString('utf8'));
+  });
 
   self.initUser = function(user,cb) {
     user.batches = clone(self.batches);
-    user.batchesIdxs = Array.apply(null, {length: user.batches.batchMeta.numBatches}).map(Number.call, Number);
-    user.batchesIdxs = shuffleArray(user.batchesIdxs);
-    user.currentSet = [0,1];
-    user.setsCompleted = 0;
-    user.idx = 0; //incs to 0-9
+    user.batchesIdxs = {};
+    user.currentSet = {};
+    user.setsCompleted = {};
+    user.idx = {};
+    user.phaseIdx=0;
+    user.currentPhase = phases[user.phaseIdx];
+    user.batchesCompleted = {};
+    phases.forEach(function(phase){ //Init that shit
+        user.batchesIdxs[phase] = Array.apply(null, {length: user.batches[phase].batchMeta.numBatches}).map(Number.call, Number);
+        user.currentSet[phase] = [0,1];
+        user.setsCompleted[phase] = 0;
+        user.batchesCompleted[phase] = [];
+        user.idx[phase] = 0; //incs to 0-9
+    });
     user.markerIndex = 0;
-    user.batchesCompleted = [];
     cb(false,user);
   };
-
-  //self.getNewSet = function(user){
-  //  return [self.getNewBatch(user), self.getNewBatch(user)]
-  //};
-  //
-  //self.getNewBatch = function(user){
-  //  var randBatchIdx = Math.floor(Math.random() * (user.noncompleteBatches.length-1)); //TODO do i need to seed rand?
-  //  var randBatch = user.noncompleteBatches.splice(randBatchIdx, 1);
-  //  return randBatch;
-  //};
 
   self.loadImageMeta = function(img,folder){
     var fileData = fs.readFileSync('./server/Data/User/' + userName + '.txt');
   };
 
   self.updateNoMakers = function(user, noMarkers){
-    var setIdx = Math.floor((user.idx) / user.batches.batchMeta.imgPerBatch);
-    var batchIdx = Math.floor((user.idx) % user.batches.batchMeta.imgPerBatch);
-    user.batches[user.batchesIdxs[user.currentSet[setIdx]]].imgs[batchIdx].noMarkers = noMarkers;
+    var setIdx = Math.floor((user.idx[user.currentPhase]) / user.batches[user.currentPhase].batchMeta.imgPerBatch);
+    var batchIdx = Math.floor((user.idx[user.currentPhase]) % user.batches[user.currentPhase].batchMeta.imgPerBatch);
+    user.batches[user.currentPhase]
+      [user.batchesIdxs[user.currentPhase]
+        [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].noMarkers = noMarkers;
   };
 
   self.updateMarkerState = function(user, marker){
@@ -117,19 +119,27 @@ function imgServer(){
     marker = self.processMarker(marker); //convert px to secs (adds xSecs field)
     //check if this marker exists in the server already
     var exists = false;
-    var setIdx = Math.floor((user.idx) / user.batches.batchMeta.imgPerBatch);
-    var batchIdx = Math.floor((user.idx) % user.batches.batchMeta.imgPerBatch);
-    user.batches[user.batchesIdxs[user.currentSet[setIdx]]].imgs[batchIdx].markers.forEach(function(currentMarker,i){
+    var setIdx = Math.floor((user.idx[user.currentPhase]) / user.batches[user.currentPhase].batchMeta.imgPerBatch);
+    var batchIdx = Math.floor((user.idx[user.currentPhase]) % user.batches[user.currentPhase].batchMeta.imgPerBatch);
+    user.batches[user.currentPhase]
+      [user.batchesIdxs[user.currentPhase]
+        [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].markers.forEach(function(currentMarker,i){
       if (currentMarker.markerIndex == marker.markerIndex){
-        if (user.batches[user.batchesIdxs[user.currentSet[setIdx]]].imgs[batchIdx].markers[i].timeStamp < marker.timeStamp) {
-          user.batches[user.batchesIdxs[user.currentSet[setIdx]]].imgs[batchIdx].markers[i] = marker; //this was just a move
+        if (user.batches[user.currentPhase]
+            [user.batchesIdxs[user.currentPhase]
+              [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].markers[i].timeStamp < marker.timeStamp) {
+          user.batches[user.currentPhase]
+            [user.batchesIdxs[user.currentPhase]
+              [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].markers[i] = marker; //this was just a move
         }
         exists = true;
       }
     });
     //else, this is a new marker
     if(!exists){
-      user.batches[user.batchesIdxs[user.currentSet[setIdx]]].imgs[batchIdx].markers.push(marker);
+      user.batches[user.currentPhase]
+        [user.batchesIdxs[user.currentPhase]
+          [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].markers.push(marker);
     }
     return self.getImageData(user,0);
   };
@@ -145,17 +155,40 @@ function imgServer(){
   };
 
   self.compareToGS = function(user){ //FIXME
-    var setIdx = Math.floor((user.idx) / user.batches.batchMeta.imgPerBatch);
-    var batchIdx = Math.floor((user.idx) % user.batches.batchMeta.imgPerBatch);
+    var setIdx = Math.floor((user.idx[user.currentPhase]) / user.batches[user.currentPhase].batchMeta.imgPerBatch);
+    var batchIdx = Math.floor((user.idx[user.currentPhase]) % user.batches[user.currentPhase].batchMeta.imgPerBatch);
     //Step through each non deleted marker and check against GS markers.
-    user.batches[user.batchesIdxs[user.currentSet[setIdx]]].imgs[batchIdx].markers.forEach(function(marker,mIdx){
-      var matches = user.batches[user.batchesIdxs[user.currentSet[setIdx]]].imgs[batchIdx].meta.gsMarkers.map(function(gsMarker){
+    user.batches[user.currentPhase]
+      [user.batchesIdxs[user.currentPhase]
+        [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].markers.forEach(function(marker,mIdx){
+      var matches = user.batches[user.currentPhase]
+        [user.batchesIdxs[user.currentPhase]
+          [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].gsMarkers.map(function(gsMarker){
         var posMatch = self.compare2Markers(gsMarker,marker);
-        if (posMatch === 'match'){
+        if (posMatch === 'matchHigh') {
           var confMatch = gsMarker.conf === marker.conf;
-          user.batches[user.idx].imgs[user.batches[user.idx].idx].markers[mIdx].match = true;
-          user.batches[user.idx].imgs[user.batches[user.idx].idx].markers[mIdx].confMatch = confMatch;
-          user.batches[user.idx].imgs[user.batches[user.idx].idx].markers[mIdx].matchMessage = 'Welldone! this spindle marker is placed correctly.'// + [!confMatch ?
+          user.batches[user.currentPhase]
+            [user.batchesIdxs[user.currentPhase]
+            [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].markers[mIdx].match = true;
+          user.batches[user.currentPhase]
+            [user.batchesIdxs[user.currentPhase]
+            [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].markers[mIdx].confMatch = confMatch;
+          user.batches[user.currentPhase]
+            [user.batchesIdxs[user.currentPhase]
+            [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].markers[mIdx].matchMessage = 'Welldone! this spindle marker is placed correctly.'// + [!confMatch ?
+          // ' However, the experts mark this with ' + gsMarker.conf + ' confidence' : ''];
+          return true;
+        } else if (posMatch === 'matchLow'){
+          var confMatch = gsMarker.conf === marker.conf;
+          user.batches[user.currentPhase]
+          [user.batchesIdxs[user.currentPhase]
+            [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].markers[mIdx].match = true;
+          user.batches[user.currentPhase]
+          [user.batchesIdxs[user.currentPhase]
+            [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].markers[mIdx].confMatch = confMatch;
+          user.batches[user.currentPhase]
+          [user.batchesIdxs[user.currentPhase]
+            [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].markers[mIdx].matchMessage = 'Good Try! This spindle marker is almost right'// + [!confMatch ?
            // ' However, the experts mark this with ' + gsMarker.conf + ' confidence' : ''];
           return true;
         } else {
@@ -163,30 +196,32 @@ function imgServer(){
         }
       });
       if (matches.every(function(el){return el===false;})){
-        user.batches[user.idx].imgs[user.batches[user.idx].idx].markers[mIdx].match = false;
-        user.batches[user.idx].imgs[user.batches[user.idx].idx].markers[mIdx].confMatch = false;
-        user.batches[user.idx].imgs[user.batches[user.idx].idx].markers[mIdx].matchMessage = 'Woops, this spindle marker is incorrect. Try again'
+        user.batches[user.currentPhase]
+          [user.batchesIdxs[user.currentPhase]
+            [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].markers[mIdx].match = false;
+        user.batches[user.currentPhase]
+          [user.batchesIdxs[user.currentPhase]
+            [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].markers[mIdx].confMatch = false;
+        user.batches[user.currentPhase]
+          [user.batchesIdxs[user.currentPhase]
+            [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].markers[mIdx].matchMessage = 'Woops, this spindle marker is incorrect. Try again'
       }
     });
-    return user.batches[user.idx].imgs[user.batches[user.idx].idx].markers;
+    return user.batches[user.currentPhase]
+      [user.batchesIdxs[user.currentPhase]
+        [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].markers;
   };
 
   self.compare2Markers = function(m1,m2){
-    if (m1.deleted==='false' && m2.deleted==='false'){
-      if (m1.type === m2.type) {
-        if (m1.type === 'box') {
-          var xDiff = Math.abs(m1.xSecs - m2.xSecs);
-          var wDiff = Math.abs(m1.wSecs - m2.wSecs);
-          if (wDiff < matchThreshs.wDiffThresh && xDiff < matchThreshs.xDiffThresh) {
-            return 'match'
-          } else {
-            return 'missMatch'
-          }
-        } else {
-          //TODO other types of markers...
-        }
+    if ((m1.deleted==='false' || !m1.deleted) && (m2.deleted==='false' || !m2.deleted)){
+      var xDiff = Math.abs(parseFloat(m1.xSecs) - parseFloat(m2.xSecs));
+      var wDiff = Math.abs(parseFloat(m1.wSecs) - parseFloat(m2.wSecs));
+      if (wDiff < matchThreshs.wDiffThreshHigh && xDiff < matchThreshs.xDiffThreshHigh) {
+        return 'matchHigh'
+      } else if (wDiff < matchThreshs.wDiffThreshLow && xDiff < matchThreshs.xDiffThreshLow) {
+        return 'matchLow'
       } else {
-        return 'typeMissmatch';
+        return 'missMatch'
       }
     } else {
       return 'markerDeleted'
@@ -194,28 +229,37 @@ function imgServer(){
   };
 
   self.getImageData = function(user,inc) {
-    user.idx += inc;
-    var maxSets = user.batches.batchMeta.numBatches/user.batches.batchMeta.batchPerSet;
-    if (user.idx >= user.batches.batchMeta.imgPerSet) { //10 images per set
-      user.setsCompleted += 1;
-      if (user.setsCompleted >= maxSets) {
-        user.setsCompleted = maxSets;
-        console.log('All sets complete');
-        user.idx -= inc
+    user.idx[user.currentPhase] += inc;
+    var maxSets = user.batches[user.currentPhase].batchMeta.numBatches/user.batches[user.currentPhase].batchMeta.batchPerSet;
+    if (user.idx[user.currentPhase] >= user.batches[user.currentPhase].batchMeta.imgPerSet) { //10 images per set
+      user.setsCompleted[user.currentPhase] += 1;
+      if (user.setsCompleted[user.currentPhase] >= maxSets) {
+        user.setsCompleted[user.currentPhase] = maxSets;
+        user.phaseIdx += 1;
+        user.currentPhase = phases[user.phaseIdx];
+        if (user.currentPhase > phases.length) {
+          user.idx[user.currentPhase] -= inc;
+          user.phaseIdx -= 1;
+          user.currentPhase = phases[user.phaseIdx];
+        }
+        user.idx[user.currentPhase] = 0
       } else {
-        user.batchesCompleted.push(user.batchesIdxs[user.currentSet]);
-        user.currentSet = user.currentSet.map(function (val) {
-          return val + user.batches.batchMeta.batchPerSet
+        user.batchesCompleted[user.currentPhase].push(user.batchesIdxs[user.currentPhase][user.currentSet[user.currentPhase]]);
+        user.currentSet[user.currentPhase] = user.currentSet[user.currentPhase].map(function (val) {
+          return val + user.batches[user.currentPhase].batchMeta.batchPerSet
         });
-        user.idx = 0;
+        user.idx[user.currentPhase] = 0;
       }
     }
-    var setIdx = Math.floor((user.idx) / user.batches.batchMeta.imgPerBatch);
-    var batchIdx = Math.floor((user.idx) % user.batches.batchMeta.imgPerBatch);
-    var dataOut = user.batches[user.batchesIdxs[user.currentSet[setIdx]]].imgs[batchIdx];
-    dataOut.idx = user.idx;
-    dataOut.idxMax = user.batches.batchMeta.imgPerSet-1;
-    dataOut.setsCompleted = user.setsCompleted;
+    var setIdx = Math.floor((user.idx[user.currentPhase]) / user.batches[user.currentPhase].batchMeta.imgPerBatch);
+    var batchIdx = Math.floor((user.idx[user.currentPhase]) % user.batches[user.currentPhase].batchMeta.imgPerBatch);
+
+    var dataOut = user.batches[user.currentPhase]
+      [user.batchesIdxs[user.currentPhase]
+        [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx];
+    dataOut.idx = user.idx[user.currentPhase];
+    dataOut.idxMax = user.batches[user.currentPhase].batchMeta.imgPerSet-1;
+    dataOut.setsCompleted = user.setsCompleted[user.currentPhase];
     dataOut.setsMax = maxSets;
     return dataOut;
   };

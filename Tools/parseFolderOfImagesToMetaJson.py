@@ -2,18 +2,23 @@ __author__ = 'ben'
 from pprint import pprint
 import os
 import json
+import pandas as pd
 from os import walk
+import os
+import sys
 
 
 data = {}
 
-mypath = '../build/img/training2/900'
+phase = 'phase1'
+prac = False
+mypath = '../build/img/' + phase + '/900'
 data['batchMeta'] = {
     'numBatches':12,
     'imgPerSet':10,
     'batchPerSet':2,
     'imgPerBatch':5,
-    'subjects':3
+    'subjects':0
 }
 
 # mypath = '../build/img/training1/test'
@@ -27,12 +32,17 @@ data['batchMeta'] = {
 for (dirpath, dirnames, filenames) in walk(mypath):
     break
 
+print os.getcwd()
+
+#gsData = pd.read_csv(os.getcwd()+'/GoldStandardData/'+phase+'/GS.txt', sep='\t')
+markerIndex = 0
 for image in filenames:
     [e, b, u1, u2, u3, smp] = image.split('-')
     [smp, u4] = smp.split('.')
     subID = u1 + '-' + u2 + '-' + u3
     if subID not in data:
         data[subID] = {}
+        data['batchMeta']['subjects'] += 1
         data[subID]['blockIdxs'] = {}
         data[subID]['blockIdx'] = 0
 
@@ -55,11 +65,29 @@ for image in filenames:
     data[subID][blcIdx]['imgs'][imgIdx]['end'] = int(smp[3:]) + 25*1000
     data[subID][blcIdx]['imgs'][imgIdx]['stage'] = 2
     data[subID][blcIdx]['imgs'][imgIdx]['subID'] = u1 + '-' + u2 + '-' + u3
-    data[subID][blcIdx]['imgs'][imgIdx]['gsMarkers'] = []
+
     data[subID][blcIdx]['imgs'][imgIdx]['markers'] = []
     data[subID][blcIdx]['imgs'][imgIdx]['noMarkers'] = False
-    data[subID][blcIdx]['imgs'][imgIdx]['prac'] = False
-    data[subID][blcIdx]['imgs'][imgIdx]['phase'] = 'training2'
+    data[subID][blcIdx]['imgs'][imgIdx]['prac'] = prac
+    data[subID][blcIdx]['imgs'][imgIdx]['phase'] = phase
+    markers = []
+    #gsMarkerData = gsData.loc[gsData.filename.isin({image})];
+    #if gsMarkerData.empty:
+    data[subID][blcIdx]['imgs'][imgIdx]['gsMarkers'] = []
+    # else:
+    #     for i in gsMarkerData.index:
+    #         print gsMarkerData.ix[i]
+    #         markers.append({
+    #             'startPercent': gsMarkerData.ix[i].startPercent,
+    #             'durationPercent': gsMarkerData.ix[i].durationPercent,
+    #             'startSecs': gsMarkerData.ix[i].startSecs,
+    #             'durationSecs': gsMarkerData.ix[i].durationSecs,
+    #             'scoreConfidence': gsMarkerData.ix[i].scoreConfidence,
+    #             'markerIndex': 'GS' + str(markerIndex)
+    #         })
+    #         markerIndex += 1
+    #     data[subID][blcIdx]['imgs'][imgIdx]['gsMarkers'] = markers;
+    #     print markers
 
 batchIdx = 0
 dataOut = {}
@@ -74,7 +102,7 @@ for subID in data:
         batchIdx += 1
 
 
-with open('../app/Assets/metaDataTraining2.json', 'wb') as fp:
+with open('../app/Assets/metaData' + phase + '.json', 'wb') as fp:
     pprint(data)
     pprint(dataOut)
     json.dump(dataOut, fp)

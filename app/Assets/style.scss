@@ -281,9 +281,9 @@ label {
 	border: 2px solid #cc0000;
     padding: 5px;
     text-align:center;
-    width: 150px;
-    height: 80px;
-    top: 95px;
+    width: 200px;
+    height: 53px;
+    top: 105px;
     left: 0;
     z-index: 99 !important;
 }
@@ -301,8 +301,8 @@ label {
 }
 
 .arrow_box_top:after {
-    left:-5px;
-    top:-19px;
+    left:-6px;
+    top:-18px;
 	border-color: rgba(136, 183, 213, 0);
 	border-bottom-color: #88b7d5;
 	border-width: 10px;
@@ -314,7 +314,7 @@ label {
 }
 
 .arrow_box_top:before {
-    top:-24px;
+    top:-22px;
     left:-9px;
 	border-color: rgba(194, 225, 245, 0);
 	border-bottom-color: #cc0000;
