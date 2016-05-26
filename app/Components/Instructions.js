@@ -277,9 +277,9 @@ module.exports = React.createClass({
   },
 
   closeInst: function(){
-    //if(this.state.instComplete) {
+    if(this.state.instComplete) {
       this.props.closeInst()
-    //}
+    }
   },
 
   render: function() {

@@ -26,16 +26,18 @@ with open(mypath+'EventLocations.csv', 'wb') as eventLocCsvFile:
                 continue
             with open(mypath + '/' + userFile) as userFileHandle:
                 userData = yaml.safe_load(userFileHandle)
-                for batch in userData['batches']:
-                    if batch == 'batchMeta':
-                        continue
-                    for img in userData['batches'][batch]['imgs']:
-                        imgData = userData['batches'][batch]['imgs'][img]
-                        epochCsvWriter.writerow([imgData['filename'],imgData['epoch'],imgData['batch'],userData['userName']])
-                        for marker in imgData['markers']:
-                            if marker['gs'] == 'true' or marker['deleted'] == 'true':
-                                continue
-                            eventLocCsvWriter.writerow([imgData['filename'], imgData['subID'], imgData['epoch'], imgData['batch'], userData['userName'], batch, marker['markerIndex'], marker['xP'], marker['wP'],marker['xSecs'], marker['wSecs'], marker['conf']])
+                for phase in userData:
+                    print phase
+                    for batch in userData['batches']:
+                        if batch == 'batchMeta':
+                            continue
+                        for img in userData['batches'][batch]['imgs']:
+                            imgData = userData['batches'][batch]['imgs'][img]
+                            epochCsvWriter.writerow([imgData['filename'],imgData['epoch'],imgData['batch'],userData['userName']])
+                            for marker in imgData['markers']:
+                                if marker['gs'] == 'true' or marker['deleted'] == 'true':
+                                    continue
+                                eventLocCsvWriter.writerow([imgData['filename'], imgData['subID'], imgData['epoch'], imgData['batch'], userData['userName'], batch, marker['markerIndex'], marker['xP'], marker['wP'],marker['xSecs'], marker['wSecs'], marker['conf']])
 
 epochCsvFile.close()
 eventLocCsvFile.close()
