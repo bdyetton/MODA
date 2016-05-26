@@ -3,7 +3,8 @@ var mturkApi = require('mturk-api');
 function mturk() {
   var self = this;
   self.phases = {
-    1:'3OFCXZK7I1YMQQ45Q5LPJ2OOHCHK93'
+    practice:'3OFCXZK7I1YMQQ45Q5LPJ2OOHCHK93',
+    phase1:'3OFCXZK7I1YMQQ45Q5LPJ2OOHCHK93'
   };
   var config = {
     access : process.env.AWS_ACCESS_KEY_ID,

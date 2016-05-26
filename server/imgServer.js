@@ -1,5 +1,7 @@
 var path = require('path');
 var fs = require('fs');
+var mturk = require('./mturk');
+var mturk= new mturk;
 var phases = ['practice','phase1'];
 
 
@@ -236,6 +238,7 @@ function imgServer(){
       if (user.setsCompleted[user.currentPhase] >= maxSets) {
         user.setsCompleted[user.currentPhase] = maxSets;
         user.phaseIdx += 1;
+        mturk.markPhaseComplete(user,user.currentPhase);
         user.currentPhase = phases[user.phaseIdx];
         if (user.currentPhase > phases.length) {
           user.idx[user.currentPhase] -= inc;
