@@ -122,7 +122,9 @@ function imgServer(){
     console.log('writing server side: ', marker.markerIndex, ' ', marker.conf);
     user.batches[user.batchesIdxs[user.currentSet[setIdx]]].imgs[batchIdx].markers.forEach(function(currentMarker,i){
       if (currentMarker.markerIndex == marker.markerIndex){
-        user.batches[user.batchesIdxs[user.currentSet[setIdx]]].imgs[batchIdx].markers[i] = marker; //this was just a move
+        if (user.batches[user.batchesIdxs[user.currentSet[setIdx]]].imgs[batchIdx].markers[i].timeStamp < marker.timeStamp) {
+          user.batches[user.batchesIdxs[user.currentSet[setIdx]]].imgs[batchIdx].markers[i] = marker; //this was just a move
+        }
         exists = true;
       }
     });
