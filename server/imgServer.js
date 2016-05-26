@@ -1,6 +1,6 @@
 var path = require('path');
 var fs = require('fs');
-var mturk = require('./mturk');
+var mturk = require('./mturkConnect');
 var mturk= new mturk;
 var phases = ['practice','phase1'];
 
