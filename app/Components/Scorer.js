@@ -160,6 +160,7 @@ module.exports = React.createClass({
         }
       } else {
         self.setState({HITsComplete:true, showSubmit:false});
+        self.getNextRemImage();
       }
     });
   },

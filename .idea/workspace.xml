@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e305a046-6328-4772-80fc-a659578f2d34" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tools/postHits.py" afterPath="$PROJECT_DIR$/Tools/postHits.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Components/Scorer.js" afterPath="$PROJECT_DIR$/app/Components/Scorer.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Assets/metaDatapractice.json" afterPath="$PROJECT_DIR$/app/Assets/metaDatapractice.json" />
     </list>
     <ignored path="simple-webpack-react-starter.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -25,11 +25,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Scorer.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Scorer.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Components/Scorer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.071428">
-              <caret line="397" column="68" selection-start-line="397" selection-start-column="68" selection-end-line="397" selection-end-column="68" />
+            <state vertical-scroll-proportion="0.52575105">
+              <caret line="162" column="31" selection-start-line="162" selection-start-column="31" selection-end-line="162" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -55,10 +55,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="imgServer.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="imgServer.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/imgServer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.41416308">
+            <state vertical-scroll-proportion="-13.785714">
               <caret line="236" column="31" selection-start-line="236" selection-start-column="31" selection-end-line="236" selection-end-column="31" />
               <folding />
             </state>
@@ -87,11 +87,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="style.scss" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Assets/style.scss">
+      <file leaf-file-name="submitHIT.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Components/submitHIT.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.3333335">
-              <caret line="284" column="14" selection-start-line="284" selection-start-column="14" selection-end-line="284" selection-end-column="14" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="41" column="19" selection-start-line="41" selection-start-column="19" selection-end-line="41" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -157,12 +157,12 @@
         <option value="$PROJECT_DIR$/app/Components/Marker.js" />
         <option value="$PROJECT_DIR$/Tools/parseFolderOfImagesPracSet.py" />
         <option value="$PROJECT_DIR$/app/Assets/style.scss" />
-        <option value="$PROJECT_DIR$/app/Components/Scorer.js" />
         <option value="$PROJECT_DIR$/server/index.js" />
         <option value="$PROJECT_DIR$/server/mturk.js" />
         <option value="$PROJECT_DIR$/server/mturkConnect.js" />
         <option value="$PROJECT_DIR$/server/imgServer.js" />
         <option value="$PROJECT_DIR$/Tools/postHits.py" />
+        <option value="$PROJECT_DIR$/app/Components/Scorer.js" />
       </list>
     </option>
   </component>
@@ -246,6 +246,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="simple-webpack-react-starter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MODA" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Components" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -752,21 +770,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Components/submitHIT.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="41" column="19" selection-start-line="41" selection-start-column="19" selection-end-line="41" selection-end-column="19" />
-          <folding>
-            <marker date="1464131022759" expanded="true" signature="-1:-1" placeholder="&lt;xml/&gt;" />
-            <marker date="1464131022759" expanded="true" signature="-1:-1" placeholder="&lt;xml/&gt;" />
-            <marker date="1464131022759" expanded="true" signature="-1:-1" placeholder="&lt;xml/&gt;" />
-            <marker date="1464131022759" expanded="true" signature="-1:-1" placeholder="&lt;xml/&gt;" />
-            <marker date="1464131022759" expanded="true" signature="-1:-1" placeholder="&lt;xml/&gt;" />
-            <marker date="1464131022759" expanded="true" signature="-1:-1" placeholder="&lt;xml/&gt;" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Components/ConfidenceBox.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.1875">
@@ -883,14 +886,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Components/Scorer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.071428">
-          <caret line="397" column="68" selection-start-line="397" selection-start-column="68" selection-end-line="397" selection-end-column="68" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/mturkConnect.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -909,10 +904,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Tools/parseFolderOfImagesPracSet.py">
+    <entry file="file://$PROJECT_DIR$/server/imgServer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="18" column="19" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
+        <state vertical-scroll-proportion="-13.785714">
+          <caret line="236" column="31" selection-start-line="236" selection-start-column="31" selection-end-line="236" selection-end-column="31" />
           <folding />
         </state>
       </provider>
@@ -925,10 +920,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/imgServer.js">
+    <entry file="file://$PROJECT_DIR$/Tools/parseFolderOfImagesPracSet.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.41416308">
-          <caret line="236" column="31" selection-start-line="236" selection-start-column="31" selection-end-line="236" selection-end-column="31" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="18" column="19" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Components/submitHIT.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="41" column="19" selection-start-line="41" selection-start-column="19" selection-end-line="41" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Components/Scorer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.52575105">
+          <caret line="162" column="31" selection-start-line="162" selection-start-column="31" selection-end-line="162" selection-end-column="31" />
           <folding />
         </state>
       </provider>
