@@ -237,8 +237,8 @@ function imgServer(){
       user.setsCompleted[user.currentPhase] += 1;
       if (user.setsCompleted[user.currentPhase] >= maxSets) {
         user.setsCompleted[user.currentPhase] = maxSets;
+        if (user.userType==='mturker'){mturk.markPhaseComplete(user,user.currentPhase);}
         user.phaseIdx += 1;
-        mturk.markPhaseComplete(user,user.currentPhase);
         user.currentPhase = phases[user.phaseIdx];
         if (user.currentPhase > phases.length) {
           user.idx[user.currentPhase] -= inc;

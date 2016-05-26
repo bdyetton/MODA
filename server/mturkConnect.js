@@ -2,9 +2,16 @@ var mturkApi = require('mturk-api');
 
 function mturk() {
   var self = this;
-  self.phases = {
-    practice:'3OFCXZK7I1YMQQ45Q5LPJ2OOHCHK93',
-    phase1:'3OFCXZK7I1YMQQ45Q5LPJ2OOHCHK93'
+  self.turkType = 'sandbox';
+  self.phasesQualID = {
+    sandbox:{
+      practice:'3LJ6LLBDMBQTWUTLG75O5EUQMZM6A6',
+      phase1:'3OFCXZK7I1YMQQ45Q5LPJ2OOHCHK93'
+    },
+    real:{
+      practice:'3EOSKS3N0DQYQTMKNK1E0HHQOWRVU1',
+      phase1:'3874R5DF6Q5C7TEUP9O1NNJXLRMPJ6'
+    }
   };
   var config = {
     access : process.env.AWS_ACCESS_KEY_ID,
@@ -13,7 +20,7 @@ function mturk() {
   };
 
   mturkApi.connect(config).then(function(api){
-  self.api = api;
+    self.api = api;
   }).catch(console.error);
 
   //self.api = mturkApi.createClient(config);
@@ -25,7 +32,7 @@ function mturk() {
   };
 
   self.markPhaseComplete = function(user,phase){
-    self.api.req('AssignQualification',{QualificationTypeId:self.phases[phase], WorkerId:user.userName}).then(function(resp){
+    self.api.req('AssignQualification',{QualificationTypeId:self.phasesQualID[self.turkType][phase], WorkerId:user.userName}).then(function(resp){
       console.log(resp)
     })
   };
