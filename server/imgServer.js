@@ -139,6 +139,7 @@ function imgServer(){
     });
     //else, this is a new marker
     if(!exists){
+      marker.firstCreated = marker.timeStamp;
       user.batches[user.currentPhase]
         [user.batchesIdxs[user.currentPhase]
           [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].markers.push(marker);
@@ -271,7 +272,6 @@ function imgServer(){
                                                                     workerId:user.workerId,
                                                                     turkSubmitTo:user.turkSubmitTo}
       }
-
     dataOut.idx = user.idx[user.currentPhase];
     dataOut.idxMax = user.batches[user.currentPhase].batchMeta.imgPerSet-1;
     dataOut.setsCompleted = user.setsCompleted[user.currentPhase];

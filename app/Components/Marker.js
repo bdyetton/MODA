@@ -17,6 +17,8 @@ module.exports = React.createClass({
       deleted:false,
       gs:this.props.gs || false,
       inited: this.props.inited || false,
+      imgFirstShown:this.props.imgFirstShown,
+      markerCreated:this.props.markerCreated,
       keyTicker: 0
     };
   },

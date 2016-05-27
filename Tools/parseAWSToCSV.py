@@ -6,7 +6,7 @@ import yaml
 import csv
 from os import walk
 
-currentPhase = 'BenTesting2/'
+currentPhase = 'BenTesting3/'
 mypath = 'DownloadedUserData/'+currentPhase
 numImgPerBatch = 5
 imgData = {}
@@ -17,7 +17,7 @@ for (dirpath, dirnames, filenames) in walk(mypath):
 
 with open(mypath+'EventLocations.csv', 'wb') as eventLocCsvFile:
     eventLocCsvWriter = csv.writer(eventLocCsvFile)
-    eventLocCsvWriter.writerow(['filename','phase','subID','epochNum', 'blockNum', 'annotatorID','MODA_batchNum','annotatorEventIndex', 'startPercent', 'durationPercent', 'startSecs', 'durationSecs', 'scoreConfidence'])
+    eventLocCsvWriter.writerow(['filename', 'phase', 'subID', 'epochNum', 'blockNum', 'annotatorID', 'MODA_batchNum','annotatorEventIndex', 'startPercent', 'durationPercent', 'startSecs', 'durationSecs', 'scoreConfidence','TimeWindowFirstShown','TimeMarkerCreated','TimeMarkerLastModified', 'turkHitId','turkAssignmentId'])
     with open(mypath+'EpochViews.csv', 'wb') as epochCsvFile:
         epochCsvWriter = csv.writer(epochCsvFile)
         epochCsvWriter.writerow(['filename','epochNum','blockNum','annotatorID'])
@@ -32,11 +32,18 @@ with open(mypath+'EventLocations.csv', 'wb') as eventLocCsvFile:
                             continue
                         for img in userData['batches'][phase][batch]['imgs']:
                             imgData = userData['batches'][phase][batch]['imgs'][img]
-                            epochCsvWriter.writerow([imgData['filename'],imgData['epoch'],imgData['batch'],userData['userName']])
+                            if len(imgData['markers']) > 0 or imgData['noMarkers'] == 'true':
+                                epochCsvWriter.writerow([imgData['filename'], imgData['epoch'], imgData['batch'], userData['userName']])
                             for marker in imgData['markers']:
                                 if marker['gs'] == 'true' or marker['deleted'] == 'true':
                                     continue
-                                eventLocCsvWriter.writerow([imgData['filename'], phase, imgData['subID'], imgData['epoch'], imgData['batch'], userData['userName'], batch, marker['markerIndex'], marker['xP'], marker['wP'],marker['xSecs'], marker['wSecs'], marker['conf']])
+                                if userData['userType'] == 'mturker':
+                                    assignmentId = imgData['mturkInfo']['hitId']
+                                    hitId = imgData['mturkInfo']['assignmentId']
+                                else:
+                                    hitId = None
+                                    assignmentId = None
+                                eventLocCsvWriter.writerow([imgData['filename'], phase, imgData['subID'], imgData['epoch'], imgData['batch'], userData['userName'], batch, marker['markerIndex'], marker['xP'], marker['wP'],marker['xSecs'], marker['wSecs'], marker['conf'],marker['imgFirstShown'],marker['markerCreated'],marker['timeStamp'],hitId,assignmentId])
 
 epochCsvFile.close()
 eventLocCsvFile.close()

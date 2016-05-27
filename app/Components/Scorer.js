@@ -13,6 +13,7 @@ module.exports = React.createClass({
   //test if complete
 
   getInitialState: function() {
+    var d = new Date();
     return {
       markerType: "box",
       noMarkerChecked:false,
@@ -31,7 +32,8 @@ module.exports = React.createClass({
       showSubmit: false,
       HITsComplete: false,
       numMarkers: 0,
-      numGSMarkers:0
+      numGSMarkers:0,
+      imgFirstShown:d.getTime()
     };
   },
 
@@ -125,8 +127,9 @@ module.exports = React.createClass({
 
   getPreviousRemImage: function() {
     var self = this;
+    var d = new Date();
     $.get('/api/previousRemImage', {user: this.props.userData.userName}, function(data){
-      self.setState({ imgMeta: data.image, showGSMarkers: false},
+      self.setState({ imgMeta: data.image, showGSMarkers: false, imgFirstShown:d.getTime()},
         function(){
           self.redrawMarkers()
         });
@@ -135,8 +138,9 @@ module.exports = React.createClass({
 
   getNextRemImage: function() {
     var self = this;
+    var d = new Date();
     $.get('/api/nextRemImage', {user: this.props.userData.userName}, function(data) {
-      self.setState({ imgMeta: data.image, showGSMarkers: false},
+      self.setState({ imgMeta: data.image, showGSMarkers: false, imgFirstShown:d.getTime()},
         function(){
           self.redrawMarkers()
         });
@@ -234,6 +238,8 @@ module.exports = React.createClass({
           y={0}
           h={scoreImg.height()}
           conf={marker.conf}
+          imgFirstShown={marker.imgFirstShown}
+          markerCreated={marker.markerCreated}
           confActive={marker.confActive==='true'}
           decrementConfCounter={self.decrementConfCounter}
           removeMarker={self.removeMarker}
@@ -289,6 +295,7 @@ module.exports = React.createClass({
   addMarker: function(e) {
     if (JSON.parse(this.state.imgMeta.noMarkers)){return;}
     var self = this;
+    var d = new Date();
     if (e.button !== 0) return;
     var scoreImg = $(this.refs.sigImg);
     var offsetFromPannel = ReactDOM.findDOMNode(self.refs.sigImg).offsetLeft;
@@ -303,6 +310,8 @@ module.exports = React.createClass({
         clickX={e.pageX}
         pannelX={offsetFromPannel}
         y={0}
+        imgFirstShown={self.state.imgFirstShown}
+        markerCreated={d.getTime()}
         h={scoreImg.height()}
         removeMarker={self.removeMarker}
         decrementConfCounter={self.decrementConfCounter}
