@@ -121,7 +121,7 @@ module.exports = React.createClass({
       <h4>2. Speed of spindles</h4>
       <p className='std-para'>
         A sleep spindle is a group of waves that oscillate (go up and down) at approximately 11-16 cycles per second
-        (11-16Hz), or most commonly between 12-14 it can be difficult to estimate the speed.
+        (11-16Hz), or most commonly between 12-14. It can be difficult to estimate their speed.
         However, because the vertical dashed lines in the display mark 0.5 second intervals,
         one way to determine the speed is to count the number of wave peaks between the dashed lines:
         between 6 and 7 wave peaks in 0.5 seconds would be equal to 12-14 cycles per second (Figure 3). It is
@@ -180,12 +180,12 @@ module.exports = React.createClass({
           To draw a bounding box around the spindles, you need to left click and drag with the mouse around the
           spindle. A menu then appears where you can select how confident you are about the spindle identification:</p>
           <ul className='std-para'>
-            <li><b>High: &quot;</b>I am sure that this is a sleep spindle. It meets all of the criteria of shape, speed, duration and
+            <li><b>High:</b> &quot;I am sure that this is a sleep spindle. It meets all of the criteria of shape, speed, duration and
             height and is very distinct from the surrounding waves.&quot;</li>
-            <li><b>Medium: &quot;</b>I would bet that this is a spindle, although I am not completely sure because one of the
+            <li><b>Medium:</b> &quot;I would bet that this is a spindle, although I am not completely sure because one of the
             criteria is not quite right. There are some imperfections in the spindle, but I still think it is a sleep
             spindle.&quot;</li>
-            <li><b>Low: &quot;</b>I think this could be a spindle, but I am not positive. Two or more of the criteria are not
+            <li><b>Low:</b> &quot;I think this could be a spindle, but I am not positive. Two or more of the criteria are not
             perfect. It would be best to have someone have a second look at this.&quot;</li>
           </ul>
       <p className='std-para'>
@@ -194,8 +194,8 @@ module.exports = React.createClass({
           surrounding EEG waves. <br/>You can resize and move the bounding box (Figure 6) by clicking in the middle or
           on the edges and dragging. You can change the spindle certainty, or delete the bounding box clicking on it.
           There may be multiple spindles, or none within a window (Figure 7). If there are no spindles in the window,
-          indicate this by clicking the box marked &quot;No spindles in Epoch&quot; found at the bottom of your screen before
-          moving on to the next window.
+          indicate this by clicking the box marked &quot;No spindles in window&quot; found at the bottom of your screen before
+          moving on to the next window. Note that you will not be able to draw any spindle markers if 'No spindle in window' is checked.
           <br/>If the spindle runs into the end or beginning of the window, just draw the bounding box right up to the edge
           of the window.
       </p>
@@ -255,23 +255,22 @@ module.exports = React.createClass({
 
         If you want to <b>score faster</b>, then try using the keyboard:</p>
         <ul className='std-para'>
-          <li>'1' Key: Set current marker as High Confidence.</li>
+          <li>'1' Key: Set current marker as Low Confidence.</li>
           <li>'2' Key: Set current marker as Med Confidence.</li>
-          <li>'3' Key: Set current marker as Low Confidence.</li>
-          <li>'Left Arrow' Key: Nudge current marker back in time</li>
-          <li>'Right Arrow' Key: Nudge current marker forward in time</li>
-          <li>'Delete' Key: Remove current marker</li>
+          <li>'3' Key: Set current marker as High Confidence.</li>
+          <li>'Left Arrow' Key: Nudge current marker back in time.</li>
+          <li>'Right Arrow' Key: Nudge current marker forward in time.</li>
+          <li>'Delete' Key: Remove current marker.</li>
           <p style={{fontSize:'0pt'}}><br/></p>
-          <li>'s' Key: Set epoch as no markers. All markers must be removed first.</li>
+          <li>'s' Key: Set window as "no markers". All markers must be removed first.</li>
           <li>'q' Key: Go to previous window.</li>
           <li>'e' Key: Go to next window.</li>
-
         </ul>
 
       <p className='std-para'>
-        These instrcutions can be opened at any time by clicking on the instructions button in the top left corner.
+        These instructions can be opened at any time by clicking on the <i>Instructions</i> button in the top left corner.
         <br/><br/>
-        Finnaly and most importantly, <b style={{color:'red'}}>Thank you for you help!</b>
+        Finally and most importantly, <b style={{color:'red'}}>Thank you for you help!</b>
       </p>
     </div>)
   },

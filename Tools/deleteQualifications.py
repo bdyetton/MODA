@@ -8,6 +8,7 @@ host = {
 }
 
 hostType = 'sandbox'
+phaseType = 'phase1'
 
 mturk = boto.mturk.connection.MTurkConnection(
     aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
@@ -30,13 +31,13 @@ phasesQualID = {
     }
   }
 
-qualData= mturk.get_all_qualifications_for_qual_type(phasesQualID[hostType]['practice'])
+qualData= mturk.get_all_qualifications_for_qual_type(phasesQualID[hostType][phaseType])
 workers = []
 for worker in qualData:
     workers.append(worker.SubjectId)
 
 for workerID in workers:
     try:
-        mturk.revoke_qualification(workerID,phasesQualID[hostType]['practice'],reason='Granted in error')
+        mturk.revoke_qualification(workerID,phasesQualID[hostType][phaseType],reason='Granted in error')
     except:
         print 'worker %s does not have qual' % workerID

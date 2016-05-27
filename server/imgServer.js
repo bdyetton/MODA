@@ -232,17 +232,17 @@ function imgServer(){
 
   self.getImageData = function(user,inc) {
     user.idx[user.currentPhase] += inc;
-    var maxSets = user.batches[user.currentPhase].batchMeta.numBatches/user.batches[user.currentPhase].batchMeta.batchPerSet;
+    var maxSets = user.batches[user.currentPhase].batchMeta.numBatches / user.batches[user.currentPhase].batchMeta.batchPerSet;
     if (user.idx[user.currentPhase] >= user.batches[user.currentPhase].batchMeta.imgPerSet) { //10 images per set
       user.setsCompleted[user.currentPhase] += 1;
       if (user.setsCompleted[user.currentPhase] >= maxSets) {
         user.setsCompleted[user.currentPhase] = maxSets;
-        if (user.userType==='mturker'){mturk.markPhaseComplete(user,user.currentPhase);}
+        if (user.userType === 'mturker') {
+          mturk.markPhaseComplete(user, user.currentPhase);
+        }
         user.phaseIdx += 1;
         user.currentPhase = phases[user.phaseIdx];
-        console.log('All Phases Complete A');
         if (user.phaseIdx >= phases.length) {
-          console.log('All Phases Complete B');
           user.idx[user.currentPhase] -= inc;
           user.phaseIdx -= 1;
           user.currentPhase = phases[user.phaseIdx];
@@ -256,14 +256,22 @@ function imgServer(){
         user.idx[user.currentPhase] = 0;
       }
     }
-    console.log('Here', user.batches[user.currentPhase]);
     var setIdx = Math.floor((user.idx[user.currentPhase]) / user.batches[user.currentPhase].batchMeta.imgPerBatch);
     var batchIdx = Math.floor((user.idx[user.currentPhase]) % user.batches[user.currentPhase].batchMeta.imgPerBatch);
-    console.log('Here2')
 
     var dataOut = user.batches[user.currentPhase]
       [user.batchesIdxs[user.currentPhase]
-        [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx];
+      [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx];
+    //save hit information
+    if (user.userType = 'mturker') {
+      user.batches[user.currentPhase]
+        [user.batchesIdxs[user.currentPhase]
+        [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].mturkInfo = { hitId:user.hitId,
+                                                                    assignmentId:user.assignmentId,
+                                                                    workerId:user.workerId,
+                                                                    turkSubmitTo:user.turkSubmitTo}
+      }
+
     dataOut.idx = user.idx[user.currentPhase];
     dataOut.idxMax = user.batches[user.currentPhase].batchMeta.imgPerSet-1;
     dataOut.setsCompleted = user.setsCompleted[user.currentPhase];

@@ -8,7 +8,7 @@ from boto.mturk.qualification import LocaleRequirement, Qualifications, Requirem
 sandbox_host = 'mechanicalturk.sandbox.amazonaws.com'
 real_host = 'mechanicalturk.amazonaws.com'
 sandbox_qaul = '3OFCXZK7I1YMQQ45Q5LPJ2OOHCHK93'
-real_qual = '3OFCXZK7I1YMQQ45Q5LPJ2OOHCHK93' #FIXME
+real_qual = '3874R5DF6Q5C7TEUP9O1NNJXLRMPJ6'
 mturk = boto.mturk.connection.MTurkConnection(
     aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
     aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'],
@@ -19,13 +19,14 @@ mturk = boto.mturk.connection.MTurkConnection(
 print boto.Version  # 2.29.1
 print mturk.get_account_balance()  # [$10,000.00]
 
-url = "https://fierce-inlet-44115.herokuapp.com/"
+#url = "https://fierce-inlet-44115.herokuapp.com/"
+url = "https://shrouded-plains-8041.herokuapp.com/"
 title = "Find patterns in sleeping brainwaves"
 description = "Find patterns in recordings of the sleeping brain! Help science understand sleep and its memory benefits"
-keywords = ["sleep", "scoring", "MODA", "psych", "annotation"]
-frame_height = 800  # the height of the iframe holding the external hit
+keywords = ["sleep", "scoring","spindles","spindle","brainwaves", "MODA", "psych", "annotation"]
+frame_height = 600  # the height of the iframe holding the external hit
 amount = .13
-num2post = 3
+num2post = 50
 
 questionform = boto.mturk.question.ExternalQuestion(url, frame_height)
 quals = Qualifications()

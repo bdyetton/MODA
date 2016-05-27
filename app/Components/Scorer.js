@@ -482,10 +482,10 @@ module.exports = React.createClass({
               </div>
             </rb.ListGroupItem>
           </rb.ListGroup>
-          <p className='std-para'>You are currently in <b style={{color:'orange'}}>practice mode.</b>
+          {self.state.imgMeta.prac ? <p className='std-para'>You are currently in <b style={{color:'orange'}}>practice mode.</b>
             Please mark spindles by drawing boxes around them. Check you accuracy with the toggle/check button.
             Position and width must be correct and confidence must be set for each marker before moving to
-            the next window. Note that some windows will not contain spindles.</p>
+            the next window. Note that some windows will not contain spindles.</p> : []}
         </rb.Panel>
       </div>
     );
