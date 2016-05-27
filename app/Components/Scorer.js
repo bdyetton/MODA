@@ -50,13 +50,7 @@ module.exports = React.createClass({
         this.getPreviousRemImage();
       }
     } else if (event.keyCode === 69) { //e pressed
-      if (!(!(JSON.parse(self.state.imgMeta.noMarkers) ||
-        (self.state.numMarkers>0 && self.state.confCounter <= 0) ||
-        self.state.showGSMarkers) ||
-        self.state.HITsComplete ||
-        self.state.imgMeta.idx==self.state.imgMeta.idxMax ||
-        self.props.userData.userType==='preview'
-        )) {
+      if (!self.isWindowNotComplete() && (self.state.imgMeta.idx!==self.state.imgMeta.idxMax)) {
         this.getNextRemImage();
       }
     } else if (event.keyCode === 83) { //s pressed
@@ -214,6 +208,7 @@ module.exports = React.createClass({
     var scoreImg = $(self.refs.sigImg);
     var numMarkers=0;
     var markersCorrect=0;
+    var confCounter = 0;
     var offsetFromPannel = ReactDOM.findDOMNode(self.refs.sigImg).offsetLeft;
     if (markers != undefined) {
       markers.forEach(function (marker) {
@@ -223,6 +218,9 @@ module.exports = React.createClass({
         numMarkers = numMarkers + 1;
         if (marker.match){
           markersCorrect += 1;
+        }
+        if (marker.conf==='' || marker.conf===undefined){
+          confCounter += 1;
         }
         popMarkers[marker.markerIndex] = <Marker
           key={parseInt(marker.markerIndex)}
@@ -248,7 +246,7 @@ module.exports = React.createClass({
         markers: popMarkers,
         numMarkers:numMarkers,
         markersCorrect:markersCorrect,
-        confCounter: 0
+        confCounter: confCounter
       });
   },
 
@@ -355,6 +353,21 @@ module.exports = React.createClass({
     this.setState({showSubmit:false});
   },
 
+  isWindowNotComplete: function(){
+    var self = this;
+    var nextDisNorm = !(JSON.parse(self.state.imgMeta.noMarkers) ||  //there must be a marker, or no markers set
+        (self.state.numMarkers>0 && self.state.confCounter <= 0)) || //All the markers have a conf set
+         self.state.HITsComplete || //must not be completed HIT
+         self.props.userData.userType==='preview'; //must not be preview mode
+    var nextDisPrac = !(JSON.parse(self.state.imgMeta.noMarkers) || (self.state.numMarkers>0 && self.state.confCounter <= 0)) ||
+         (self.state.markersCorrect!==self.state.numGSMarkers) ||
+         self.state.confCounter > 0 ||
+         self.state.HITsComplete || //must not be completed HIT
+         self.props.userData.userType==='preview'; //must not be preview mode
+
+    return self.state.imgMeta.prac ? nextDisPrac : nextDisNorm;
+  },
+
   drawImageAndMarkers: function(){
       var self = this;
     var markers = $.map(this.state.markers, function(marker, index) {
@@ -382,18 +395,7 @@ module.exports = React.createClass({
 
   drawButtons: function(){
     var self = this;
-    var nextDisNorm = !(JSON.parse(self.state.imgMeta.noMarkers) ||  //there must be a marker, or no markers set
-        (self.state.numMarkers>0 && self.state.confCounter <= 0)) || //All the markers have a conf set
-         self.state.HITsComplete || //must not be completed HIT
-         self.props.userData.userType==='preview'; //must not be preview mode
-    var nextDisPrac = !(JSON.parse(self.state.imgMeta.noMarkers) ||  //there must be a marker, or no markers set
-        (self.state.numMarkers>0 && self.state.confCounter <= 0)) ||
-         (self.state.markersCorrect!==self.state.numGSMarkers) ||
-         self.state.HITsComplete || //must not be completed HIT
-         self.props.userData.userType==='preview'; //must not be preview mode
-
-    var nextDis = self.state.imgMeta.prac ? nextDisPrac : nextDisNorm;
-
+    var nextDis = self.isWindowNotComplete();
     return (<rb.ButtonToolbar>
               <rb.ButtonGroup className='pull-left'>
                 <rb.Button bsStyle="primary"
@@ -404,11 +406,14 @@ module.exports = React.createClass({
                 </rb.Button>
               </rb.ButtonGroup>
               <rb.ButtonGroup style={{textAlign:'center', position:'absolute', left:'50%', top: '50%',  transform: 'translateY(-50%) translateX(-50%)'}}>
-                <rb.Input type="checkbox" ref='noMarkers'
+                <label>
+                  <rb.Input type="checkbox" ref='noMarkers'
+                          className='no-markers'
                           disabled={self.state.numMarkers!==0}
                           checked={JSON.parse(self.state.imgMeta.noMarkers)}
-                          label={'No spindles in window'}
                           onClick={self.setNoMarkers}/>
+                  <p className={JSON.parse(self.state.imgMeta.noMarkers) ? "no-markers" : "not-no-markers"}>No spindles in window</p>
+                </label>
               </rb.ButtonGroup>
               <rb.ButtonGroup className='pull-right'>
                 {JSON.parse(self.state.imgMeta.prac) ?
@@ -442,7 +447,9 @@ module.exports = React.createClass({
 
   render: function () {
     var self = this;
-
+    if (self.state.imgMeta.setsCompleted >= self.state.imgMeta.setsMax){
+      return (<p className='thank-you-text'>You've completed all available HITs. Thanks for yor help!</p>)
+    }
     return (
       <div onKeyDown={this.handleKey} className='container' style={{textAlign:'center', width:'95%', position:'absolute', left:'50%', top: '50%',  transform: 'translateY(-50%) translateX(-50%)'}}>
         {self.checkForPreview()}

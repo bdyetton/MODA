@@ -32,6 +32,7 @@ function mturk() {
   };
 
   self.markPhaseComplete = function(user,phase){
+    console.log('GRANTING QUALIFICATION!')
     self.api.req('AssignQualification',{QualificationTypeId:self.phasesQualID[self.turkType][phase], WorkerId:user.userName}).then(function(resp){
       console.log(resp)
     })

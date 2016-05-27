@@ -240,7 +240,9 @@ function imgServer(){
         if (user.userType==='mturker'){mturk.markPhaseComplete(user,user.currentPhase);}
         user.phaseIdx += 1;
         user.currentPhase = phases[user.phaseIdx];
-        if (user.currentPhase > phases.length) {
+        console.log('All Phases Complete A');
+        if (user.phaseIdx >= phases.length) {
+          console.log('All Phases Complete B');
           user.idx[user.currentPhase] -= inc;
           user.phaseIdx -= 1;
           user.currentPhase = phases[user.phaseIdx];
@@ -254,8 +256,10 @@ function imgServer(){
         user.idx[user.currentPhase] = 0;
       }
     }
+    console.log('Here', user.batches[user.currentPhase]);
     var setIdx = Math.floor((user.idx[user.currentPhase]) / user.batches[user.currentPhase].batchMeta.imgPerBatch);
     var batchIdx = Math.floor((user.idx[user.currentPhase]) % user.batches[user.currentPhase].batchMeta.imgPerBatch);
+    console.log('Here2')
 
     var dataOut = user.batches[user.currentPhase]
       [user.batchesIdxs[user.currentPhase]
