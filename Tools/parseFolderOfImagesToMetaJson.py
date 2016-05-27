@@ -14,7 +14,7 @@ phase = 'phase1'
 prac = False
 mypath = '../build/img/' + phase + '/900'
 data['batchMeta'] = {
-    'numBatches':12,
+    'numBatches':404,
     'imgPerSet':10,
     'batchPerSet':2,
     'imgPerBatch':5,

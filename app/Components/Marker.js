@@ -49,13 +49,13 @@ module.exports = React.createClass({
       this.setState({xP:(this.state.xP*this.props.imageW+1)/this.props.imageW, keyTicker:this.state.keyTicker+1});
     } else if (event.keyCode === 37) {
       this.setState({xP:(this.state.xP*this.props.imageW-1)/this.props.imageW, keyTicker:this.state.keyTicker+1});
-    } else if (event.keyCode===51){
+    } else if (event.keyCode===51 || event.keyCode === 99){
         this.updateConf('high');
       }
-      else if (event.keyCode===50){
+      else if (event.keyCode===50  || event.keyCode === 98){
         this.updateConf('med');
       }
-      else if (event.keyCode===49){
+      else if (event.keyCode===49  || event.keyCode === 97 ){
         this.updateConf('low');
       }
       else if (event.keyCode===27 || event.keyCode===46){
