@@ -412,7 +412,9 @@ module.exports = React.createClass({
                           disabled={self.state.numMarkers!==0}
                           checked={JSON.parse(self.state.imgMeta.noMarkers)}
                           onClick={self.setNoMarkers}/>
-                  <p className={JSON.parse(self.state.imgMeta.noMarkers) ? "no-markers" : "not-no-markers"}>No spindles in window</p>
+                  <p className={JSON.parse(self.state.imgMeta.noMarkers) ? "no-markers" : "not-no-markers"}>
+                    {(self.state.imgMeta.prac && self.state.numGSMarkers===0 && self.state.showGSMarkers) ? <u>No spindles in window</u> : 'No spindles in window'}
+                  </p>
                 </label>
               </rb.ButtonGroup>
               <rb.ButtonGroup className='pull-right'>
