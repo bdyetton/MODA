@@ -498,6 +498,7 @@ module.exports = React.createClass({
             Please mark spindles by drawing boxes around them. Check you accuracy with the toggle/check button.
             Position and width must be correct and confidence must be set for each marker before moving to
             the next window. Note that some windows will not contain spindles.</p> : []}
+          {self.state.imgMeta.msg ? <p className='std-para text-green'>{self.state.imgMeta.msg}</p> : ''}
         </rb.Panel>
       </div>
     );

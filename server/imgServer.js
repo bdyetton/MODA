@@ -82,6 +82,20 @@ function imgServer(){
     self.batches[phase] = JSON.parse(metaDataFileHandle.toString('utf8'));
   });
 
+  self.motMesg=['Keep up the good work!',
+  'Thanks for you help so far, we realy aprriciated it!',
+    'Your doing well. Thanks for helping science!',
+    'Keep making that $$',
+    "Don't watch the clock; do what it does. Keep going.",
+    "Pat yourself on the back, your doing a great job.",
+    "Your a sleep scientist in the making",
+    "Your work helps us develop treatments for poor sleep. Thanks for helping!",
+    "Your a star scorer.",
+    "Keep spotting those spindles!",
+    ":)",
+    "We think your awesome for helping us!"
+    ];
+
   self.initUser = function(user,cb) {
     user.batches = clone(self.batches);
     user.batchesIdxs = {};
@@ -231,6 +245,13 @@ function imgServer(){
     }
   };
 
+  self.getMotivMesg = function(){
+    var rando = getRandomInt(0,20);
+    if (rando===1){
+      return self.motMesg[getRandomInt(0,self.motMesg.length)]
+    }
+  },
+
   self.getImageData = function(user,inc) {
     user.idx[user.currentPhase] += inc;
     var maxSets = user.batches[user.currentPhase].batchMeta.numBatches / user.batches[user.currentPhase].batchMeta.batchPerSet;
@@ -272,6 +293,9 @@ function imgServer(){
                                                                     workerId:user.workerId,
                                                                     turkSubmitTo:user.turkSubmitTo}
       }
+    if (inc){
+      dataOut.msg = self.getMotivMesg();
+    }
     dataOut.idx = user.idx[user.currentPhase];
     dataOut.idxMax = user.batches[user.currentPhase].batchMeta.imgPerSet-1;
     dataOut.setsCompleted = user.setsCompleted[user.currentPhase];
