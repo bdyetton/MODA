@@ -167,17 +167,18 @@ module.exports = React.createClass({
   compareToGS: function(markerData){
     var self = this;
     var showGS = this.state.showGSMarkers;
-    self.setState({showGSMarkers:!showGS});
-    if (!showGS) {
-      $.get('/api/compareToGS', {user: this.props.userData.userName}, function (data) {
-        self.populateMarkers(data.markers);
-        self.populateGSMarkers(self.state.imgMeta.gsMarkers);
-      }).fail(function (xhr, textStatus, errorThrown) {
-        console.log('Error comparing markers to gs');
-      });
-    } else {
+    self.setState({showGSMarkers:!showGS},function(){
+      if (!showGS) {
+        $.get('/api/compareToGS', {user: this.props.userData.userName}, function (data) {
+          self.populateMarkers(data.markers);
+          self.populateGSMarkers(self.state.imgMeta.gsMarkers);
+        }).fail(function (xhr, textStatus, errorThrown) {
+          console.log('Error comparing markers to gs');
+        });
+      } else {
         self.redrawMarkers()
-    }
+      }
+    });
   },
 
   updateMarkerState: function(markerData){

@@ -275,6 +275,18 @@ module.exports = React.createClass({
     </div>)
   },
 
+  handleKey: function(event) {
+    if (event.keyCode === 39) {
+      this.nextPage();
+    } else if (event.keyCode === 37) {
+      this.previousPage();
+    } else {
+      return;//Do nothing, let event propagate
+    }
+    event.stopPropagation();
+    event.preventDefault();
+  },
+
   closeInst: function(){
     if(this.state.instComplete) {
       this.props.closeInst()
@@ -306,6 +318,7 @@ module.exports = React.createClass({
                   dataKeyboard={false}
                   show={this.props.showInst}
                   onHide={this.closeInst}
+                  onKeyDown={this.handleKey}
                   bsSize="large">
           <rb.Modal.Header closeButton={this.state.instComplete}>
             <rb.Modal.Title>Instructions</rb.Modal.Title>
