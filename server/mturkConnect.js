@@ -2,7 +2,6 @@ var mturkApi = require('mturk-api');
 
 function mturk() {
   var self = this;
-  self.turkType = 'real'; //FIXME should pull from an env var or something
   self.host = process.env.MODA_MTURK_HOST;
   self.phasesQualID = {
     sandbox:{
@@ -31,8 +30,8 @@ function mturk() {
   };
 
   self.markPhaseComplete = function(user,phase){
-    console.log('Granting ' + phase + ' qualification to ' + user.userName)
-    self.api.req('AssignQualification',{QualificationTypeId:self.phasesQualID[self.turkType][phase], WorkerId:user.userName}).then(function(resp){
+    console.log('Granting ' + phase + ' qualification to ' + user.userName);
+    self.api.req('AssignQualification',{QualificationTypeId:self.phasesQualID[self.host][phase], WorkerId:user.userName}).then(function(resp){
       console.log(resp)
     })
   };

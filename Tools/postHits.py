@@ -58,7 +58,7 @@ for i in range(0, num2Pracpost):
         description=description,
         keywords=keywords,
         question=questionform,
-        reward=boto.mturk.price.Price(amount=0.13),
+        reward=boto.mturk.price.Price(amount=0.25),
         qualifications=quals,
         response_groups=('Minimal', 'HITDetail'),  # I don't know what response groups are
     )
