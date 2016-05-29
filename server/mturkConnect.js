@@ -3,6 +3,7 @@ var mturkApi = require('mturk-api');
 function mturk() {
   var self = this;
   self.turkType = 'real'; //FIXME should pull from an env var or something
+  self.host = process.env.MODA_MTURK_HOST;
   self.phasesQualID = {
     sandbox:{
       practice:'3LJ6LLBDMBQTWUTLG75O5EUQMZM6A6',
@@ -16,7 +17,7 @@ function mturk() {
   var config = {
     access : process.env.AWS_ACCESS_KEY_ID,
     secret : process.env.AWS_SECRET_ACCESS_KEY,
-    sandbox: true
+    sandbox: self.host==='sandbox'
   };
 
   mturkApi.connect(config).then(function(api){

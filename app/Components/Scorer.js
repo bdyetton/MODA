@@ -158,7 +158,11 @@ module.exports = React.createClass({
           self.setState({showSubmit:false});
         }
       } else {
-        self.setState({HITsComplete:true, showSubmit:false});
+        if (self.state.imgMeta.prac) {
+          self.setState({showSubmit: false});
+        } else {
+          self.setState({HITsComplete: true, showSubmit: false});
+        }
         self.getNextRemImage();
       }
     });
