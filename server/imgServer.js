@@ -106,7 +106,7 @@ function imgServer(){
     user.currentPhase = phases[user.phaseIdx];
     user.batchesCompleted = {};
     phases.forEach(function(phase){ //Init that shit
-        user.batchesIdxs[phase] = Array.apply(null, {length: user.batches[phase].batchMeta.numBatches}).map(Number.call, Number);
+        user.batchesIdxs[phase] = shuffleArray(Array.apply(null, {length: user.batches[phase].batchMeta.numBatches}).map(Number.call, Number));
         user.currentSet[phase] = [0,1];
         user.setsCompleted[phase] = 0;
         user.batchesCompleted[phase] = [];
@@ -271,6 +271,8 @@ function imgServer(){
         }
         user.idx[user.currentPhase] = 0
       } else {
+        console.log(user.currentSet[user.currentPhase]);
+        console.log(user.batchesIdxs[user.currentPhase][user.currentSet[user.currentPhase]]);
         user.batchesCompleted[user.currentPhase].push(user.batchesIdxs[user.currentPhase][user.currentSet[user.currentPhase]]);
         user.currentSet[user.currentPhase] = user.currentSet[user.currentPhase].map(function (val) {
           return val + user.batches[user.currentPhase].batchMeta.batchPerSet

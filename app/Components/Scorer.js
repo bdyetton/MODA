@@ -488,7 +488,7 @@ module.exports = React.createClass({
                 self.props.userData.userType==='other' ?
                   <p className='thank-you-text'>All HITs complete, Thank You!</p> : <p className='thank-you-text'>HIT complete, Thank You! Return to Mturk to select more</p>
                 : self.drawImageAndMarkers()}
-              {self.state.showSubmit ? <SubmitHIT showSubmit={self.state.showSubmit} closeSubmit={self.closeSubmit} submitHit={self.submitHit} userData={self.props.userData}/> : []}
+              {self.state.showSubmit ? <SubmitHIT showSubmit={self.state.showSubmit} closeSubmit={self.closeSubmit} submitHit={self.submitHit} userData={self.props.userData} prac={self.state.imgMeta.prac}/> : []}
               <div className='row' style={{position:'relative',textAlign:'center'}}>
                 {self.drawButtons()}
               </div>
