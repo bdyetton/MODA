@@ -2,18 +2,18 @@ __author__ = 'ben'
 import os
 import boto.mturk.connection
 
-host = {
+hosts = {
     'sandbox':'mechanicalturk.sandbox.amazonaws.com',
     'real':'mechanicalturk.amazonaws.com'
 }
 
-hostType = 'sandbox'
-phaseType = 'phase1'
+phaseType = 'practice'
+host = os.environ['MODA_MTURK_HOST']
 
 mturk = boto.mturk.connection.MTurkConnection(
     aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
     aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'],
-    host=host[hostType],
+    host=hosts[host],
     debug=1  # debug = 2 prints out all requests.
 )
 
@@ -31,13 +31,13 @@ phasesQualID = {
     }
   }
 
-qualData= mturk.get_all_qualifications_for_qual_type(phasesQualID[hostType][phaseType])
+qualData= mturk.get_all_qualifications_for_qual_type(phasesQualID[host][phaseType])
 workers = []
 for worker in qualData:
     workers.append(worker.SubjectId)
 
 for workerID in workers:
     try:
-        mturk.revoke_qualification(workerID,phasesQualID[hostType][phaseType],reason='Granted in error')
+        mturk.revoke_qualification(workerID,phasesQualID[host][phaseType],reason='Granted in error')
     except:
         print 'worker %s does not have qual' % workerID

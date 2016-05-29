@@ -11,10 +11,16 @@ hosts={
     'real':'mechanicalturk.amazonaws.com'
 }
 
-qualIds = {
-    'real':'3874R5DF6Q5C7TEUP9O1NNJXLRMPJ6',
-    'sandbox':'3OFCXZK7I1YMQQ45Q5LPJ2OOHCHK93'
-}
+phasesQualID = {
+    'sandbox': {
+      'practice': '3LJ6LLBDMBQTWUTLG75O5EUQMZM6A6',
+      'phase1': '3OFCXZK7I1YMQQ45Q5LPJ2OOHCHK93'
+    },
+    'real': {
+      'practice': '3EOSKS3N0DQYQTMKNK1E0HHQOWRVU1',
+      'phase1': '3874R5DF6Q5C7TEUP9O1NNJXLRMPJ6'
+    }
+  }
 
 host = os.environ['MODA_MTURK_HOST'];
 
@@ -47,7 +53,8 @@ if host != 'sandbox':
     quals.add(Requirement('00000000000000000040', 'GreaterThanOrEqualTo', '100')) #'Worker_​NumberHITsApproved'
 
 quals.add(Requirement('000000000000000000L0', 'GreaterThanOrEqualTo', '95')) #'Worker_​PercentHITsApproved'
-quals.add(Requirement(qualIds[host], 'DoesNotExist'))
+quals.add(Requirement(phasesQualID[host]['practice'], 'DoesNotExist'))
+quals.add(Requirement(phasesQualID[host]['phase1'], 'DoesNotExist'))
 
 #quals.add(LocaleRequirement('In', ['US','IN'])) #locale
 #quals.add(LocaleRequirement('EqualTo', 'IN')) #locale
@@ -80,7 +87,8 @@ if host != 'sandbox':
     quals.add(Requirement('00000000000000000040', 'GreaterThanOrEqualTo', '100')) #'Worker_​NumberHITsApproved'
 
 quals.add(Requirement('000000000000000000L0', 'GreaterThanOrEqualTo', '95')) #'Worker_​PercentHITsApproved'
-quals.add(Requirement(qualIds[host], 'Exists'))
+quals.add(Requirement(phasesQualID[host]['practice'], 'Exists'))
+quals.add(Requirement(phasesQualID[host]['phase1'], 'DoesNotExist'))
 
 #quals.add(LocaleRequirement('In', ['US','IN'])) #locale
 #quals.add(LocaleRequirement('EqualTo', 'IN')) #locale

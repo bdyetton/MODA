@@ -7,11 +7,6 @@ hosts={
     'real':'mechanicalturk.amazonaws.com'
 }
 
-qualIds = {
-    'real':'3874R5DF6Q5C7TEUP9O1NNJXLRMPJ6',
-    'sandbox':'3OFCXZK7I1YMQQ45Q5LPJ2OOHCHK93'
-}
-
 host = os.environ['MODA_MTURK_HOST'];
 
 mturk = boto.mturk.connection.MTurkConnection(
