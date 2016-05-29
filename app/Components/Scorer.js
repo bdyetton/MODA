@@ -33,7 +33,8 @@ module.exports = React.createClass({
       HITsComplete: false,
       numMarkers: 0,
       numGSMarkers:0,
-      imgFirstShown:d.getTime()
+      imgFirstShown:d.getTime(),
+      viewedImgs:[]
     };
   },
 
@@ -129,7 +130,10 @@ module.exports = React.createClass({
     var self = this;
     var d = new Date();
     $.get('/api/previousRemImage', {user: this.props.userData.userName}, function(data){
-      self.setState({ imgMeta: data.image, showGSMarkers: false, imgFirstShown:d.getTime()},
+      self.setState({ imgMeta: data.image,
+          showGSMarkers: false,
+          imgFirstShown:d.getTime(),
+          viewedImgs:self.state.viewedImgs.push(data.image.filename)},
         function(){
           self.redrawMarkers()
         });
@@ -140,7 +144,10 @@ module.exports = React.createClass({
     var self = this;
     var d = new Date();
     $.get('/api/nextRemImage', {user: this.props.userData.userName}, function(data) {
-      self.setState({ imgMeta: data.image, showGSMarkers: false, imgFirstShown:d.getTime()},
+      self.setState({ imgMeta: data.image,
+          showGSMarkers: false,
+          imgFirstShown:d.getTime(),
+          viewedImgs:self.state.viewedImgs.push(data.image.filename)},
         function(){
           self.redrawMarkers()
         });
@@ -153,15 +160,15 @@ module.exports = React.createClass({
       if (self.props.userData.userType==='other') {
         self.getNextRemImage();
         if (self.state.imgMeta.setsCompleted === self.state.imgMeta.setsMax){
-          self.setState({HITsComplete:true, showSubmit:false});
+          self.setState({HITsComplete:true, showSubmit:false, viewedImgs:[]});
         } else {
-          self.setState({showSubmit:false});
+          self.setState({showSubmit:false, viewedImgs:[]});
         }
       } else {
         if (self.state.imgMeta.prac) {
           self.setState({showSubmit: false});
         } else {
-          self.setState({HITsComplete: true, showSubmit: false});
+          self.setState({HITsComplete: true, showSubmit: false, viewedImgs:[]});
         }
         self.getNextRemImage();
       }
@@ -493,7 +500,12 @@ module.exports = React.createClass({
                 self.props.userData.userType==='other' ?
                   <p className='thank-you-text'>All HITs complete, Thank You!</p> : <p className='thank-you-text'>HIT complete, Thank You! Return to Mturk to select more</p>
                 : self.drawImageAndMarkers()}
-              {self.state.showSubmit ? <SubmitHIT showSubmit={self.state.showSubmit} closeSubmit={self.closeSubmit} submitHit={self.submitHit} userData={self.props.userData} prac={self.state.imgMeta.prac}/> : []}
+              {self.state.showSubmit ? <SubmitHIT showSubmit={self.state.showSubmit}
+                                                  closeSubmit={self.closeSubmit}
+                                                  submitHit={self.submitHit}
+                                                  userData={self.props.userData}
+                                                  prac={self.state.imgMeta.prac}
+                                                  viewedImgs={self.state.viewedImgs}/> : []}
               <div className='row' style={{position:'relative',textAlign:'center'}}>
                 {self.drawButtons()}
               </div>
