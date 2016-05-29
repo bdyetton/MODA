@@ -2,7 +2,7 @@ var mturkApi = require('mturk-api');
 
 function mturk() {
   var self = this;
-  self.turkType = 'sandbox';
+  self.turkType = 'real'; //FIXME should pull from an env var or something
   self.phasesQualID = {
     sandbox:{
       practice:'3LJ6LLBDMBQTWUTLG75O5EUQMZM6A6',
@@ -23,8 +23,6 @@ function mturk() {
     self.api = api;
   }).catch(console.error);
 
-  //self.api = mturkApi.createClient(config);
-
   self.approveHIT = function(user,cb) {
     self.api.req('ApproveAssignment',{assignmentId:user.assignmentId}).then(function(resp){
       console.log(resp)
@@ -32,7 +30,7 @@ function mturk() {
   };
 
   self.markPhaseComplete = function(user,phase){
-    console.log('GRANTING QUALIFICATION!')
+    console.log('Granting ' + phase + ' qualification to ' + user.userName)
     self.api.req('AssignQualification',{QualificationTypeId:self.phasesQualID[self.turkType][phase], WorkerId:user.userName}).then(function(resp){
       console.log(resp)
     })

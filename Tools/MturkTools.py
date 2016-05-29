@@ -66,7 +66,7 @@ class MturkTools:
                                            'turkAssignmentId'])
             with open(mypath+'EpochViews.csv', 'wb') as epochCsvFile:
                 epoch_csv_writer = csv.writer(epochCsvFile)
-                epoch_csv_writer.writerow(['filename', 'epochNum', 'blockNum', 'annotatorID','hitId','assignmentId'])
+                epoch_csv_writer.writerow(['filename', 'epochNum', 'blockNum', 'phase', 'annotatorID','hitId','assignmentId'])
 
                 with open(mypath+'TurkStats.csv', 'wb') as turkStatsFile:
                     turk_stats_writer = csv.writer(turkStatsFile)
@@ -102,7 +102,7 @@ class MturkTools:
                                                 assignment_id = None
                                             epoch_csv_writer.writerow([img_data['filename'],
                                                                        img_data['epoch'],
-                                                                       img_data['batch'],
+                                                                       img_data['batch'],phase,
                                                                        user_data['userName'],
                                                                        hit_id,
                                                                        assignment_id])

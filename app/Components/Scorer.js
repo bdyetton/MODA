@@ -364,6 +364,7 @@ module.exports = React.createClass({
   },
 
   isWindowNotComplete: function(){
+    //return false //FIXME remove
     var self = this;
     var nextDisNorm = !(JSON.parse(self.state.imgMeta.noMarkers) ||  //there must be a marker, or no markers set
         (self.state.numMarkers>0 && self.state.confCounter <= 0)) || //All the markers have a conf set
@@ -494,7 +495,8 @@ module.exports = React.createClass({
               </div>
             </rb.ListGroupItem>
           </rb.ListGroup>
-          {self.state.imgMeta.prac ? <p className='std-para'>You are currently in <b style={{color:'orange'}}>practice mode.</b>
+          {self.state.imgMeta.prac ? <p className='std-para'>You are currently in <b style={{color:'orange'}}>practice mode. &nbsp;</b>
+            This HIT will take longer than subsequent HITs because you are required to complete a practice HIT first (and read the instructions).<br/><br/>
             Please mark spindles by drawing boxes around them. Check you accuracy with the toggle/check button.
             Position and width must be correct and confidence must be set for each marker before moving to
             the next window. Note that some windows will not contain spindles.</p> : []}

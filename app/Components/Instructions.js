@@ -55,13 +55,11 @@ module.exports = React.createClass({
             using the same username, it will return to where you left off. If you experience any problems with
             the MODA interface, first try closing your browser and logging back in. If you continue to have
             problems, please contact: moda.sleepscoring@gmail.com
-          </p> : <p className='std-para'>You must identify spindles in 10 of these windows to complete at HIT</p>}
+          </p> : <p className='std-para'>You must identify spindles in 10 of these windows to complete at HIT.
+            This HIT will take longer than subsequent HITs because you are required to read the instructions and complete a practice HIT first.</p>}
         </div>
     )
   },
-      //  <rb.ResponsiveEmbed a16by9>
-      //  <embed type="image/svg+xml" src="https://www.youtube.com/embed/FavUpD_IjVY"/>
-      //</rb.ResponsiveEmbed>
 
   page2: function(){
     return (<div>

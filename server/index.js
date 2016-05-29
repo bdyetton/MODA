@@ -80,7 +80,6 @@ app.get('/api/getUser',cors(),function(req,res){
             out.userData = req.query.userData;
             out.success= true;
             out.image = imServ.getImageData(currentUsers[userData.userName], 0);
-            console.log(out.image.markers);
             out.image.markerIndex = currentUsers[userData.userName].markerIndex;
             res.send(out);
           } else {

@@ -60,6 +60,8 @@ for image in filenames:
     subID = u1 + '-' + u2 + '-' + u3
 
     data[dif]['imgs'][idx]['idx'] = 0
+    data[dif]['imgs'][idx]['loadedViews'] = 0
+    data[dif]['imgs'][idx]['backNextViews'] = 0
     data[dif]['imgs'][idx]['epoch'] = int(e[1:])
     data[dif]['imgs'][idx]['batch'] = int(b[1:])
     data[dif]['imgs'][idx]['filename'] = image

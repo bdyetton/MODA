@@ -64,6 +64,8 @@ for image in filenames:
     data[subID][blcIdx]['imgs'][imgIdx]['start'] = int(smp[3:])
     data[subID][blcIdx]['imgs'][imgIdx]['end'] = int(smp[3:]) + 25*1000
     data[subID][blcIdx]['imgs'][imgIdx]['stage'] = 2
+    data[subID][blcIdx]['imgs'][imgIdx]['loadedViews'] = 0
+    data[subID][blcIdx]['imgs'][imgIdx]['backNextViews'] = 0
     data[subID][blcIdx]['imgs'][imgIdx]['subID'] = u1 + '-' + u2 + '-' + u3
 
     data[subID][blcIdx]['imgs'][imgIdx]['markers'] = []

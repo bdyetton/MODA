@@ -106,7 +106,10 @@ function imgServer(){
     user.currentPhase = phases[user.phaseIdx];
     user.batchesCompleted = {};
     phases.forEach(function(phase){ //Init that shit
-        user.batchesIdxs[phase] = shuffleArray(Array.apply(null, {length: user.batches[phase].batchMeta.numBatches}).map(Number.call, Number));
+        user.batchesIdxs[phase] = Array.apply(null, {length: user.batches[phase].batchMeta.numBatches}).map(Number.call, Number);
+        if (phase != 'practice'){
+          user.batchesIdxs[phase] = shuffleArray(user.batchesIdxs[phase])
+        }
         user.currentSet[phase] = [0,1];
         user.setsCompleted[phase] = 0;
         user.batchesCompleted[phase] = [];
@@ -271,9 +274,8 @@ function imgServer(){
         }
         user.idx[user.currentPhase] = 0
       } else {
-        console.log(user.currentSet[user.currentPhase]);
-        console.log(user.batchesIdxs[user.currentPhase][user.currentSet[user.currentPhase]]);
-        user.batchesCompleted[user.currentPhase].push(user.batchesIdxs[user.currentPhase][user.currentSet[user.currentPhase]]);
+        user.batchesCompleted[user.currentPhase].push(user.batchesIdxs[user.currentPhase][user.currentSet[user.currentPhase][0]]);
+        user.batchesCompleted[user.currentPhase].push(user.batchesIdxs[user.currentPhase][user.currentSet[user.currentPhase][1]]);
         user.currentSet[user.currentPhase] = user.currentSet[user.currentPhase].map(function (val) {
           return val + user.batches[user.currentPhase].batchMeta.batchPerSet
         });
@@ -290,13 +292,23 @@ function imgServer(){
     if (user.userType = 'mturker') {
       user.batches[user.currentPhase]
         [user.batchesIdxs[user.currentPhase]
-        [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].mturkInfo = { hitId:user.hitId,
-                                                                    assignmentId:user.assignmentId,
-                                                                    workerId:user.workerId,
-                                                                    turkSubmitTo:user.turkSubmitTo}
-      }
-    if (inc){
+        [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].mturkInfo = {
+                                                                                    hitId: user.hitId,
+                                                                                    assignmentId: user.assignmentId,
+                                                                                    workerId: user.workerId,
+                                                                                    turkSubmitTo: user.turkSubmitTo
+                                                                                  }
+    }
+
+    if (inc===0) {
+      user.batches[user.currentPhase]
+        [user.batchesIdxs[user.currentPhase]
+          [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].loadedViews += 1
+    } else {
       dataOut.msg = self.getMotivMesg();
+      user.batches[user.currentPhase]
+        [user.batchesIdxs[user.currentPhase]
+          [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].backNextViews += 1
     }
     dataOut.idx = user.idx[user.currentPhase];
     dataOut.idxMax = user.batches[user.currentPhase].batchMeta.imgPerSet-1;
