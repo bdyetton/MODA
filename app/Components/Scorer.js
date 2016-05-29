@@ -130,10 +130,12 @@ module.exports = React.createClass({
     var self = this;
     var d = new Date();
     $.get('/api/previousRemImage', {user: this.props.userData.userName}, function(data){
+      var viewedImgs = self.state.viewedImgs;
+      viewedImgs.push(data.image.filename);
       self.setState({ imgMeta: data.image,
           showGSMarkers: false,
           imgFirstShown:d.getTime(),
-          viewedImgs:self.state.viewedImgs.push(data.image.filename)},
+          viewedImgs:viewedImgs},
         function(){
           self.redrawMarkers()
         });
@@ -144,10 +146,12 @@ module.exports = React.createClass({
     var self = this;
     var d = new Date();
     $.get('/api/nextRemImage', {user: this.props.userData.userName}, function(data) {
+      var viewedImgs = self.state.viewedImgs;
+      viewedImgs.push(data.image.filename);
       self.setState({ imgMeta: data.image,
           showGSMarkers: false,
           imgFirstShown:d.getTime(),
-          viewedImgs:self.state.viewedImgs.push(data.image.filename)},
+          viewedImgs:viewedImgs},
         function(){
           self.redrawMarkers()
         });
