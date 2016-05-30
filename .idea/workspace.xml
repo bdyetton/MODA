@@ -2,16 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e305a046-6328-4772-80fc-a659578f2d34" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Tools/deleteAllHits.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Tools/deleteQualifications.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Tools/postHits.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/img/practice/900MissingData.csv" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Components/Login.js" afterPath="$PROJECT_DIR$/app/Components/Login.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tools/MturkTools.py" afterPath="$PROJECT_DIR$/Tools/MturkTools.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Components/Scorer.js" afterPath="$PROJECT_DIR$/app/Components/Scorer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/bundle.b6cb6a1e66ef63831f88.js.map" afterPath="$PROJECT_DIR$/build/bundle.b6cb6a1e66ef63831f88.js.map" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tools/errorInvestigation.py" afterPath="$PROJECT_DIR$/Tools/errorInvestigation.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/imgServer.js" afterPath="$PROJECT_DIR$/server/imgServer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/index.js" afterPath="$PROJECT_DIR$/server/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/user.js" afterPath="$PROJECT_DIR$/server/user.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Components/submitHIT.js" afterPath="$PROJECT_DIR$/app/Components/submitHIT.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="simple-webpack-react-starter.iws" />
@@ -37,8 +32,8 @@
       <file leaf-file-name="Scorer.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Components/Scorer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.9285715">
-              <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+            <state vertical-scroll-proportion="-24.428572">
+              <caret line="38" column="4" selection-start-line="38" selection-start-column="4" selection-end-line="38" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -54,11 +49,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="user.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="user.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/user.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.28448275">
-              <caret line="17" column="21" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
+            <state vertical-scroll-proportion="-21.23077">
+              <caret line="33" column="76" selection-start-line="33" selection-start-column="76" selection-end-line="33" selection-end-column="76" />
               <folding />
             </state>
           </provider>
@@ -74,24 +69,57 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Instructions.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Components/Instructions.js">
+      <file leaf-file-name="Login.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Components/Login.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+              <caret line="47" column="46" selection-start-line="47" selection-start-column="46" selection-end-line="47" selection-end-column="46" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MturkTools.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Content.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Components/Content.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="19" selection-end-column="2" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MturkTools.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Tools/MturkTools.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.5">
-              <caret line="60" column="41" selection-start-line="60" selection-start-column="41" selection-end-line="60" selection-end-column="41" />
+            <state vertical-scroll-proportion="0.52483803">
+              <caret line="348" column="89" selection-start-line="348" selection-start-column="89" selection-end-line="348" selection-end-column="89" />
               <folding>
                 <element signature="e#44#53#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="submitHIT.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Components/submitHIT.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WorkerResultData.csv" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Tools/DownloadedUserData/phase1trial2/WorkerResultData.csv">
+          <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -100,7 +128,7 @@
         <entry file="file://$PROJECT_DIR$/Tools/errorInvestigation.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="57" column="58" selection-start-line="57" selection-start-column="58" selection-end-line="57" selection-end-column="58" />
+              <caret line="41" column="29" selection-start-line="41" selection-start-column="29" selection-end-line="41" selection-end-column="29" />
               <folding>
                 <element signature="e#19#44#0" expanded="true" />
               </folding>
@@ -122,11 +150,9 @@
         <option value="$PROJECT_DIR$/Tools/EventLocations.csv" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/.babelrc" />
-        <option value="$PROJECT_DIR$/app/Components/Login.js" />
         <option value="$PROJECT_DIR$/app/Components/ConfidenceBox.js" />
         <option value="$PROJECT_DIR$/node_modules/react-resizable-box/lib/index.js" />
         <option value="$PROJECT_DIR$/node_modules/react-resizable-and-movable/node_modules/react-resizable-box/lib/index.js" />
-        <option value="$PROJECT_DIR$/app/Components/Content.js" />
         <option value="$PROJECT_DIR$/node_modules/react-resizable-and-movable/lib/index.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/server/mturk.js" />
@@ -141,16 +167,18 @@
         <option value="$PROJECT_DIR$/Tools/parseFolderOfImagesPracSet.py" />
         <option value="$PROJECT_DIR$/Tools/parseFolderOfImagesToMetaJson.py" />
         <option value="$PROJECT_DIR$/server/mturkConnect.js" />
-        <option value="$PROJECT_DIR$/app/Components/submitHIT.js" />
         <option value="$PROJECT_DIR$/server/imgServer.js" />
         <option value="$PROJECT_DIR$/Tools/deleteAllHits.py" />
         <option value="$PROJECT_DIR$/Tools/deleteQualifications.py" />
         <option value="$PROJECT_DIR$/Tools/postHits.py" />
         <option value="$PROJECT_DIR$/server/index.js" />
         <option value="$PROJECT_DIR$/app/Components/Scorer.js" />
-        <option value="$PROJECT_DIR$/Tools/errorInvestigation.py" />
-        <option value="$PROJECT_DIR$/Tools/MturkTools.py" />
         <option value="$PROJECT_DIR$/server/user.js" />
+        <option value="$PROJECT_DIR$/Tools/errorInvestigation.py" />
+        <option value="$PROJECT_DIR$/app/Components/Content.js" />
+        <option value="$PROJECT_DIR$/app/Components/Login.js" />
+        <option value="$PROJECT_DIR$/app/Components/submitHIT.js" />
+        <option value="$PROJECT_DIR$/Tools/MturkTools.py" />
       </list>
     </option>
   </component>
@@ -232,6 +260,38 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="build" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="simple-webpack-react-starter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MODA" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="build" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="img" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="simple-webpack-react-starter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MODA" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -283,6 +343,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="simple-webpack-react-starter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MODA" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DownloadedUserData" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="phase1trial2" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -539,14 +621,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1601" y="0" width="1392" height="1074" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27985612" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19352518" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -651,13 +733,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Components/Content.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="27" column="34" selection-start-line="27" selection-start-column="34" selection-end-line="27" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.53961456">
@@ -741,14 +816,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Components/Login.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="38" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Tools/parseFolderOfImagesToMetaJson.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.4528302">
@@ -777,14 +844,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3207547">
           <caret line="21" column="46" selection-start-line="21" selection-start-column="46" selection-end-line="21" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Components/submitHIT.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="31" column="63" selection-start-line="31" selection-start-column="53" selection-end-line="31" selection-end-column="63" />
           <folding />
         </state>
       </provider>
@@ -888,27 +947,36 @@
     <entry file="file://$PROJECT_DIR$/Tools/errorInvestigation.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="57" column="58" selection-start-line="57" selection-start-column="58" selection-end-line="57" selection-end-column="58" />
+          <caret line="41" column="29" selection-start-line="41" selection-start-column="29" selection-end-line="41" selection-end-column="29" />
           <folding>
             <element signature="e#19#44#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Tools/MturkTools.py">
+    <entry file="file://$PROJECT_DIR$/Tools/DownloadedUserData/phase1trial2/WorkerResultData.csv">
+      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.5">
-          <caret line="60" column="41" selection-start-line="60" selection-start-column="41" selection-end-line="60" selection-end-column="41" />
-          <folding>
-            <element signature="e#44#53#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Components/Scorer.js">
+    <entry file="file://$PROJECT_DIR$/app/Components/Content.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.9285715">
-          <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="19" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Components/Login.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="47" column="46" selection-start-line="47" selection-start-column="46" selection-end-line="47" selection-end-column="46" />
           <folding />
         </state>
       </provider>
@@ -921,6 +989,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/server/user.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-21.23077">
+          <caret line="33" column="76" selection-start-line="33" selection-start-column="76" selection-end-line="33" selection-end-column="76" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/server/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -929,11 +1005,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/user.js">
+    <entry file="file://$PROJECT_DIR$/app/Components/Scorer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28448275">
-          <caret line="17" column="21" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
+        <state vertical-scroll-proportion="-24.428572">
+          <caret line="38" column="4" selection-start-line="38" selection-start-column="4" selection-end-line="38" selection-end-column="4" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Components/submitHIT.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tools/MturkTools.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.52483803">
+          <caret line="348" column="89" selection-start-line="348" selection-start-column="89" selection-end-line="348" selection-end-column="89" />
+          <folding>
+            <element signature="e#44#53#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

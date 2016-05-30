@@ -10,6 +10,7 @@ import datetime
 import csv
 import yaml
 import sys
+import math
 import pandas as pd
 from pprint import pprint
 
@@ -187,24 +188,42 @@ class MturkTools:
             eventLocCsvFile.close()
             turkStatsFile.close()
 
-    def compare_moda_results_to_turk_results(self):
+    def save_mturk_data(self):
         hits = self.get_all_reviewable_hits()
-        workers = {}
+        try:
+            workerResultData = pd.read_csv("DownloadedUserData/" + self.phase + "/WorkerResultData.csv", sep=',')
+        except:
+            workerResultData = pd.DataFrame(columns={'workerId','viewedImgs','numViewed','numHits'})
         for hit in hits:
-            print hit
-            #assignments = self.mturk.get_assignments(hit.HITId)
-            continue
+            assignments = self.mturk.get_assignments(hit.HITId)
             for assignment in assignments:
-                if assignment.WorkerId not in workers:
-                    workers[assignment.WorkerId] = []
-                print assignment.answers.feilds['viwedImgs']
-                workers[assignment.WorkerId].append(assignment.answers.feilds['viwedImgs'])
                 print "Answers of the worker %s" % assignment.WorkerId
-        #         for question_form_answer in assignment.answers&#91;0&#93;:
-        #             for key, value in question_form_answer.fields:
-        #                 print "%s: %s" % (key,value)
-        #         print "--------------------"
-        # viewData = pd.read_csv(mypath = 'DownloadedUserData/'+self.phase + '/EpochViews', sep=',')
+                for answer in assignment.answers:
+                    for idx, ans in enumerate(answer):
+                        if idx == 1:
+                            for viewedImg in ans.fields:
+                                viewedImg = viewedImg.split(',')
+                                if len(viewedImg)<=1 or viewedImg==None:
+                                    print "Missing DATA for {0}".format(assignment.WorkerId)
+                                    continue
+                                if assignment.WorkerId not in workerResultData['workerId'].values:
+                                    ser = pd.Series([assignment.WorkerId, viewedImg, len(viewedImg), 1], index=['workerId','viewedImgs','numViewed','numHits'])
+                                    workerResultData = workerResultData.append(ser, ignore_index=True)
+                                else:
+                                    currentData = workerResultData.loc[workerResultData['workerId']==assignment.WorkerId, 'viewedImgs']
+                                    currentNumViewed = workerResultData.loc[workerResultData['workerId']==assignment.WorkerId, 'numViewed']
+                                    currentNumHits = workerResultData.loc[workerResultData['workerId']==assignment.WorkerId, 'numHits']
+                                    if not set(viewedImg).issubset(currentData.values[0]):
+                                        currentDataValue = currentData.values[0]
+                                        if isinstance(currentDataValue, basestring):
+                                            currentDataValue = currentDataValue.split(',')
+                                        workerLoc = workerResultData['workerId']==assignment.WorkerId
+                                        currentDataValue.extend(viewedImg)
+                                        workerResultData.loc[workerLoc, 'viewedImgs'] = [currentDataValue]
+                                        workerResultData.loc[workerLoc, 'numViewed'] = currentNumViewed+len(viewedImg)
+                                        workerResultData.loc[workerLoc, 'numHits'] = currentNumHits+1
+        workerResultData.to_csv("DownloadedUserData/" + self.phase + "/WorkerResultData.csv")
+
 
     def get_all_reviewable_hits(self):
         page_size = 50
@@ -227,7 +246,6 @@ class MturkTools:
 
     def get_all_hits(self):
         return self.mturk.get_all_hits()
-
 
     def approve_hits(self):
         reviewable_hits = self.get_all_reviewable_hits()
@@ -328,7 +346,7 @@ class MturkTools:
         questionform = boto.mturk.question.ExternalQuestion(url, frame_height)
         quals = Qualifications()
         quals.add(Requirement('000000000000000000L0', 'GreaterThanOrEqualTo', '95')) #'Worker_​PercentHITsApproved'
-        quals.add(Requirement(phasesQualID[host]['practice'], 'Exists'))
+        quals.add(Requirement(phasesQualID[host]['practice'], 'LessThanOrEqualTo', '50'))
         quals.add(Requirement(phasesQualID[host]['phase1'], 'DoesNotExist'))
         if host != 'sandbox':
             if testing:
@@ -354,9 +372,11 @@ class MturkTools:
         print 'Posted ' + str(i) + ' further HITS @ ' + str(amount)
 
 mtt = MturkTools()
-#mtt.post_futher_hits(50,0.13)
-#mtt.approve_hits()
-mtt.remove_qualifications('practice')
+#mtt.save_mturk_data()
+mtt.disable_all_hits()
+#mtt.get_all_user_data_from_aws()
+#mtt.parse_aws_to_csv()
+#mtt.remove_qualifications('practice')
 
 
 # mtt.mturk.notify_workers('AR72L0JX4D03W',
