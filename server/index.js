@@ -26,6 +26,7 @@ app.get('/api/currentTime', cors(), function(req, res) {
 app.get('/api/submitHit', cors(), function(req, res) {
   //mturk.approveHIT(currentUsers[req.query.user]);
   res.send({ success: true });
+  users.saveUser(currentUsers[req.query.user]);
 });
 
 app.get('/api/nextRemImage',cors(),function(req,res){

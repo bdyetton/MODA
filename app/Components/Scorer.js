@@ -79,7 +79,6 @@ module.exports = React.createClass({
     }
   },
 
-
   redrawMarkers: function(){
     var self = this;
     self.populateMarkers(self.state.imgMeta.markers);

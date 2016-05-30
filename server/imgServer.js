@@ -46,8 +46,8 @@ var imgConfig = { //THIS DATA NEEDS TO BE UPDATED! //TODO break out into a file
 };
 
 var matchThreshs = {
-  wDiffThreshLow:0.5,
-  xDiffThreshLow:0.5,
+  wDiffThreshLow:0.75,
+  xDiffThreshLow:0.6,
   wDiffThreshHigh:0.15,
   xDiffThreshHigh:0.1
 };

@@ -31,6 +31,7 @@ function user(){
         loc = loc || 's3';
         //Write to s3
         if (loc == 's3') {
+            if (user.userName==='preview'){return;} //dont save preview data
             self.aws.postFile('UserData_' + user.userName, JSON.stringify(user));
         }
 

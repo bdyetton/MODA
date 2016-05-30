@@ -1,42 +1,77 @@
+# -*- coding: utf-8 -*-
+
 __author__ = 'ben'
 import os
 from os import walk
 import boto.mturk.connection
 from boto.s3.connection import S3Connection
+from boto.mturk.qualification import LocaleRequirement, Qualifications, Requirement
+import datetime
 import csv
 import yaml
+import sys
 import pandas as pd
 from pprint import pprint
 
 sandbox_host = 'mechanicalturk.sandbox.amazonaws.com'
 real_host = 'mechanicalturk.amazonaws.com'
 
+host = os.environ['MODA_MTURK_HOST']
+
+hosts={
+    'sandbox':'mechanicalturk.sandbox.amazonaws.com',
+    'real':'mechanicalturk.amazonaws.com'
+}
+
+phasesQualID = {
+    'sandbox': {
+      'practice': '3LJ6LLBDMBQTWUTLG75O5EUQMZM6A6',
+      'phase1': '3OFCXZK7I1YMQQ45Q5LPJ2OOHCHK93'
+    },
+    'real': {
+      'practice': '3EOSKS3N0DQYQTMKNK1E0HHQOWRVU1',
+      'phase1': '3874R5DF6Q5C7TEUP9O1NNJXLRMPJ6'
+    }
+  }
+
+testingQual = '35NJKTSSL0Z7GHLPTM145UTQ6PFZXY'
+
 
 class MturkTools:
     """Tools for mturk"""
 
     def __init__(self):
-        self.phase = 'phase1trial1'
+        self.phase = 'phase1trial2'
+        self.url = "https://shrouded-plains-8041.herokuapp.com/"
         self.mturk = boto.mturk.connection.MTurkConnection(
             aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
             aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'],
-            host=real_host,
+            host=hosts[host],
             debug=1  # debug = 2 prints out all requests.
         )
+        self.titles_to_remove = ['Find patterns in sleeping brainwaves',
+                                 'Find patterns in sleeping brainwaves (Training HIT)']
         print "Welcome to mturk tools, your balance is:"
-        print self.mturk.get_account_balance()  # [$10,000.00]
+        accountBal = self.mturk.get_account_balance()  # [$10,000.00]
+        print accountBal
+        if self.phase=='sandbox' and accountBal[0] != '10,000.00':
+            print 'Error, your meant to be in sandbox but you are not!'
+            sys.exit()
 
-    def get_all_user_data(self):
+    def get_all_user_data_from_aws(self):
         if not os.path.exists('DownloadedUserData/'+self.phase):
             os.makedirs('DownloadedUserData/'+self.phase)
 
         s3 = S3Connection(os.environ['AWS_ACCESS_KEY_ID'], os.environ['AWS_SECRET_ACCESS_KEY'])
         bucket = s3.get_bucket('moss-assets')
         bucket_list = bucket.list()
+        i=0
         for l in bucket_list:
-            keyString = str(l.key)
-            l.get_contents_to_filename('DownloadedUserData/'+self.phase + '/' +keyString)
-        print "%i user data files downloaded" % len(bucket_list)
+            i += 1
+            key_string = str(l.key)
+            if key_string.find('UserData') != -1:
+                l.get_contents_to_filename('DownloadedUserData/'+self.phase + '/' +key_string)
+        print "%i user data files downloaded" % i
 
     def parse_aws_to_csv(self):
         mypath = 'DownloadedUserData/'+self.phase + '/'
@@ -70,30 +105,41 @@ class MturkTools:
 
                 with open(mypath+'TurkStats.csv', 'wb') as turkStatsFile:
                     turk_stats_writer = csv.writer(turkStatsFile)
-                    turk_stats_writer.writerow(['annotatorID','pracHits','phase1Hits'])
+                    turk_stats_writer.writerow(['annotatorID','pracHits','phase1Hits','pracBatches','phase1Batches'])
                     for userFile in filenames:  # collate markers, and collate batches
-                        if userFile.find('.csv') > 0:
+                        if not (userFile.find('UserData') > -1):
                             continue
                         with open(mypath + '/' + userFile) as userFileHandle:
                             dataExists = False
                             if userFile == "UserData_preview":
                                 continue
                             user_data = yaml.safe_load(userFileHandle)
-                            print "working on user %s" % user_data['userName']
-                            turk_stats_writer.writerow([user_data['userName'],
-                                                        user_data['setsCompleted']['practice'],
-                                                        user_data['setsCompleted']['phase1']])
+                            try:
+                                if 'userName' not in user_data:
+                                    print userFile
+                                    continue
+                                print "working on user %s" % user_data['userName']
+                            except:
+                                print userFile
+                            batchTickers = {}
                             for phase in user_data['batches']:
                                 batch_comp = user_data['setsCompleted'][phase]
                                 print "   HITS completed in {0}: {1}".format(phase, batch_comp)
-
+                                if phase not in batchTickers:
+                                    batchTickers[phase] = 0
                                 for batch in user_data['batches'][phase]:
+
+                                    batchTicker = 0
                                     if batch == 'batchMeta':
                                         continue
                                     for img in user_data['batches'][phase][batch]['imgs']:
-                                        dataExists = True
                                         img_data = user_data['batches'][phase][batch]['imgs'][img]
-                                        if len(img_data['markers']) > 0 or img_data['noMarkers'] == 'true':
+                                        if len(img_data['markers']) > 0 or img_data['noMarkers'] == 'true' or ('mturkInfo' in img_data):
+                                            batchTicker += 1
+                                            if batchTicker == 5:
+                                               batchTickers[phase] += 1
+                                               print batchTickers[phase]
+                                            dataExists = True
                                             if user_data['userType'] == 'mturker':
                                                 assignment_id = img_data['mturkInfo']['assignmentId']
                                                 hit_id = img_data['mturkInfo']['hitId']
@@ -127,12 +173,38 @@ class MturkTools:
                                                                                marker['timeStamp'],
                                                                                hit_id,
                                                                                assignment_id])
+
+                            turk_stats_writer.writerow([user_data['userName'],
+                            user_data['setsCompleted']['practice'],
+                            user_data['setsCompleted']['phase1'],
+                            batchTickers['practice'],
+                            batchTickers['phase1']])
+
                             if not dataExists:
                                 print "ERROR, %s has a file but did not complete any images. " % user_data['userName']
 
             epochCsvFile.close()
             eventLocCsvFile.close()
             turkStatsFile.close()
+
+    def compare_moda_results_to_turk_results(self):
+        hits = self.get_all_reviewable_hits()
+        workers = {}
+        for hit in hits:
+            print hit
+            #assignments = self.mturk.get_assignments(hit.HITId)
+            continue
+            for assignment in assignments:
+                if assignment.WorkerId not in workers:
+                    workers[assignment.WorkerId] = []
+                print assignment.answers.feilds['viwedImgs']
+                workers[assignment.WorkerId].append(assignment.answers.feilds['viwedImgs'])
+                print "Answers of the worker %s" % assignment.WorkerId
+        #         for question_form_answer in assignment.answers&#91;0&#93;:
+        #             for key, value in question_form_answer.fields:
+        #                 print "%s: %s" % (key,value)
+        #         print "--------------------"
+        # viewData = pd.read_csv(mypath = 'DownloadedUserData/'+self.phase + '/EpochViews', sep=',')
 
     def get_all_reviewable_hits(self):
         page_size = 50
@@ -153,9 +225,12 @@ class MturkTools:
             hits.extend(temp_hits)
         return hits
 
+    def get_all_hits(self):
+        return self.mturk.get_all_hits()
+
+
     def approve_hits(self):
         reviewable_hits = self.get_all_reviewable_hits()
-
         for hit in reviewable_hits:
             assignments = self.mturk.get_assignments(hit.HITId)
             for assignment in assignments:
@@ -167,8 +242,131 @@ class MturkTools:
                 print "--------------------"
             self.mturk.disable_hit(hit.HITId)
 
-tt = MturkTools()
-tt.parse_aws_to_csv()
+    def disable_all_hits(self):
+        allHits = self.mturk.get_all_hits()
+        for hit in allHits:
+            if hit.Title in self.titles_to_remove:
+                print 'deleting'
+                self.mturk.disable_hit(hit.HITId)
+
+    def dispose_reviewed_hits(self):
+        allHits = self.mturk.get_all_hits()
+        for hit in allHits:
+            if hit.Title in self.titles_to_remove:
+                print 'disposing'
+                self.mturk.dispose_hit(hit.HITId)
+
+    def expire_remaining_hits(self):
+        allHits = self.mturk.get_all_hits()
+        for hit in allHits:
+            if hit.Title in self.titles_to_remove:
+                print 'expiring {0}'.format(hit.Title)
+                self.mturk.expire_hit(hit.HITId)
+
+    def remove_qualifications(self, phase_type):
+        qual_data= self.mturk.get_all_qualifications_for_qual_type(phasesQualID[host][phase_type])
+        workers = []
+        for worker in qual_data:
+            workers.append(worker.SubjectId)
+
+        for workerID in workers:
+            try:
+                self.mturk.revoke_qualification(workerID, phasesQualID[host][phase_type], reason='Granted in error')
+            except:
+                print 'worker %s does not have qual' % workerID
+
+    def post_prac_hits(self, num_hits, amount, testing=False):
+        title = "Find patterns in sleeping brainwaves (Training HIT)"
+        description = "This is a training hit which will grant you a qualification to complete more HITs." \
+                      "Expected HIT completion time is 10mins (because you have to read instructions etc)," \
+                      " BUT future HITs will be shorter!!!" \
+                      "Your job is to find patterns in recordings of the sleeping brain! Help science understand " \
+                      "sleep and its memory benefits. \n" \
+                      "This project is run by the MODA team at University of California, Riverside." \
+                      "If you would like to find out more about this project please visit our Open Science Project" \
+                      "at https://osf.io/8bma7/ or consider backing our project on " \
+                      "Experiment: https://experiment.com/projects/crowdsourcing-the-analysis-of-sleep-can-the-public-be-sleep-scientists"
+        keywords = ["sleep", "scoring","spindles","spindle","brainwaves", "MODA", "psych", "annotation"]
+        frame_height = 800  # the height of the iframe holding the external hit
+        questionform = boto.mturk.question.ExternalQuestion(self.url, frame_height)
+        quals = Qualifications()
+        quals.add(Requirement('000000000000000000L0', 'GreaterThanOrEqualTo', '95')) #'Worker_​PercentHITsApproved'
+        quals.add(Requirement(phasesQualID[host]['practice'], 'DoesNotExist'))
+        quals.add(Requirement(phasesQualID[host]['phase1'], 'DoesNotExist'))
+        if host != 'sandbox':
+            if testing:
+                quals.add(Requirement(testingQual, 'Exists'))
+            else:
+                quals.add(Requirement('00000000000000000040', 'GreaterThanOrEqualTo', '100')) #'Worker_​NumberHITsApproved'
+        i=0
+        for i in range(1, num_hits+1):
+            self.mturk.create_hit(
+                title=title,
+                description=description,
+                keywords=keywords,
+                question=questionform,
+                reward=boto.mturk.price.Price(amount=amount),
+                lifetime=datetime.timedelta(4),
+                duration=datetime.timedelta(minutes=30),
+                qualifications=quals,
+                response_groups=('Minimal', 'HITDetail'),  # I don't know what response groups are
+            )
+        print 'Posted ' + str(i+1) + ' practice HITS @ ' + str(amount)
+
+    def post_futher_hits(self, num_hits, amount, testing=False):
+        url = "https://shrouded-plains-8041.herokuapp.com/"
+        title = "Find patterns in sleeping brainwaves"
+        description = "Expected HIT completion time is 2.5 mins.\n\n" \
+                      "Your job is to find patterns in recordings of the sleeping brain! Help science understand " \
+                      "sleep and its memory benefits. \n" \
+                      "This project is run by the MODA team at University of California, Riverside." \
+                      "If you would like to find out more about this project please visit our Open Science Project" \
+                      "at https://osf.io/8bma7/ or consider backing our project on " \
+                      "Experiment: https://experiment.com/projects/crowdsourcing-the-analysis-of-sleep-can-the-public-be-sleep-scientists"
+        keywords = ["sleep", "scoring", "spindles", "spindle", "brainwaves", "MODA", "psych", "annotation"]
+        frame_height = 600  # the height of the iframe holding the external hit
+        questionform = boto.mturk.question.ExternalQuestion(url, frame_height)
+        quals = Qualifications()
+        quals.add(Requirement('000000000000000000L0', 'GreaterThanOrEqualTo', '95')) #'Worker_​PercentHITsApproved'
+        quals.add(Requirement(phasesQualID[host]['practice'], 'Exists'))
+        quals.add(Requirement(phasesQualID[host]['phase1'], 'DoesNotExist'))
+        if host != 'sandbox':
+            if testing:
+                quals.add(Requirement(testingQual, 'Exists'))
+            else:
+                quals.add(Requirement('00000000000000000040', 'GreaterThanOrEqualTo', '100')) #'Worker_​NumberHITsApproved'
+
+        # quals.add(LocaleRequirement('In', ['US','IN'])) #locale
+        # quals.add(LocaleRequirement('EqualTo', 'IN')) #locale
+        i = 0
+        for i in range(1, num_hits+1):
+            create_hit_result = self.mturk.create_hit(
+                title=title,
+                description=description,
+                keywords=keywords,
+                question=questionform,
+                reward=boto.mturk.price.Price(amount=amount),
+                lifetime=datetime.timedelta(4),
+                duration=datetime.timedelta(minutes=30),
+                qualifications=quals,
+                response_groups=('Minimal', 'HITDetail'),  # I don't know what response groups are
+            )
+        print 'Posted ' + str(i) + ' further HITS @ ' + str(amount)
+
+mtt = MturkTools()
+#mtt.post_futher_hits(50,0.13)
+#mtt.approve_hits()
+mtt.remove_qualifications('practice')
+
+
+# mtt.mturk.notify_workers('AR72L0JX4D03W',
+#                          'Spindle Detection on MODA',
+#                          'Hi There!,'
+#                          'Thanks for completing spindle detection HITs. '
+#                          'Unfortunately the data for you HITs is missing. '
+#                          'This is most likely an error with the spindle detection program. '
+#                          'Can you help me debug this by replying with your operating system, browser type and version'
+#                          'and if you saw any strange behaviour in the spindle detection program.')
 
 
 
