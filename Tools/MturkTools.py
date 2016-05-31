@@ -35,6 +35,11 @@ phasesQualID = {
     }
   }
 
+myWorkerID = {
+    'sandbox': '?',
+    'real': 'A2SI2XQA7HPR8V'
+}
+
 testingQual = '35NJKTSSL0Z7GHLPTM145UTQ6PFZXY'
 
 
@@ -42,7 +47,9 @@ class MturkTools:
     """Tools for mturk"""
 
     def __init__(self):
-        self.phase = 'phase1trial2'
+        self.phase = 'phase1trial4'
+        if not os.path.exists('DownloadedUserData/'+self.phase):
+            os.makedirs('DownloadedUserData/'+self.phase)
         self.url = "https://shrouded-plains-8041.herokuapp.com/"
         self.mturk = boto.mturk.connection.MTurkConnection(
             aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
@@ -60,9 +67,6 @@ class MturkTools:
             sys.exit()
 
     def get_all_user_data_from_aws(self):
-        if not os.path.exists('DownloadedUserData/'+self.phase):
-            os.makedirs('DownloadedUserData/'+self.phase)
-
         s3 = S3Connection(os.environ['AWS_ACCESS_KEY_ID'], os.environ['AWS_SECRET_ACCESS_KEY'])
         bucket = s3.get_bucket('moss-assets')
         bucket_list = bucket.list()
@@ -193,21 +197,24 @@ class MturkTools:
         try:
             workerResultData = pd.read_csv("DownloadedUserData/" + self.phase + "/WorkerResultData.csv", sep=',')
         except:
-            workerResultData = pd.DataFrame(columns={'workerId','viewedImgs','numViewed','numHits'})
+            workerResultData = pd.DataFrame(columns={'workerId','viewedImgs','numViewed','numHits','browser'})
         for hit in hits:
             assignments = self.mturk.get_assignments(hit.HITId)
             for assignment in assignments:
                 print "Answers of the worker %s" % assignment.WorkerId
                 for answer in assignment.answers:
                     for idx, ans in enumerate(answer):
-                        if idx == 1:
+                        if idx == 2:
+                            for viewedImg in ans.fields:
+                                browser = viewedImg
+                        elif idx == 3:
                             for viewedImg in ans.fields:
                                 viewedImg = viewedImg.split(',')
                                 if len(viewedImg)<=1 or viewedImg==None:
                                     print "Missing DATA for {0}".format(assignment.WorkerId)
                                     continue
                                 if assignment.WorkerId not in workerResultData['workerId'].values:
-                                    ser = pd.Series([assignment.WorkerId, viewedImg, len(viewedImg), 1], index=['workerId','viewedImgs','numViewed','numHits'])
+                                    ser = pd.Series([assignment.WorkerId, viewedImg, len(viewedImg), 1, browser], index=['workerId','viewedImgs','numViewed','numHits','browser'])
                                     workerResultData = workerResultData.append(ser, ignore_index=True)
                                 else:
                                     currentData = workerResultData.loc[workerResultData['workerId']==assignment.WorkerId, 'viewedImgs']
@@ -281,11 +288,14 @@ class MturkTools:
                 print 'expiring {0}'.format(hit.Title)
                 self.mturk.expire_hit(hit.HITId)
 
-    def remove_qualifications(self, phase_type):
-        qual_data= self.mturk.get_all_qualifications_for_qual_type(phasesQualID[host][phase_type])
-        workers = []
-        for worker in qual_data:
-            workers.append(worker.SubjectId)
+    def remove_qualifications(self, phase_type, workers_to_remove='me'):
+        if workers_to_remove != 'me':
+            qual_data= self.mturk.get_all_qualifications_for_qual_type(phasesQualID[host][phase_type])
+            workers = []
+            for worker in qual_data:
+                workers.append(worker.SubjectId)
+        else:
+            workers = [myWorkerID[host]]
 
         for workerID in workers:
             try:
@@ -329,7 +339,7 @@ class MturkTools:
                 qualifications=quals,
                 response_groups=('Minimal', 'HITDetail'),  # I don't know what response groups are
             )
-        print 'Posted ' + str(i+1) + ' practice HITS @ ' + str(amount)
+        print 'Posted ' + str(i) + ' practice HITS @ ' + str(amount)
 
     def post_futher_hits(self, num_hits, amount, testing=False):
         url = "https://shrouded-plains-8041.herokuapp.com/"
@@ -372,13 +382,15 @@ class MturkTools:
         print 'Posted ' + str(i) + ' further HITS @ ' + str(amount)
 
 mtt = MturkTools()
-#mtt.post_prac_hits(13, 0.20)
-mtt.expire_remaining_hits()
+#mtt.post_prac_hits(100, 0.20)
+#mtt.post_futher_hits(120, 0.13)
 
-#mtt.save_mturk_data()
-#mtt.disable_all_hits()
-#mtt.get_all_user_data_from_aws()
-#mtt.parse_aws_to_csv()
+# mtt.save_mturk_data()
+mtt.get_all_user_data_from_aws()
+mtt.parse_aws_to_csv()
+#
+#mtt.approve_hits()
+
 #mtt.remove_qualifications('practice')
 
 

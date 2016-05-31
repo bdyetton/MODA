@@ -31,7 +31,7 @@ data['batchMeta'] = {
 #     'imgPerBatch':5,
 # }
 
-phaseSet = 'phase1trial2'
+phaseSet = 'phase1trial3'
 workerData = pd.read_csv("DownloadedUserData/" + phaseSet + "/WorkerData.csv", sep=',')
 
 workerIdsTurk = workerData.loc[:,['Worker ID','Number of HITs approved or rejected - Lifetime', 'CURRENT-MODASleepScoring_PracticeCompleted']].copy()

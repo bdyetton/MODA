@@ -33,7 +33,7 @@ module.exports = React.createClass({
     if ('assignmentId' in mTurkLoginData){
       mTurkLoginData.userName=mTurkLoginData.workerId;
       mTurkLoginData.userType='mturker';
-      if (mTurkLoginData.assignmentId==='ASSIGNMENT_ID_NOT_AVAILABLE')
+      if (mTurkLoginData.assignmentId == 'ASSIGNMENT_ID_NOT_AVAILABLE')
       {
         this.parsePreviewLogin();
       } else {
