@@ -372,8 +372,11 @@ class MturkTools:
         print 'Posted ' + str(i) + ' further HITS @ ' + str(amount)
 
 mtt = MturkTools()
+#mtt.post_prac_hits(13, 0.20)
+mtt.expire_remaining_hits()
+
 #mtt.save_mturk_data()
-mtt.disable_all_hits()
+#mtt.disable_all_hits()
 #mtt.get_all_user_data_from_aws()
 #mtt.parse_aws_to_csv()
 #mtt.remove_qualifications('practice')

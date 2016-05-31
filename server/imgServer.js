@@ -289,7 +289,7 @@ function imgServer(){
       [user.batchesIdxs[user.currentPhase]
       [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx];
     //save hit information
-    if (user.userType = 'mturker') {
+    if (user.userType === 'mturker') {
       user.batches[user.currentPhase]
         [user.batchesIdxs[user.currentPhase]
         [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].mturkInfo = {

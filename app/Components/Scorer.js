@@ -463,7 +463,8 @@ module.exports = React.createClass({
   checkForPreview: function() {
       return (this.props.userData.userType === 'preview' ?
         <div style={{position:'relative', left:'50%', width:'800px', transform: 'translateX(-50%)'}}>
-          <p className='std-para'><h4>You are <b style={{color:'red'}}>preveiwing</b> this HIT. Click accept above.</h4>
+          <h4>You are <b style={{color:'red'}}>preveiwing</b> this HIT. Click accept above.</h4>
+          <p className='std-para'>
             <br/><br/>
             In this task you will draw boxes around particular patterns (<i>sleep spindles</i>)
             in brainwaves recorded from sleeping subjects. You must first read the instructions
