@@ -25,20 +25,20 @@ app.get('/api/currentTime', cors(), function(req, res) {
 
 app.get('/api/submitHit', cors(), function(req, res) {
   //mturk.approveHIT(currentUsers[req.query.user]);
-  res.send({ success: true });
   users.saveUser(currentUsers[req.query.user]);
+  res.send({ success: true });
 });
 
 app.get('/api/nextRemImage',cors(),function(req,res){
   var img = imServ.getImageData(currentUsers[req.query.user],1);
-  res.send({success: true, image: img});
   users.saveUser(currentUsers[req.query.user]);
+  res.send({success: true, image: img});
 });
 
 app.get('/api/previousRemImage',cors(),function(req,res){
   var img = imServ.getImageData(currentUsers[req.query.user],-1);
-  res.send({success: true, image: img});
   users.saveUser(currentUsers[req.query.user]);
+  res.send({success: true, image: img});
 });
 
 app.get('/api/compareToGS',cors(),function(req,res){
