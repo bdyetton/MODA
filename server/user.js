@@ -18,10 +18,6 @@ function user(){
     return false;
   };
 
-  this.getPracData = function(cb){
-    self.aws.getFile('PracData_1',cb);
-  };
-
   this.createUser = function(userData,imServ,cb){
     var user = userData;
     imServ.initUser(user,cb);
@@ -32,7 +28,7 @@ function user(){
     //Write to s3
     if (loc == 's3') {
       if (user.userName==='preview'){return;} //dont save preview data
-      self.aws.postFile('UserData_' + user.userName, JSON.stringify(user));
+      self.aws.postFile('UserData_' + user.currentPhase + '_' + user.userName, JSON.stringify(user));
     }
 
     //Write to local disk
@@ -47,17 +43,17 @@ function user(){
     }
   };
 
-  this.loadUser = function(userData,cb,loc) {
+  this.loadUser = function(user,cb,loc) {
     loc = loc || 's3';
 
     //Get from s3
     if (loc == 's3') {
-      self.aws.getFile('UserData_'+userData.userName,cb);
+      self.aws.getFile('UserData_'+ user.currentPhase + '_' + user.userName,cb);
     }
 
     if (loc == 'local') {
       try {
-        var fileData = fs.readFileSync('./server/Data/User/' + userData.userName + '.txt');
+        var fileData = fs.readFileSync('./server/Data/User/' + user.userName + '.txt');
         fileData = fileData.toString('utf8');
         cb(false,JSON.parse(fileData));
       } catch (err) {

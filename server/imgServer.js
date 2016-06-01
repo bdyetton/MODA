@@ -93,7 +93,9 @@ function imgServer(){
     "Your a star scorer.",
     "Keep spotting those spindles!",
     ":)",
-    "We think your awesome for helping us!"
+    "We think your awesome for helping us!",
+    "If your questioning your quality, have a read of the instructions again",
+    "Keep those eyes open for spindles!",
     ];
 
   self.initUser = function(user,cb) {

@@ -316,7 +316,7 @@ class MturkTools:
                       "Experiment: https://experiment.com/projects/crowdsourcing-the-analysis-of-sleep-can-the-public-be-sleep-scientists"
         keywords = ["sleep", "scoring","spindles","spindle","brainwaves", "MODA", "psych", "annotation"]
         frame_height = 800  # the height of the iframe holding the external hit
-        questionform = boto.mturk.question.ExternalQuestion(self.url, frame_height)
+        questionform = boto.mturk.question.ExternalQuestion(self.url + '?currentPhase=practice', frame_height)
         quals = Qualifications()
         quals.add(Requirement('000000000000000000L0', 'GreaterThanOrEqualTo', '95')) #'Worker_​PercentHITsApproved'
         quals.add(Requirement(phasesQualID[host]['practice'], 'DoesNotExist'))
@@ -339,7 +339,7 @@ class MturkTools:
                 qualifications=quals,
                 response_groups=('Minimal', 'HITDetail'),  # I don't know what response groups are
             )
-        print 'Posted ' + str(i) + ' practice HITS @ ' + str(amount)
+        print 'Posted ' + str(i) + ' practice HITS @ $' + str(amount)
 
     def post_futher_hits(self, num_hits, amount, testing=False):
         url = "https://shrouded-plains-8041.herokuapp.com/"
@@ -353,7 +353,7 @@ class MturkTools:
                       "Experiment: https://experiment.com/projects/crowdsourcing-the-analysis-of-sleep-can-the-public-be-sleep-scientists"
         keywords = ["sleep", "scoring", "spindles", "spindle", "brainwaves", "MODA", "psych", "annotation"]
         frame_height = 600  # the height of the iframe holding the external hit
-        questionform = boto.mturk.question.ExternalQuestion(url, frame_height)
+        questionform = boto.mturk.question.ExternalQuestion(url + '?currentPhase=practice', frame_height)
         quals = Qualifications()
         quals.add(Requirement('000000000000000000L0', 'GreaterThanOrEqualTo', '95')) #'Worker_​PercentHITsApproved'
         quals.add(Requirement(phasesQualID[host]['practice'], 'LessThanOrEqualTo', '50'))
@@ -379,15 +379,16 @@ class MturkTools:
                 qualifications=quals,
                 response_groups=('Minimal', 'HITDetail'),  # I don't know what response groups are
             )
-        print 'Posted ' + str(i) + ' further HITS @ ' + str(amount)
+        print 'Posted ' + str(i) + ' further HITS @ $' + str(amount)
 
 mtt = MturkTools()
-#mtt.post_prac_hits(100, 0.20)
-#mtt.post_futher_hits(120, 0.13)
+mtt.approve_hits()
+#mtt.post_prac_hits(10, 0.20)
+#mtt.post_futher_hits(12, 0.13)
 
 # mtt.save_mturk_data()
-mtt.get_all_user_data_from_aws()
-mtt.parse_aws_to_csv()
+# mtt.get_all_user_data_from_aws()
+# mtt.parse_aws_to_csv()
 #
 #mtt.approve_hits()
 

@@ -36,7 +36,7 @@ for (dirpath, dirnames, filenames) in walk(mypath):
 
 print os.getcwd()
 
-gsData = pd.read_csv(os.getcwd()+'/GoldStandardData/'+phase+'/GS.txt', sep='\t')
+gsData = pd.read_csv(os.getcwd()+'/GoldStandardData/'+phase+'/GS.txt', sep=',')
 markerIndex = 0
 data['easy'] = {'imgs':{0:{},1:{},2:{},3:{},4:{}}}
 data['hard'] = {'imgs':{0:{},1:{},2:{},3:{},4:{}}}

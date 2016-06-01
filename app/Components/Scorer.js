@@ -171,7 +171,7 @@ module.exports = React.createClass({
         if (self.state.imgMeta.prac) {
           self.setState({showSubmit: false});
         } else {
-          self.setState({HITsComplete: true, showSubmit: false, viewedImgs:[]});
+          self.setState({HITsComplete: true, viewedImgs:[]});
         }
         self.getNextRemImage();
       }
@@ -504,17 +504,17 @@ module.exports = React.createClass({
                 self.props.userData.userType==='other' ?
                   <p className='thank-you-text'>All HITs complete, Thank You!</p> : <p className='thank-you-text'>HIT complete, Thank You! Return to Mturk to select more</p>
                 : self.drawImageAndMarkers()}
-              {self.state.showSubmit ? <SubmitHIT showSubmit={self.state.showSubmit}
-                                                  closeSubmit={self.closeSubmit}
-                                                  submitHit={self.submitHit}
-                                                  userData={self.props.userData}
-                                                  prac={self.state.imgMeta.prac}
-                                                  viewedImgs={self.state.viewedImgs}/> : []}
               <div className='row' style={{position:'relative',textAlign:'center'}}>
                 {self.drawButtons()}
               </div>
             </rb.ListGroupItem>
           </rb.ListGroup>
+          {self.state.showSubmit ? <SubmitHIT showSubmit={self.state.showSubmit}
+                                    closeSubmit={self.closeSubmit}
+                                    submitHit={self.submitHit}
+                                    userData={self.props.userData}
+                                    prac={self.state.imgMeta.prac}
+                                    viewedImgs={self.state.viewedImgs}/> : []}
           {self.state.imgMeta.prac ? <p className='std-para'>You are currently in <b style={{color:'orange'}}>practice mode. &nbsp;</b>
             This HIT will take longer than subsequent HITs because you are required to complete a practice HIT first (and read the instructions).<br/><br/>
             Please mark spindles by drawing boxes around them. Check you accuracy with the toggle/check button.
