@@ -36,7 +36,7 @@ phasesQualID = {
   }
 
 myWorkerID = {
-    'sandbox': '?',
+    'sandbox': 'A2SI2XQA7HPR8V',
     'real': 'A2SI2XQA7HPR8V'
 }
 
@@ -352,11 +352,11 @@ class MturkTools:
                       "at https://osf.io/8bma7/ or consider backing our project on " \
                       "Experiment: https://experiment.com/projects/crowdsourcing-the-analysis-of-sleep-can-the-public-be-sleep-scientists"
         keywords = ["sleep", "scoring", "spindles", "spindle", "brainwaves", "MODA", "psych", "annotation"]
-        frame_height = 600  # the height of the iframe holding the external hit
+        frame_height = 800  # the height of the iframe holding the external hit
         questionform = boto.mturk.question.ExternalQuestion(url + '?currentPhase=phase1', frame_height)
         quals = Qualifications()
         quals.add(Requirement('000000000000000000L0', 'GreaterThanOrEqualTo', '95')) #'Worker_​PercentHITsApproved'
-        quals.add(Requirement(phasesQualID[host]['practice'], 'LessThanOrEqualTo', '50'))
+        quals.add(Requirement(phasesQualID[host]['practice'], 'Exists'))
         quals.add(Requirement(phasesQualID[host]['phase1'], 'DoesNotExist'))
         if host != 'sandbox':
             if testing:
@@ -382,9 +382,9 @@ class MturkTools:
         print 'Posted ' + str(i) + ' further HITS @ $' + str(amount)
 
 mtt = MturkTools()
-mtt.disable_all_hits()
-mtt.post_prac_hits(10, 0.20)
-mtt.post_futher_hits(12, 0.13)
+#mtt.disable_all_hits()
+#mtt.post_prac_hits(10, 0.20)
+#mtt.post_futher_hits(12, 0.13)
 
 # mtt.save_mturk_data()
 # mtt.get_all_user_data_from_aws()
@@ -392,7 +392,7 @@ mtt.post_futher_hits(12, 0.13)
 #
 #mtt.approve_hits()
 
-#mtt.remove_qualifications('practice')
+mtt.remove_qualifications('practice')
 
 
 # mtt.mturk.notify_workers('AR72L0JX4D03W',

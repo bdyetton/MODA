@@ -78,7 +78,6 @@ module.exports = React.createClass({
               <input type="hidden" value={self.props.userData.browser} name="browser" id="browser"/>
               <input type="hidden" value={self.props.viewedImgs} name="viwedImgs" id="viwedImgs"/>
               <rb.Input type="submit" style={{width:'70%', float: "left"}}/>
-              <rb.Button onClick={self.props.closeSubmit}>Cancel</rb.Button>
             </form>)
   },
 
