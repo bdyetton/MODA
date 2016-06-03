@@ -371,11 +371,11 @@ class MturkTools:
 mtt = MturkTools()
 #mtt.expire_remaining_hits()
 #mtt.post_prac_hits(40, 0.20)
-#mtt.post_futher_hits(500, 0.20)
+mtt.post_futher_hits(10, 0.20)
 
-mtt.save_mturk_data()
-mtt.get_all_user_data_from_aws()
-mtt.parse_aws_to_csv()
+#mtt.save_mturk_data()
+#mtt.get_all_user_data_from_aws()
+#mtt.parse_aws_to_csv()
 #
 #mtt.approve_hits()
 

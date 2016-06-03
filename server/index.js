@@ -28,7 +28,7 @@ app.get('/api/currentTime', cors(), function(req, res) {
 });
 
 app.get('/api/submitHit', cors(), function(req, res) {
-  imServ.getImageData(currentUsers[req.query.user],1);
+  imServ.getImageData(currentUsers[req.query.user],1,true);
   users.saveUser(currentUsers[req.query.user]);
   res.send({ success: true });
 });

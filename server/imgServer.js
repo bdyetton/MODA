@@ -284,8 +284,8 @@ function imgServer(){
       }
   };
 
-  self.getImageData = function(user,inc) {
-    user.idx[user.currentPhase] += inc;
+  self.getImageData = function(user,inc,cleanUpdate) {
+    user.idx[user.userData.currentPhase] += inc;
     var maxSets = user.batches[user.currentPhase].batchMeta.numBatches / user.batches[user.currentPhase].batchMeta.batchPerSet;
     if (user.idx[user.currentPhase] >= user.batches[user.currentPhase].batchMeta.imgPerSet) { //10 images per set
       self.incrementSet(user)
@@ -299,24 +299,26 @@ function imgServer(){
     //save hit information
     if (user.userType === 'mturker') {
       if (user.batches[user.currentPhase]
-        [user.batchesIdxs[user.currentPhase]
-        [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].mturkInfo !== undefined) {
+          [user.batchesIdxs[user.currentPhase]
+          [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].mturkInfo !== undefined) {
         if (user.batches[user.currentPhase]
-        [user.batchesIdxs[user.currentPhase]
-        [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].mturkInfo.assignmentId !== user.userData.assignmentId) {
+            [user.batchesIdxs[user.currentPhase]
+            [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].mturkInfo.assignmentId !== user.userData.assignmentId) {
           console.log('Warning!!!! THIS SET HAS ALREADY BEEN DONE WITH DIFFERENT HIT ID!!!!!');
           if (user.currentPhase !== 'practice') {
             self.incrementSet(user)
           }
         }
       }
-      user.batches[user.currentPhase]
-        [user.batchesIdxs[user.currentPhase]
-        [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].mturkInfo = {
-        hitId: user.userData.hitId,
-        assignmentId: user.userData.assignmentId,
-        workerId: user.userData.workerId,
-        turkSubmitTo: user.userData.turkSubmitTo
+      if (cleanUpdate !== undefined) {
+        user.batches[user.currentPhase]
+          [user.batchesIdxs[user.currentPhase]
+          [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].mturkInfo = {
+          hitId: user.userData.hitId,
+          assignmentId: user.userData.assignmentId,
+          workerId: user.userData.workerId,
+          turkSubmitTo: user.userData.turkSubmitTo
+        }
       }
     }
 
