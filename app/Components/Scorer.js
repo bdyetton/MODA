@@ -196,6 +196,7 @@ module.exports = React.createClass({
         } else {
           if (self.state.imgMeta.prac) {
             self.setState({showSubmit: false});
+            self.getNextRemImage()
           } else {
             self.setState({HITsComplete: true, viewedImgs: []});
           }

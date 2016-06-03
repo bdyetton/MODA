@@ -14,6 +14,10 @@ var app = express();
 var imgNum = 0;
 var static_path = path.join(__dirname, './../build');
 
+function clone(a) {
+  return JSON.parse(JSON.stringify(a));
+}
+
 app.enable('trust proxy');
 
 app.use(compression());
@@ -80,7 +84,7 @@ app.get('/api/getUser',cors(),function(req,res){
         users.createUser(req.query.userData, imServ, function(err, userDataAll){ //async callback
           if (!err) {
             currentUsers[userDataAll.userName] = userDataAll;
-            currentUsers[userDataAll.userName].userData = req.query.userData;
+            currentUsers[userDataAll.userName].userData = clone(req.query.userData);
             var out = {};
             out.login = true;
             out.createdUser = true;
