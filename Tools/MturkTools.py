@@ -47,7 +47,7 @@ class MturkTools:
     """Tools for mturk"""
 
     def __init__(self):
-        self.phase = 'phase1trial6'
+        self.phase = 'phase1trial7'
         self.path = '/media/ben/Data1/Users/Ben/Google Drive/MODA/DownloadUserData/'
         if not os.path.exists(self.path+self.phase):
             os.makedirs(self.path+self.phase)
@@ -370,8 +370,8 @@ class MturkTools:
 
 mtt = MturkTools()
 #mtt.expire_remaining_hits()
-#mtt.post_prac_hits(40, 0.20)
-#mtt.post_futher_hits(10, 0.20)
+#mtt.post_prac_hits(20, 0.20)
+#mtt.post_futher_hits(100, 0.20)
 
 #mtt.save_mturk_data()
 #mtt.get_all_user_data_from_aws()
@@ -379,7 +379,7 @@ mtt = MturkTools()
 #
 #mtt.approve_hits()
 
-#mtt.remove_qualifications('practice')
+mtt.remove_qualifications('practice')
 
 
 # mtt.mturk.notify_workers('AR72L0JX4D03W',

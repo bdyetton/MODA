@@ -285,7 +285,7 @@ function imgServer(){
   };
 
   self.getImageData = function(user,inc,cleanUpdate) {
-    user.idx[user.userData.currentPhase] += inc;
+    user.idx[user.currentPhase] += inc;
     var maxSets = user.batches[user.currentPhase].batchMeta.numBatches / user.batches[user.currentPhase].batchMeta.batchPerSet;
     if (user.idx[user.currentPhase] >= user.batches[user.currentPhase].batchMeta.imgPerSet) { //10 images per set
       self.incrementSet(user)
