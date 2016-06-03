@@ -73,6 +73,7 @@ app.get('/api/getUser',cors(),function(req,res){
       out.createdUser = false;
       currentUsers[userDataAll.userName] = userDataAll;
       currentUsers[userDataAll.userName].userData = req.query.userData;
+      currentUsers[userDataAll.userName].currentPhase = req.query.userData.currentPhase;
       out.userName = userDataAll.userName;
       out.userData = req.query.userData;
       out.success= true;
@@ -85,6 +86,7 @@ app.get('/api/getUser',cors(),function(req,res){
           if (!err) {
             currentUsers[userDataAll.userName] = userDataAll;
             currentUsers[userDataAll.userName].userData = clone(req.query.userData);
+            currentUsers[userDataAll.userName].currentPhase = req.query.userData.currentPhase;
             var out = {};
             out.login = true;
             out.createdUser = true;
