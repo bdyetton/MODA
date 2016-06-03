@@ -2,6 +2,7 @@ require("./Assets/style.scss")
 var $ = require('jquery');
 var jQuery = $;
 global.$=$;
+$.ajaxSetup({timeout:2000});
 global.jQuery = jQuery;
 global.React = require('react');
 global.ReactDOM = require('react-dom');

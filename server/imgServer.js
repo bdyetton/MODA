@@ -255,13 +255,12 @@ function imgServer(){
     if (rando===1){
       return self.motMesg[getRandomInt(0,self.motMesg.length)]
     }
-  },
+  };
 
-  self.getImageData = function(user,inc) {
-    user.idx[user.currentPhase] += inc;
+
+  self.incrementSet = function(user){
     var maxSets = user.batches[user.currentPhase].batchMeta.numBatches / user.batches[user.currentPhase].batchMeta.batchPerSet;
-    if (user.idx[user.currentPhase] >= user.batches[user.currentPhase].batchMeta.imgPerSet) { //10 images per set
-      user.setsCompleted[user.currentPhase] += 1;
+    user.setsCompleted[user.currentPhase] += 1;
       if (user.setsCompleted[user.currentPhase] >= maxSets) {
         user.setsCompleted[user.currentPhase] = maxSets;
         if (user.userType === 'mturker') {
@@ -283,6 +282,13 @@ function imgServer(){
         });
         user.idx[user.currentPhase] = 0;
       }
+  };
+
+  self.getImageData = function(user,inc) {
+    user.idx[user.currentPhase] += inc;
+    var maxSets = user.batches[user.currentPhase].batchMeta.numBatches / user.batches[user.currentPhase].batchMeta.batchPerSet;
+    if (user.idx[user.currentPhase] >= user.batches[user.currentPhase].batchMeta.imgPerSet) { //10 images per set
+      self.incrementSet(user)
     }
     var setIdx = Math.floor((user.idx[user.currentPhase]) / user.batches[user.currentPhase].batchMeta.imgPerBatch);
     var batchIdx = Math.floor((user.idx[user.currentPhase]) % user.batches[user.currentPhase].batchMeta.imgPerBatch);
@@ -292,14 +298,26 @@ function imgServer(){
       [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx];
     //save hit information
     if (user.userType === 'mturker') {
+      if (user.batches[user.currentPhase]
+        [user.batchesIdxs[user.currentPhase]
+        [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].mturkInfo !== undefined) {
+        if (user.batches[user.currentPhase]
+        [user.batchesIdxs[user.currentPhase]
+        [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].mturkInfo.assignmentId !== user.userData.assignmentId) {
+          console.log('Warning!!!! THIS SET HAS ALREADY BEEN DONE WITH DIFFERENT HIT ID!!!!!');
+          if (user.currentPhase !== 'practice') {
+            self.incrementSet(user)
+          }
+        }
+      }
       user.batches[user.currentPhase]
         [user.batchesIdxs[user.currentPhase]
         [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].mturkInfo = {
-                                                                                    hitId: user.hitId,
-                                                                                    assignmentId: user.assignmentId,
-                                                                                    workerId: user.workerId,
-                                                                                    turkSubmitTo: user.turkSubmitTo
-                                                                                  }
+        hitId: user.userData.hitId,
+        assignmentId: user.userData.assignmentId,
+        workerId: user.userData.workerId,
+        turkSubmitTo: user.userData.turkSubmitTo
+      }
     }
 
     if (inc===0) {
@@ -318,6 +336,8 @@ function imgServer(){
     dataOut.setsMax = maxSets;
     return dataOut;
   };
+
 };
+
 
 module.exports = imgServer;

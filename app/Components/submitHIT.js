@@ -13,8 +13,8 @@ module.exports = React.createClass({
     var self = this;
     $( "#mturk_form" ).submit(function(event) {
       //alert( "Handler for .submit() called." );
-      self.props.closeSubmit()
-      self.setState({confirmOk:false})
+      self.props.closeSubmit();
+      self.setState({confirmOk:false});
       //event.preventDefault();
     });
   },
@@ -56,7 +56,9 @@ module.exports = React.createClass({
          if (self.props.prac){
            return self.stdSubmit()
          } else {
-           return self.turkerSubmit()
+           if (self.props.HITComplete) {
+             return self.turkerSubmit()
+           }
          }
       }
     } else {

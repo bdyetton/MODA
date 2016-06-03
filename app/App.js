@@ -5,11 +5,23 @@ module.exports = React.createClass({
   displayName: 'App',
 
   componentDidMount: function(){
-      $(document).on("dragstart", function(e) {
-           if (e.target.nodeName.toUpperCase() == "IMG") {
-               return false;
-           }
-      });
+    $(document).on("dragstart", function(e) {
+         if (e.target.nodeName.toUpperCase() == "IMG") {
+             return false;
+         }
+    });
+
+    $(document).on("onpageshow",function(event) {
+      if (event.persisted) {
+          window.location.reload()
+      }
+    });
+
+    $(document).on("onpopstate",function(event) {
+      if (event.persisted) {
+          window.location.reload()
+      }
+    });
   },
 
   render: function () {

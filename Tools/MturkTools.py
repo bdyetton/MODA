@@ -47,9 +47,10 @@ class MturkTools:
     """Tools for mturk"""
 
     def __init__(self):
-        self.phase = 'phase1trial4'
-        if not os.path.exists('DownloadedUserData/'+self.phase):
-            os.makedirs('DownloadedUserData/'+self.phase)
+        self.phase = 'phase1trial6'
+        self.path = '/media/ben/Data1/Users/Ben/Google Drive/MODA/DownloadUserData/'
+        if not os.path.exists(self.path+self.phase):
+            os.makedirs(self.path+self.phase)
         self.url = "https://shrouded-plains-8041.herokuapp.com/"
         self.mturk = boto.mturk.connection.MTurkConnection(
             aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
@@ -75,11 +76,11 @@ class MturkTools:
             i += 1
             key_string = str(l.key)
             if key_string.find('UserData') != -1:
-                l.get_contents_to_filename('DownloadedUserData/'+self.phase + '/' +key_string)
+                l.get_contents_to_filename(self.path+self.phase + '/' +key_string)
         print "%i user data files downloaded" % i
 
     def parse_aws_to_csv(self):
-        mypath = 'DownloadedUserData/'+self.phase + '/'
+        mypath = self.path+self.phase + '/'
 
         for (dirpath, dirnames, filenames) in walk(mypath):
             break
@@ -107,15 +108,11 @@ class MturkTools:
             with open(mypath+'EpochViews.csv', 'wb') as epochCsvFile:
                 epoch_csv_writer = csv.writer(epochCsvFile)
                 epoch_csv_writer.writerow(['filename', 'epochNum', 'blockNum', 'phase', 'annotatorID','hitId','assignmentId'])
-
-                with open(mypath+'TurkStats.csv', 'wb') as turkStatsFile:
-                    turk_stats_writer = csv.writer(turkStatsFile)
-                    turk_stats_writer.writerow(['annotatorID','pracHits','phase1Hits','pracBatches','phase1Batches'])
-                    for userFile in filenames:  # collate markers, and collate batches
+                for userFile in filenames:  # collate markers, and collate batches
+                    try:
                         if not (userFile.find('UserData') > -1):
                             continue
                         with open(mypath + '/' + userFile) as userFileHandle:
-                            dataExists = False
                             if userFile == "UserData_preview":
                                 continue
                             user_data = yaml.safe_load(userFileHandle)
@@ -124,26 +121,18 @@ class MturkTools:
                                     print userFile
                                     continue
                                 print "working on user %s" % user_data['userName']
+                                dataExists = False
                             except:
                                 print userFile
-                            batchTickers = {}
                             for phase in user_data['batches']:
                                 batch_comp = user_data['setsCompleted'][phase]
                                 print "   HITS completed in {0}: {1}".format(phase, batch_comp)
-                                if phase not in batchTickers:
-                                    batchTickers[phase] = 0
                                 for batch in user_data['batches'][phase]:
-
-                                    batchTicker = 0
                                     if batch == 'batchMeta':
                                         continue
                                     for img in user_data['batches'][phase][batch]['imgs']:
                                         img_data = user_data['batches'][phase][batch]['imgs'][img]
                                         if len(img_data['markers']) > 0 or img_data['noMarkers'] == 'true' or ('mturkInfo' in img_data):
-                                            batchTicker += 1
-                                            if batchTicker == 5:
-                                               batchTickers[phase] += 1
-                                               print batchTickers[phase]
                                             dataExists = True
                                             if user_data['userType'] == 'mturker':
                                                 assignment_id = img_data['mturkInfo']['assignmentId']
@@ -179,25 +168,20 @@ class MturkTools:
                                                                                hit_id,
                                                                                assignment_id])
 
-                            turk_stats_writer.writerow([user_data['userName'],
-                            user_data['setsCompleted']['practice'],
-                            user_data['setsCompleted']['phase1'],
-                            batchTickers['practice'],
-                            batchTickers['phase1']])
-
                             if not dataExists:
                                 print "ERROR, %s has a file but did not complete any images. " % user_data['userName']
-
-            epochCsvFile.close()
-            eventLocCsvFile.close()
-            turkStatsFile.close()
+                    except:
+                        print "Massive Error somewhere with {0}".format(user_data['userName'])
+                    userFileHandle.close()
+        epochCsvFile.close()
+        eventLocCsvFile.close()
 
     def save_mturk_data(self):
         hits = self.get_all_reviewable_hits()
         try:
-            workerResultData = pd.read_csv("DownloadedUserData/" + self.phase + "/WorkerResultData.csv", sep=',')
+            workerResultData = pd.read_csv(self.path+self.phase + "/WorkerResultData.csv", sep=',')
         except:
-            workerResultData = pd.DataFrame(columns={'workerId','viewedImgs','numViewed','numHits','browser'})
+            workerResultData = pd.DataFrame(columns={'workerId', 'viewedImgs', 'numViewed', 'numHits', 'browser'})
         for hit in hits:
             assignments = self.mturk.get_assignments(hit.HITId)
             for assignment in assignments:
@@ -207,11 +191,14 @@ class MturkTools:
                         if idx == 2:
                             for viewedImg in ans.fields:
                                 browser = viewedImg
+                                print browser
                         elif idx == 3:
                             for viewedImg in ans.fields:
+                                print viewedImg
                                 viewedImg = viewedImg.split(',')
-                                if len(viewedImg)<=1 or viewedImg==None:
+                                if len(viewedImg)<1 or viewedImg==None:
                                     print "Missing DATA for {0}".format(assignment.WorkerId)
+                                    print viewedImg
                                     continue
                                 if assignment.WorkerId not in workerResultData['workerId'].values:
                                     ser = pd.Series([assignment.WorkerId, viewedImg, len(viewedImg), 1, browser], index=['workerId','viewedImgs','numViewed','numHits','browser'])
@@ -229,7 +216,7 @@ class MturkTools:
                                         workerResultData.loc[workerLoc, 'viewedImgs'] = [currentDataValue]
                                         workerResultData.loc[workerLoc, 'numViewed'] = currentNumViewed+len(viewedImg)
                                         workerResultData.loc[workerLoc, 'numHits'] = currentNumHits+1
-        workerResultData.to_csv("DownloadedUserData/" + self.phase + "/WorkerResultData.csv")
+        workerResultData.to_csv(self.path+self.phase + "/WorkerResultData.csv")
 
 
     def get_all_reviewable_hits(self):
@@ -306,7 +293,7 @@ class MturkTools:
     def post_prac_hits(self, num_hits, amount, testing=False):
         title = "Find patterns in sleeping brainwaves (Training HIT)"
         description = "This is a training hit which will grant you a qualification to complete more HITs." \
-                      "Expected HIT completion time is 10mins (because you have to read instructions etc)," \
+                      "Expected HIT completion time is 12mins (because you have to read instructions etc)," \
                       " BUT future HITs will be shorter!!!" \
                       "Your job is to find patterns in recordings of the sleeping brain! Help science understand " \
                       "sleep and its memory benefits. \n" \
@@ -344,7 +331,7 @@ class MturkTools:
     def post_futher_hits(self, num_hits, amount, testing=False):
         url = "https://shrouded-plains-8041.herokuapp.com/"
         title = "Find patterns in sleeping brainwaves"
-        description = "Expected HIT completion time is 2.5 mins.\n\n" \
+        description = "Expected HIT completion time is ~3 mins.\n\n" \
                       "Your job is to find patterns in recordings of the sleeping brain! Help science understand " \
                       "sleep and its memory benefits. \n" \
                       "This project is run by the MODA team at University of California, Riverside." \
@@ -382,17 +369,17 @@ class MturkTools:
         print 'Posted ' + str(i) + ' further HITS @ $' + str(amount)
 
 mtt = MturkTools()
-#mtt.disable_all_hits()
-#mtt.post_prac_hits(10, 0.20)
-#mtt.post_futher_hits(12, 0.13)
+#mtt.expire_remaining_hits()
+#mtt.post_prac_hits(40, 0.20)
+#mtt.post_futher_hits(500, 0.20)
 
-# mtt.save_mturk_data()
-# mtt.get_all_user_data_from_aws()
-# mtt.parse_aws_to_csv()
+mtt.save_mturk_data()
+mtt.get_all_user_data_from_aws()
+mtt.parse_aws_to_csv()
 #
 #mtt.approve_hits()
 
-mtt.remove_qualifications('practice')
+#mtt.remove_qualifications('practice')
 
 
 # mtt.mturk.notify_workers('AR72L0JX4D03W',

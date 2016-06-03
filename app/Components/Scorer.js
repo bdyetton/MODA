@@ -34,7 +34,8 @@ module.exports = React.createClass({
       numMarkers: 0,
       numGSMarkers:0,
       imgFirstShown:d.getTime(),
-      viewedImgs:[]
+      viewedImgs:[],
+      errorMsg:undefined
     };
   },
 
@@ -128,66 +129,99 @@ module.exports = React.createClass({
   getPreviousRemImage: function() {
     var self = this;
     var d = new Date();
+    var errorMsg = 'Error getting previous window';
     $.get('/api/previousRemImage', {user: this.props.userData.userName}, function(data){
-      var viewedImgs = self.state.viewedImgs;
-      viewedImgs.push(data.image.filename);
-      self.setState({ imgMeta: data.image,
-          showGSMarkers: false,
-          imgFirstShown:d.getTime(),
-          viewedImgs:viewedImgs},
-        function(){
-          self.redrawMarkers()
-        });
+      if (!data.success){
+        self.setState({errorMsg:errorMsg});
+        console.log(errorMsg);
+      } else {
+        var viewedImgs = self.state.viewedImgs;
+        viewedImgs.push(data.image.filename);
+        self.setState({
+            imgMeta: data.image,
+            showGSMarkers: false,
+            imgFirstShown: d.getTime(),
+            viewedImgs: viewedImgs
+          },
+          function () {
+            self.redrawMarkers()
+          });
+      }
+    }).fail(function (xhr, textStatus, errorThrown) {
+          console.log(errorMsg);
     });
   },
 
   getNextRemImage: function() {
     var self = this;
     var d = new Date();
+    var errorMsg = 'Error getting next window';
     $.get('/api/nextRemImage', {user: this.props.userData.userName}, function(data) {
-      var viewedImgs = self.state.viewedImgs;
-      viewedImgs.push(data.image.filename);
-      self.setState({ imgMeta: data.image,
-          showGSMarkers: false,
-          imgFirstShown:d.getTime(),
-          viewedImgs:viewedImgs},
-        function(){
-          self.redrawMarkers()
-        });
+      if (!data.success){
+        self.setState({errorMsg:errorMsg});
+        console.log(errorMsg);
+      } else {
+        var viewedImgs = self.state.viewedImgs;
+        viewedImgs.push(data.image.filename);
+        self.setState({
+            imgMeta: data.image,
+            showGSMarkers: false,
+            imgFirstShown: d.getTime(),
+            viewedImgs: viewedImgs
+          },
+          function () {
+            self.redrawMarkers()
+          });
+      }
+    }).fail(function (xhr, textStatus, errorThrown) {
+          console.log(errorMsg);
     });
   },
 
   submitHit: function() {
     var self = this;
+    var errorMsg = 'Error saving HIT data. Try again.';
     $.get('/api/submitHit', {user: this.props.userData.userName}, function(data) {
-      if (self.props.userData.userType==='other') {
-        self.getNextRemImage();
-        if (self.state.imgMeta.setsCompleted === self.state.imgMeta.setsMax){
-          self.setState({HITsComplete:true, showSubmit:false, viewedImgs:[]});
-        } else {
-          self.setState({showSubmit:false, viewedImgs:[]});
-        }
+      if (!data.success){
+        self.setState({errorMsg:errorMsg});
+        console.log(errorMsg);
       } else {
-        if (self.state.imgMeta.prac) {
-          self.setState({showSubmit: false});
+        if (self.props.userData.userType === 'other') {
+          self.getNextRemImage();
+          if (self.state.imgMeta.setsCompleted === self.state.imgMeta.setsMax) {
+            self.setState({HITsComplete: true, showSubmit: false, viewedImgs: []});
+          } else {
+            self.setState({showSubmit: false, viewedImgs: []});
+          }
         } else {
-          self.setState({HITsComplete: true, viewedImgs:[]});
+          if (self.state.imgMeta.prac) {
+            self.setState({showSubmit: false});
+          } else {
+            self.setState({HITsComplete: true, viewedImgs: []});
+          }
         }
-        self.getNextRemImage();
       }
+    }).fail(function (xhr, textStatus, errorThrown) {
+          console.log(errorMsg);
     });
   },
 
   compareToGS: function(markerData){
     var self = this;
     var showGS = this.state.showGSMarkers;
+    var errorMsg = 'Error saving comparing markers to gold standard';
     self.setState({showGSMarkers:!showGS},function(){
       if (!showGS) {
         $.get('/api/compareToGS', {user: this.props.userData.userName}, function (data) {
-          self.populateMarkers(data.markers);
-          self.populateGSMarkers(self.state.imgMeta.gsMarkers);
+          if (!data.success){
+            self.setState({errorMsg:errorMsg});
+            console.log(errorMsg);
+          } else {
+            self.populateMarkers(data.markers);
+            self.populateGSMarkers(self.state.imgMeta.gsMarkers);
+          }
         }).fail(function (xhr, textStatus, errorThrown) {
-          console.log('Error comparing markers to gs');
+          console.log(errorMsg);
         });
       } else {
         self.redrawMarkers()
@@ -198,26 +232,43 @@ module.exports = React.createClass({
   updateMarkerState: function(markerData){
     var self = this;
     var d = new Date();
+    var errorMsg = 'Error saving marker information.';
     markerData.timeStamp = d.getTime();
     $.get('/api/updateMarkerState', {marker:markerData, user: this.props.userData.userName}, function(data){
       if (!data.success){
-        console.log('Error saving marker');
+        self.setState({errorMsg:errorMsg});
+        console.log(errorMsg);
       } else{
         self.setState({imgMeta:data.imgData})
       }
     }).fail(function(xhr, textStatus, errorThrown){
-      console.log('Error saving marker');
+      console.log(errorMsg);
     });
   },
 
   updateNoMakers: function(){
     var self = this;
+    var errorMsg = 'Error updating no marker state.';
     $.get('/api/updateNoMakers', {noMarkers: this.state.imgMeta.noMarkers, user: self.props.userData.userName}, function(data){
       if (!data.success){
-        console.log('Error saving meta');
+        self.setState({errorMsg:errorMsg});
+        console.log(errorMsg);
       }
     }).fail(function(xhr, textStatus, errorThrown){
-      console.log('Error saving meta');
+      console.log(errorMsg);
+    });
+  },
+
+  saveUser: function(){
+    var self = this;
+    var errorMsg = 'Error saving user data.';
+    $.get('/api/saveUser', {user: self.props.userData.userName}, function(data){
+      if (!data.success){
+        self.setState({errorMsg:errorMsg});
+        console.log(errorMsg);
+      }
+    }).fail(function(xhr, textStatus, errorThrown){
+      console.log(errorMsg);
     });
   },
 
@@ -378,7 +429,6 @@ module.exports = React.createClass({
   },
 
   isWindowNotComplete: function(){
-    //return false //FIXME remove
     var self = this;
     var nextDisNorm = !(JSON.parse(self.state.imgMeta.noMarkers) ||  //there must be a marker, or no markers set
         (self.state.numMarkers>0 && self.state.confCounter <= 0)) || //All the markers have a conf set
@@ -436,7 +486,8 @@ module.exports = React.createClass({
                           className='no-markers'
                           disabled={self.state.numMarkers!==0}
                           checked={JSON.parse(self.state.imgMeta.noMarkers)}
-                          onClick={self.setNoMarkers}/>
+                          onClick={self.setNoMarkers}
+                          onChange={function(){}}/>
                   <p className={JSON.parse(self.state.imgMeta.noMarkers) ? "no-markers" : "not-no-markers"}>
                     {(self.state.imgMeta.prac && self.state.numGSMarkers===0 && self.state.showGSMarkers) ? <u>No spindles in window</u> : 'No spindles in window'}
                   </p>
@@ -463,7 +514,7 @@ module.exports = React.createClass({
   checkForPreview: function() {
       return (this.props.userData.userType === 'preview' ?
         <div style={{position:'relative', left:'50%', width:'800px', transform: 'translateX(-50%)'}}>
-          <h4>You are <b style={{color:'red'}}>preveiwing</b> this HIT. Click accept above.</h4>
+          <h4>You are <b style={{color:'red'}}>previewing</b> this HIT. Click accept above.</h4>
           <p className='std-para'>
             <br/><br/>
             In this task you will draw boxes around particular patterns (<i>sleep spindles</i>)
@@ -481,6 +532,7 @@ module.exports = React.createClass({
     return (
       <div onKeyDown={this.handleKey} className='container' style={{textAlign:'center', width:'95%', position:'absolute', left:'50%', top: '50%',  transform: 'translateY(-50%) translateX(-50%)'}}>
         {self.checkForPreview()}
+        {self.state.errorMsg ? <p>{self.state.errorMsg + " Try refreshing your browser. If the problem persists do not accept any more HITs & contact the Requester for support."}</p> : []}
         <rb.Panel bsStyle="primary" className="grand-panel" ref='grandPanel' textAlign='center' header={
             <div>
              <h4>MODA: Massive Online Data Annotation</h4>
@@ -512,16 +564,18 @@ module.exports = React.createClass({
           {self.state.showSubmit ? <SubmitHIT showSubmit={self.state.showSubmit}
                                     closeSubmit={self.closeSubmit}
                                     submitHit={self.submitHit}
+                                    HITComplete={self.state.HITsComplete}
                                     userData={self.props.userData}
                                     prac={self.state.imgMeta.prac}
                                     viewedImgs={self.state.viewedImgs}/> : []}
           {self.state.imgMeta.prac ? <p className='std-para'>You are currently in <b style={{color:'orange'}}>practice mode. &nbsp;</b>
             This HIT will take longer than subsequent HITs because you are required to complete a practice HIT first (and read the instructions).<br/><br/>
-            Please mark spindles by drawing boxes around them. Check you accuracy with the toggle/check button.
+            Please mark spindles by drawing boxes around them. Check you accuracy with the toggle/check button.<br/>
             Position and width must be correct and confidence must be set for each marker before moving to
             the next window. Note that some windows will not contain spindles.</p> : []}
           {self.state.imgMeta.msg ? <p className='std-para text-green'>{self.state.imgMeta.msg}</p> : ''}
         </rb.Panel>
+        <p className='std-para text-green'><b style={{color:'red'}}>DISCLAIMER:</b> If you seems to be doing the same windows again and again (and your HIT count in orange at the top is not increasing), then some error has occurred. <br/> Please do not accept more HITs. We are working to fix this bug ASAP.</p>
       </div>
     );
   }

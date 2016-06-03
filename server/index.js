@@ -24,7 +24,7 @@ app.get('/api/currentTime', cors(), function(req, res) {
 });
 
 app.get('/api/submitHit', cors(), function(req, res) {
-  //mturk.approveHIT(currentUsers[req.query.user]);
+  imServ.getImageData(currentUsers[req.query.user],1);
   users.saveUser(currentUsers[req.query.user]);
   res.send({ success: true });
 });
@@ -39,6 +39,11 @@ app.get('/api/previousRemImage',cors(),function(req,res){
   var img = imServ.getImageData(currentUsers[req.query.user],-1);
   users.saveUser(currentUsers[req.query.user]);
   res.send({success: true, image: img});
+});
+
+app.get('/api/saveUser',cors(),function(req,res){
+  users.saveUser(currentUsers[req.query.user]);
+  res.send({success: true});
 });
 
 app.get('/api/compareToGS',cors(),function(req,res){
@@ -57,32 +62,33 @@ app.get('/api/updateNoMakers',cors(),function(req,res){
 });
 
 app.get('/api/getUser',cors(),function(req,res){
-  users.loadUser(req.query.userData,function(err,userData){ //async callback
+  users.loadUser(req.query.userData,function(err,userDataAll){ //async callback
     if (!err) { //load user
       var out = {};
       out.login = true;
       out.createdUser = false;
-      currentUsers[userData.userName] = userData;
-      out.userName = userData.userName;
+      currentUsers[userDataAll.userName] = userDataAll;
+      currentUsers[userDataAll.userName].userData = req.query.userData;
+      out.userName = userDataAll.userName;
       out.userData = req.query.userData;
-      console.log(out.userData)
       out.success= true;
-      out.image = imServ.getImageData(currentUsers[userData.userName], 0);
-      out.image.markerIndex = currentUsers[userData.userName].markerIndex;
+      out.image = imServ.getImageData(currentUsers[userDataAll.userName], 0);
+      out.image.markerIndex = currentUsers[userDataAll.userName].markerIndex;
       res.send(out);
     } else { //create user
       if(err.code == 'NoSuchKey') {
-        users.createUser(req.query.userData, imServ, function(err, userData){ //async callback
+        users.createUser(req.query.userData, imServ, function(err, userDataAll){ //async callback
           if (!err) {
-            currentUsers[userData.userName] = userData;
+            currentUsers[userDataAll.userName] = userDataAll;
+            currentUsers[userDataAll.userName].userData = req.query.userData;
             var out = {};
             out.login = true;
             out.createdUser = true;
-            out.userName = currentUsers[userData.userName].name;
+            out.userName = currentUsers[userDataAll.userName].name;
             out.userData = req.query.userData;
             out.success= true;
-            out.image = imServ.getImageData(currentUsers[userData.userName], 0);
-            out.image.markerIndex = currentUsers[userData.userName].markerIndex;
+            out.image = imServ.getImageData(currentUsers[userDataAll.userName], 0);
+            out.image.markerIndex = currentUsers[userDataAll.userName].markerIndex;
             res.send(out);
           } else {
             var out = {};
