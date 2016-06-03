@@ -310,7 +310,7 @@ function imgServer(){
           }
         }
       }
-      if (cleanUpdate !== undefined) {
+      if (cleanUpdate === undefined) {
         user.batches[user.currentPhase]
           [user.batchesIdxs[user.currentPhase]
           [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].mturkInfo = {
