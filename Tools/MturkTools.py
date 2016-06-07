@@ -47,7 +47,7 @@ class MturkTools:
     """Tools for mturk"""
 
     def __init__(self):
-        self.phase = 'phase1trial7'
+        self.phase = 'phase1trial2'
         self.path = '/media/ben/Data1/Users/Ben/Google Drive/MODA/DownloadUserData/'
         if not os.path.exists(self.path+self.phase):
             os.makedirs(self.path+self.phase)
@@ -58,8 +58,7 @@ class MturkTools:
             host=hosts[host],
             debug=1  # debug = 2 prints out all requests.
         )
-        self.titles_to_remove = ['Find patterns in sleeping brainwaves',
-                                 'Find patterns in sleeping brainwaves (Training HIT)']
+        self.titles_to_remove = ['Find patterns in sleeping brainwaves (Training HIT)', 'Find patterns in sleeping brainwaves']
         print "Welcome to mturk tools, your balance is:"
         accountBal = self.mturk.get_account_balance()  # [$10,000.00]
         print accountBal
@@ -369,17 +368,17 @@ class MturkTools:
         print 'Posted ' + str(i) + ' further HITS @ $' + str(amount)
 
 mtt = MturkTools()
-#mtt.expire_remaining_hits()
-#mtt.post_prac_hits(20, 0.20)
-#mtt.post_futher_hits(100, 0.20)
 
-#mtt.save_mturk_data()
-#mtt.get_all_user_data_from_aws()
-#mtt.parse_aws_to_csv()
-#
-#mtt.approve_hits()
+#mtt.post_prac_hits(100, 0.20)
+#mtt.post_futher_hits(100, 0.13)
 
-mtt.remove_qualifications('practice')
+# mtt.expire_remaining_hits()
+# mtt.save_mturk_data()
+# mtt.get_all_user_data_from_aws()
+# mtt.parse_aws_to_csv()
+mtt.approve_hits()
+
+#mtt.remove_qualifications('practice')
 
 
 # mtt.mturk.notify_workers('AR72L0JX4D03W',

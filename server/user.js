@@ -29,7 +29,11 @@ function user(){
     if (loc == 's3') {
       if (user.userName==='preview'){return;} //dont save preview data
       console.log('Saving User' + user.userName);
-      self.aws.postFile('UserData_' + user.currentPhase + '_' + user.userName, JSON.stringify(user));
+      if (user.userType == 'mturker') {
+        self.aws.postFile('UserData_' + user.currentPhase + '_' + user.userName, JSON.stringify(user));
+      } else {
+        self.aws.postFile('UserData_expert_' + user.userName, JSON.stringify(user));
+      }
     }
 
     //Write to local disk
@@ -49,7 +53,11 @@ function user(){
 
     //Get from s3
     if (loc == 's3') {
-      self.aws.getFile('UserData_'+ user.currentPhase + '_' + user.userName,cb);
+      if (user.userType == 'mturker') {
+        self.aws.getFile('UserData_' + user.currentPhase + '_' + user.userName, cb);
+      } else {
+        self.aws.getFile('UserData_expert_' + user.userName, cb);
+      }
     }
 
     if (loc == 'local') {

@@ -127,36 +127,18 @@ module.exports = React.createClass({
   },
 
   getPreviousRemImage: function() {
-    var self = this;
-    var d = new Date();
-    var errorMsg = 'Error getting previous window';
-    $.get('/api/previousRemImage', {user: this.props.userData.userName}, function(data){
-      if (!data.success){
-        self.setState({errorMsg:errorMsg});
-        console.log(errorMsg);
-      } else {
-        var viewedImgs = self.state.viewedImgs;
-        viewedImgs.push(data.image.filename);
-        self.setState({
-            imgMeta: data.image,
-            showGSMarkers: false,
-            imgFirstShown: d.getTime(),
-            viewedImgs: viewedImgs
-          },
-          function () {
-            self.redrawMarkers()
-          });
-      }
-    }).fail(function (xhr, textStatus, errorThrown) {
-          console.log(errorMsg);
-    });
+    this.getRemImg(-1);
   },
 
   getNextRemImage: function() {
+    this.getRemImg(1);
+  },
+
+  getRemImg: function(inc){
     var self = this;
     var d = new Date();
-    var errorMsg = 'Error getting next window';
-    $.get('/api/nextRemImage', {user: this.props.userData.userName}, function(data) {
+    var errorMsg = 'Error getting window';
+    $.get('/api/getRemImage', {user: this.props.userData.userName, inc:inc}, function(data) {
       if (!data.success){
         self.setState({errorMsg:errorMsg});
         console.log(errorMsg);
@@ -187,12 +169,12 @@ module.exports = React.createClass({
         console.log(errorMsg);
       } else {
         if (self.props.userData.userType === 'other') {
-          self.getNextRemImage();
           if (self.state.imgMeta.setsCompleted === self.state.imgMeta.setsMax) {
             self.setState({HITsComplete: true, showSubmit: false, viewedImgs: []});
           } else {
             self.setState({showSubmit: false, viewedImgs: []});
           }
+          self.getRemImg(0)
         } else {
           if (self.state.imgMeta.prac) {
             self.setState({showSubmit: false});
@@ -552,7 +534,7 @@ module.exports = React.createClass({
               }
            </div>}>
           <rb.ListGroup fill style={{margin:listMargin+'px'}}>
-            <rb.ListGroupItem style={{marginBottom:'20px', marginTop:'20px'}}>
+            <rb.ListGroupItem style={{marginBottom:'10px', marginTop:'20px'}}>
               {self.state.HITsComplete ?
                 self.props.userData.userType==='other' ?
                   <p className='thank-you-text'>All HITs complete, Thank You!</p> : <p className='thank-you-text'>HIT complete, Thank You! Return to Mturk to select more</p>

@@ -35,7 +35,7 @@ module.exports = React.createClass({
     var self = this;
     return (<div>
               <rb.Button onClick={self.props.closeSubmit}>Cancel</rb.Button>
-              <rb.Button onClick={self.props.stdSubmitClicked}>Submit</rb.Button>
+              <rb.Button onClick={self.stdSubmitClicked}>Submit</rb.Button>
             </div>)
   },
 

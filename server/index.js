@@ -28,19 +28,13 @@ app.get('/api/currentTime', cors(), function(req, res) {
 });
 
 app.get('/api/submitHit', cors(), function(req, res) {
-  imServ.getImageData(currentUsers[req.query.user],1,true);
+  imServ.getImageData(currentUsers[req.query.user], 1, true);
   users.saveUser(currentUsers[req.query.user]);
   res.send({ success: true });
 });
 
-app.get('/api/nextRemImage',cors(),function(req,res){
-  var img = imServ.getImageData(currentUsers[req.query.user],1);
-  users.saveUser(currentUsers[req.query.user]);
-  res.send({success: true, image: img});
-});
-
-app.get('/api/previousRemImage',cors(),function(req,res){
-  var img = imServ.getImageData(currentUsers[req.query.user],-1);
+app.get('/api/getRemImage',cors(),function(req,res){
+  var img = imServ.getImageData(currentUsers[req.query.user],parseInt(req.query.inc));
   users.saveUser(currentUsers[req.query.user]);
   res.send({success: true, image: img});
 });
@@ -73,7 +67,9 @@ app.get('/api/getUser',cors(),function(req,res){
       out.createdUser = false;
       currentUsers[userDataAll.userName] = userDataAll;
       currentUsers[userDataAll.userName].userData = req.query.userData;
-      currentUsers[userDataAll.userName].currentPhase = req.query.userData.currentPhase;
+      if (req.query.userData.currentPhase) {
+        currentUsers[userDataAll.userName].currentPhase = req.query.userData.currentPhase;
+      }
       out.userName = userDataAll.userName;
       out.userData = req.query.userData;
       out.success= true;
@@ -86,7 +82,9 @@ app.get('/api/getUser',cors(),function(req,res){
           if (!err) {
             currentUsers[userDataAll.userName] = userDataAll;
             currentUsers[userDataAll.userName].userData = clone(req.query.userData);
-            currentUsers[userDataAll.userName].currentPhase = req.query.userData.currentPhase;
+            if (req.query.userData.currentPhase) {
+              currentUsers[userDataAll.userName].currentPhase = req.query.userData.currentPhase;
+            }
             var out = {};
             out.login = true;
             out.createdUser = true;

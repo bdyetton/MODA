@@ -105,7 +105,7 @@ function imgServer(){
     user.setsCompleted = {};
     user.idx = {};
     user.phaseIdx=0;
-    user.currentPhase = phases[user.phaseIdx];
+    user.currentPhase = user.currentPhase || phases[user.phaseIdx];
     user.batchesCompleted = {};
     phases.forEach(function(phase){ //Init that shit
         user.batchesIdxs[phase] = Array.apply(null, {length: user.batches[phase].batchMeta.numBatches}).map(Number.call, Number);

@@ -27,9 +27,7 @@ module.exports = React.createClass({
   },
 
   componentWillMount: function(){
-    var query = URI.parse(window.location.href);
-    var mTurkLoginData = URI.parseQuery(query.query);
-    console.log(mTurkLoginData)
+    var mTurkLoginData = this.getURIData();
     if ('assignmentId' in mTurkLoginData){
       mTurkLoginData.userName=mTurkLoginData.workerId;
       mTurkLoginData.userType='mturker';
@@ -40,6 +38,11 @@ module.exports = React.createClass({
         this.setState({mTurkLoginData: mTurkLoginData}, this.parseMturkLogin)
       }
     }
+  },
+
+  getURIData: function(){
+    var query = URI.parse(window.location.href);
+    return URI.parseQuery(query.query);
   },
 
   parseMturkLogin: function(){
@@ -56,15 +59,17 @@ module.exports = React.createClass({
   getOtherUser: function() {
     var self = this;
     var userName = self.refs.username.getValue();
-    var password = '*'//self.refs.password.getValue(); //TODO
+    var password = '*'; //self.refs.password.getValue(); //TODO
     var browserInfo = get_browser();
     var userData = {
       userName:userName,
       password:password,
       userType:'other',
       browser: browserInfo.name,
-      version:browserInfo.version
-    }
+      version:browserInfo.version,
+    };
+    var uriData = self.getURIData();
+    $.extend(userData, uriData);
     $.get('/api/getUser',{userData:userData},function(data){
       self.props.updatePage('score',data);
     });
@@ -73,7 +78,7 @@ module.exports = React.createClass({
   parsePreviewLogin: function() {
   var self = this;
   var userName = 'preview';
-  var password = '*'//self.refs.password.getValue(); //TODO
+  var password = '*'; //self.refs.password.getValue(); //TODO
     $.get('/api/getUser',{userData:{userName:userName,password:password,userType:'preview'}},function(data){
       self.props.updatePage('score',data);
     });
