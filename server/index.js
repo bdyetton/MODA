@@ -59,7 +59,70 @@ app.get('/api/updateNoMakers',cors(),function(req,res){
   res.send({success: true});
 });
 
-app.get('/api/getUser',cors(),function(req,res){
+app.get('/api/loginOther',cors(),function(req,res){
+  users.loadUser(req.query.userData,function(err,userDataAll) { //async callback
+    if (!err) { //load user
+      var out = {};
+      out.login = true;
+      out.createdUser = false;
+      currentUsers[userDataAll.userName] = userDataAll;
+      currentUsers[userDataAll.userName].userData = req.query.userData;
+      if (req.query.userData.currentPhase) {
+        currentUsers[userDataAll.userName].currentPhase = req.query.userData.currentPhase;
+      }
+      out.userName = userDataAll.userName;
+      out.userData = req.query.userData;
+      out.success = true;
+      out.image = imServ.getImageData(currentUsers[userDataAll.userName], 0);
+      out.image.markerIndex = currentUsers[userDataAll.userName].markerIndex;
+      res.send(out);
+    } else {
+      console.log(err)
+      var out = {};
+      if (err.code === 'NoSuchKey'){
+        out.err = 'That email/password combination does not exist';
+      } else {
+        out.err = 'Some unknown error occurred: 2335';
+      }
+      out.success = false;
+      res.send(out)
+    }
+  })
+});
+
+app.get('/api/registerOther',cors(),function(req,res){
+  users.createUser(req.query.userData, imServ, function(err, userDataAll){ //async callback
+    if (!err) {
+      currentUsers[userDataAll.userName] = userDataAll;
+      currentUsers[userDataAll.userName].userData = clone(req.query.userData);
+      if (req.query.userData.currentPhase) {
+        currentUsers[userDataAll.userName].currentPhase = req.query.userData.currentPhase;
+      }
+      var out = {};
+      out.login = true;
+      out.createdUser = true;
+      out.userName = currentUsers[userDataAll.userName].name;
+      out.userData = req.query.userData;
+      out.success= true;
+      out.image = imServ.getImageData(currentUsers[userDataAll.userName], 0);
+      out.image.markerIndex = currentUsers[userDataAll.userName].markerIndex;
+      res.send(out);
+    } else {
+      var out = {};
+      out.image = {};
+      out.image.filename = 'http://i.imgur.com/xEv2LWQ.jpg';
+      out.userName = 'Invalid User *Slothmode Enabled*';
+      out.login = true;
+      out.sme = true;
+      out.success= true;
+      out.createdUser = false;
+      console.log(err);
+      res.send(out);
+    }
+  });
+}),
+
+app.get('/api/loginMturker',cors(),function(req,res){
   users.loadUser(req.query.userData,function(err,userDataAll){ //async callback
     if (!err) { //load user
       var out = {};
@@ -77,7 +140,7 @@ app.get('/api/getUser',cors(),function(req,res){
       out.image.markerIndex = currentUsers[userDataAll.userName].markerIndex;
       res.send(out);
     } else { //create user
-      if(err.code == 'NoSuchKey') {
+      if(err.code === 'NoSuchKey') {
         users.createUser(req.query.userData, imServ, function(err, userDataAll){ //async callback
           if (!err) {
             currentUsers[userDataAll.userName] = userDataAll;

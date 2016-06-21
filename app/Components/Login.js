@@ -1,4 +1,6 @@
 var rb = require('react-bootstrap');
+import { ButtonInput } from 'react-bootstrap';
+import { Form, ValidatedInput } from 'react-bootstrap-validation';
 var URI = require('urijs');
 
 
@@ -23,7 +25,7 @@ function get_browser(){
 module.exports = React.createClass({
   displayName: 'Login',
   getInitialState: function() {
-    return {loggedIn: false, userType:'other'};
+    return {loginType:'login', missingData:false};
   },
 
   componentWillMount: function(){
@@ -51,15 +53,15 @@ module.exports = React.createClass({
     var browserInfo = get_browser();
     mTurkLoginData.browser = browserInfo.name;
     mTurkLoginData.version = browserInfo.version;
-    $.get('/api/getUser',{userData:mTurkLoginData},function(data){
+    $.get('/api/loginMturker',{userData:mTurkLoginData},function(data){
       self.props.updatePage('score',data);
     });
   },
 
-  getOtherUser: function() {
+  loginOtherUser: function() {
     var self = this;
     var userName = self.refs.username.getValue();
-    var password = '*'; //self.refs.password.getValue(); //TODO
+    var password = self.refs.password.getValue();
     var browserInfo = get_browser();
     var userData = {
       userName:userName,
@@ -70,8 +72,32 @@ module.exports = React.createClass({
     };
     var uriData = self.getURIData();
     $.extend(userData, uriData);
-    $.get('/api/getUser',{userData:userData},function(data){
-      self.props.updatePage('score',data);
+    $.get('/api/loginOther',{userData:userData},function(data){
+      console.log(data)
+      if (data.success) {
+        self.props.updatePage('score', data);
+      } else {
+        self.setState({errorMsg: data.err})
+      }
+    });
+  },
+  
+  registerOtherUser: function(formData) {
+    var self = this;
+    self.setState({missingData:false});
+    var browserInfo = get_browser();
+    var userData = {
+      userName: formData.email,
+      password: formData.password,
+      userType: 'other',
+      browser: browserInfo.name,
+      version: browserInfo.version,
+      registerData: formData
+    };
+    var uriData = self.getURIData();
+    $.extend(userData, uriData);
+    $.get('/api/registerOther',{userData:userData},function(data){
+      self.props.updatePage('score', data);
     });
   },
 
@@ -79,7 +105,7 @@ module.exports = React.createClass({
   var self = this;
   var userName = 'preview';
   var password = '*'; //self.refs.password.getValue(); //TODO
-    $.get('/api/getUser',{userData:{userName:userName,password:password,userType:'preview'}},function(data){
+    $.get('/api/loginMturker',{userData:{userName:userName,password:password,userType:'preview'}},function(data){
       self.props.updatePage('score',data);
     });
   },
@@ -87,59 +113,132 @@ module.exports = React.createClass({
 
   handleKeypress: function(event){
     if (event.keyCode === 13){
-      if (this.state.userType==='other') {this.getOtherUser();}
+      this.loginOtherUser();
     }
   },
 
-  loggedIn: function(){
-    return self.state.loggedIn
-  },
-
   otherUserLogin: function(){
-    return (<div style={{margin:'5px'}}>
-      <rb.Row style={{margin:'0 5px 0px 5px','padding':'0px'}}>Username: <rb.Input ref='username' type='text' autoFocus onKeyDown={this.handleKeypress}></rb.Input></rb.Row>
-         <rb.Row style={{margin:'0 5px 20px 5px'}}><rb.Button ref='mTurkLogin'
-                           onClick={this.getOtherUser}
+    return (<div ref='login' className='form-inline' style={{margin:'5px'}}>
+      <rb.Row style={{margin:'0 5px 0px 5px', 'padding':'0px'}}>
+        <label>Email:</label>
+        <rb.Input ref='username' type='text' autoFocus onKeyDown={this.handleKeypress}></rb.Input>
+      </rb.Row>
+      <rb.Row style={{margin:'5px 5px 5px 5px'}}>
+        <label>Password:</label>
+        <rb.Input ref='password' type='password' onKeyDown={this.handleKeypress}></rb.Input>
+      </rb.Row>
+      <rb.Row style={{margin:'25px 5px 20px 5px'}}><rb.Button ref='otherLogin'
+                           onClick={this.loginOtherUser}
                            value='Login'
-          style={{width:'100%'}}>
+          style={{width:'200px'}}>
           Login
         </rb.Button></rb.Row>
       </div>)
   },
 
-         /*<rb.Row style={{margin:'0 5px 0px 5px'}}>Password: <rb.Input ref='password' type='text' defaultValue='Not Checked Currently' onKeyDown={this.handleKeypress}></rb.Input></rb.Row>*/
+  otherUserRegister: function(){
+    var self = this;
+    return (
+      <Form
+        // Supply callbacks to both valid and invalid
+        // submit attempts
+        onValidSubmit={this.registerOtherUser}
+        onInvalidSubmit={this.handleInvalidSubmit}>
+        <div style={{position:'relative', left:'50%', width: '250px', transform: 'translateX(-50%)'}}>
+        <ValidatedInput
+          type='text'
+          label='Email'
+          name='email'
+          validate='required,isEmail'
+          errorHelp={{
+              required: 'Please enter your email',
+              isEmail: 'Email is invalid'
+          }}
+        />
 
-  mTurkerLogin: function(){
-      //window.location.href = "http://localhost:8080/?gameid=01523&assignmentId=123RVWYBAZW00EXAMPLE456RVWYBAZW00EXAMPLE&hitId=123RVWYBAZW00EXAMPLE&turkSubmitTo=https://www.mturk.com/&workerId=AZ3256EXAMPLE";
-      //https://shrouded-plains-8041.herokuapp.com/?assignmentId=3DYGAII7PL83TDTSIP…workerId=A2SI2XQA7HPR8V&turkSubmitTo=https%3A%2F%2Fworkersandbox.mturk.com
-      return (<div style={{margin:'5px'}}>
-        <rb.Row style={{margin:'0 5px 0px 5px'}}> Please log into you <a href='http://www.mturk.com/mturk/beginsignin'>amazon mturk account</a> and search for MODA HIT's</rb.Row>
-      </div>)
+        <ValidatedInput
+          type='password'
+          name='password'
+          label='Password'
+          validate='required,isLength:6:60'
+          errorHelp={{
+              required: 'Please specify a password',
+              isLength: 'Password must be at least 6 characters'
+          }}
+        />
+
+        <ValidatedInput
+            type='password'
+            name='password-confirm'
+            label='Confirm Password'
+            validate={(val, context) => val === context.password}
+            errorHelp='Passwords do not match'
+        />
+        </div>
+        <div>
+        <p style={{fontSize:'14pt', clear:'both'}}><br/>Please provide some information about you experience sleep scoring:<br/></p>
+
+        <ValidatedInput
+            type='field'
+            name='yearsExp'
+            label='How many years have you been scoring sleep (etc etc):'
+            validate='required'
+            errorHelp={{
+                required: 'Please enter this information'
+            }}
+        />
+
+        <ValidatedInput
+            type='field'
+            name='hoursPerWeek'
+            label='How many hours do you spend scoring per week?'
+            validate='required'
+            errorHelp={{
+                required: 'Please enter this information'
+            }}
+        />
+        </div>
+        <rb.Button
+          type='submit'
+          ref='otherLogin'
+          value='Register'
+          style={{width:'200px'}}>
+          Register
+        </rb.Button>
+        {self.state.missingData ? <p style={{color:'red'}}>Missing data, see above</p> : []}
+      </Form>)
+  },
+
+  handleInvalidSubmit: function(errors, values) {
+    this.setState({missingData: true});
   },
 
   render: function () {
     var self=this;
     console.log(window.location.href);
     return (<div className='bs-callout bs-callout-primary'
-                 style={{'textAlign':'center', position:'absolute', left:'50%', top: '50%',  transform: 'translateY(-50%) translateX(-50%)'}}>
-        <h4>Please Login to MODA</h4>
-      <rb.ButtonGroup  style={{margin:'0 10px 5px 10px'}} bsSize='medium' position='relative' width='100%'>
+                 style={{padding:'20px', 'textAlign':'center', position:'absolute', left:'50%', top: '50%',  transform: 'translateY(-50%) translateX(-50%)'}}>
+        <h4>Welcome to MODA, please Login or Register</h4>
+      <rb.ButtonGroup  style={{margin:'5px 10px 20px 10px'}} bsSize='medium' position='relative' width='100%'>
         <rb.Button bsClass='btn active-green'
-                   data-id='other'
-                   onClick={function(){self.setState({userType:'other'})}}
-                   ref='other'
-                   active={this.state.userType==='other'}>
-          Regular User Login
+                   data-id='login'
+                   style={{width:'100px'}}
+                   onClick={function(){self.setState({loginType:'login'})}}
+                   ref='login'
+                   active={this.state.loginType==='login'}>
+          Login
         </rb.Button>
         <rb.Button bsClass='btn active-green'
-                   data-id='mTurker'
-                   onClick={function(){self.setState({userType:'mTurker'})}}
-                   ref='mTurker'
-                   active={this.state.userType==='mTurker'}>
-          mTurk Login
+                   data-id='register'
+                   style={{width:'100px'}}
+                   onClick={function(){self.setState({loginType:'register'})}}
+                   ref='register'
+                   active={this.state.loginType==='register'}>
+          Register
         </rb.Button>
       </rb.ButtonGroup>
-      {this.state.userType==='other' ? this.otherUserLogin() : this.mTurkerLogin()}
+      {this.state.loginType==='login' ? this.otherUserLogin() : this.otherUserRegister()}
+      {this.state.errorMsg ? <p style={{color:'red'}}>{this.state.errorMsg}</p> : []}
       </div>)
   },
 
