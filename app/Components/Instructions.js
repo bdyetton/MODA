@@ -16,6 +16,18 @@ module.exports = React.createClass({
     });
   },
 
+  handleKey: function(event) {
+    if (event.keyCode === 39) {
+      this.nextPage();
+    } else if (event.keyCode === 37) {
+      this.previousPage();
+    } else {
+      return;//Do nothing, let event propagate
+    }
+    event.stopPropagation();
+    event.preventDefault();
+  },
+
   nextPage: function(){
     this.changePage(1)
   },
@@ -26,10 +38,10 @@ module.exports = React.createClass({
 
   changePage: function(inc){
     var self = this;
-    if (self.state.page+inc===10 && !self.state.instComplete) {
+    if (self.state.page+inc === 10 && !self.state.instComplete) {
       self.setState({page: 10, instComplete: true})
     }
-    if (self.state.page+inc!==1 || self.state.page+inc!==10) {
+    if (self.state.page+inc >= 1 && self.state.page+inc <= 10) {
       self.setState({page: self.state.page + inc})
     }
   },
@@ -271,18 +283,6 @@ module.exports = React.createClass({
         Finally and most importantly, <b style={{color:'red'}}>Thank you for you help!</b>
       </p>
     </div>)
-  },
-
-  handleKey: function(event) {
-    if (event.keyCode === 39) {
-      this.nextPage();
-    } else if (event.keyCode === 37) {
-      this.previousPage();
-    } else {
-      return;//Do nothing, let event propagate
-    }
-    event.stopPropagation();
-    event.preventDefault();
   },
 
   closeInst: function(){

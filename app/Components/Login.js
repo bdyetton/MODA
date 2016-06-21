@@ -60,20 +60,18 @@ module.exports = React.createClass({
 
   loginOtherUser: function() {
     var self = this;
-    var userName = self.refs.username.getValue();
-    var password = self.refs.password.getValue();
     var browserInfo = get_browser();
     var userData = {
-      userName:userName,
-      password:password,
+      userName:self.refs.loginUsername.getValue(),
+      password:self.refs.loginPassword.getValue(),
       userType:'other',
       browser: browserInfo.name,
       version:browserInfo.version,
     };
     var uriData = self.getURIData();
     $.extend(userData, uriData);
+
     $.get('/api/loginOther',{userData:userData},function(data){
-      console.log(data)
       if (data.success) {
         self.props.updatePage('score', data);
       } else {
@@ -97,7 +95,11 @@ module.exports = React.createClass({
     var uriData = self.getURIData();
     $.extend(userData, uriData);
     $.get('/api/registerOther',{userData:userData},function(data){
-      self.props.updatePage('score', data);
+      if (data.success) {
+        self.props.updatePage('score', data);
+      } else {
+        self.setState({errorMsg: data.err})
+      }
     });
   },
 
@@ -121,11 +123,11 @@ module.exports = React.createClass({
     return (<div ref='login' className='form-inline' style={{margin:'5px'}}>
       <rb.Row style={{margin:'0 5px 0px 5px', 'padding':'0px'}}>
         <label>Email:</label>
-        <rb.Input ref='username' type='text' autoFocus onKeyDown={this.handleKeypress}></rb.Input>
+        <rb.Input ref='loginUsername' type='text' autoFocus onKeyDown={this.handleKeypress}></rb.Input>
       </rb.Row>
       <rb.Row style={{margin:'5px 5px 5px 5px'}}>
         <label>Password:</label>
-        <rb.Input ref='password' type='password' onKeyDown={this.handleKeypress}></rb.Input>
+        <rb.Input ref='loginPassword' type='password' onKeyDown={this.handleKeypress}></rb.Input>
       </rb.Row>
       <rb.Row style={{margin:'25px 5px 20px 5px'}}><rb.Button ref='otherLogin'
                            onClick={this.loginOtherUser}
@@ -223,7 +225,7 @@ module.exports = React.createClass({
         <rb.Button bsClass='btn active-green'
                    data-id='login'
                    style={{width:'100px'}}
-                   onClick={function(){self.setState({loginType:'login'})}}
+                   onClick={function(){self.setState({loginType:'login', errorMsg:undefined})}}
                    ref='login'
                    active={this.state.loginType==='login'}>
           Login
@@ -231,14 +233,14 @@ module.exports = React.createClass({
         <rb.Button bsClass='btn active-green'
                    data-id='register'
                    style={{width:'100px'}}
-                   onClick={function(){self.setState({loginType:'register'})}}
+                   onClick={function(){self.setState({loginType:'register', errorMsg:undefined})}}
                    ref='register'
                    active={this.state.loginType==='register'}>
           Register
         </rb.Button>
       </rb.ButtonGroup>
       {this.state.loginType==='login' ? this.otherUserLogin() : this.otherUserRegister()}
-      {this.state.errorMsg ? <p style={{color:'red'}}>{this.state.errorMsg}</p> : []}
+      {this.state.errorMsg ? <p style={{color:'red'}}><br/>{this.state.errorMsg}</p> : []}
       </div>)
   },
 

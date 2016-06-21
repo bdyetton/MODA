@@ -488,7 +488,7 @@ module.exports = React.createClass({
                     </rb.Button> :
                     <rb.Button bsStyle="warning" ref='submitHit'
                                  disabled={nextDis}
-                                 onClick={self.openSubmit}>{'Submit Completed HIT'}
+                                 onClick={self.openSubmit}>{'Submit Completed Set'}
                     </rb.Button>}
               </rb.ButtonGroup>
             </rb.ButtonToolbar>)
@@ -510,7 +510,7 @@ module.exports = React.createClass({
   render: function () {
     var self = this;
     if (self.state.imgMeta.setsCompleted >= self.state.imgMeta.setsMax){
-      return (<p className='thank-you-text'>You've completed all available HITs. Thanks for yor help!</p>)
+      return (<p className='thank-you-text'>You've completed all available Sets. Thanks for yor help!</p>)
     }
     return (
       <div onKeyDown={this.handleKey} className='container' style={{textAlign:'center', width:'95%', position:'absolute', left:'50%', top: '50%',  transform: 'translateY(-50%) translateX(-50%)'}}>
@@ -529,7 +529,7 @@ module.exports = React.createClass({
                 </div> :
                 <div className='pull-right'
                      style={{color:'orange', position:'relative' ,top:'-30px',marginLeft:'5px'}}>
-                     {'HITs Complete: '+ (self.state.imgMeta.setsCompleted)}
+                     {'Sets Complete: '+ (self.state.imgMeta.setsCompleted)}
                 </div>
               }
            </div>}>
@@ -551,15 +551,17 @@ module.exports = React.createClass({
                                     userData={self.props.userData}
                                     prac={self.state.imgMeta.prac}
                                     viewedImgs={self.state.viewedImgs}/> : []}
-          {self.state.imgMeta.prac ? <p className='std-para'>You are currently in <b style={{color:'orange'}}>practice mode. &nbsp;</b>
-            This HIT will take longer than subsequent HITs because you are required to complete a practice HIT first (and read the instructions).<br/><br/>
-            Please mark spindles by drawing boxes around them. Check you accuracy with the toggle/check button.<br/>
-            Position and width must be correct and confidence must be set for each marker before moving to
-            the next window. Note that some windows will not contain spindles.</p> : []}
+          {self.state.imgMeta.prac ?
+            <p className='std-para'>You are currently in <b style={{color:'orange'}}>practice mode. </b>
+              Please mark spindles by drawing boxes around them. Check you accuracy with the toggle/check button.<br/>
+              Position and width must be correct and confidence must be set for each marker before moving to
+              the next window. Note that some windows will not contain spindles.</p> : []}
+          {self.state.imgMeta.prac && self.props.userType==='mturker' ?
+            <p className='std-para'><br/><br/>Note that this HIT will take longer than subsequent HITs because you are required
+              to complete a practice HIT first (and read the instructions).<br/><br/></p> : []}
           {self.state.imgMeta.msg ? <p className='std-para text-green'>{self.state.imgMeta.msg}</p> : ''}
         </rb.Panel>
-        <p className='std-para text-green'><b style={{color:'red'}}>DISCLAIMER:</b> If you seems to be doing the same windows again and again (and your HIT count in orange at the top is not increasing), then some error has occurred. <br/> Please do not accept more HITs. We are working to fix this bug ASAP.</p>
-      </div>
+     </div>
     );
   }
 });

@@ -60,9 +60,18 @@ app.get('/api/updateNoMakers',cors(),function(req,res){
 });
 
 app.get('/api/loginOther',cors(),function(req,res){
+  console.log(req.query.userData)
   users.loadUser(req.query.userData,function(err,userDataAll) { //async callback
     if (!err) { //load user
       var out = {};
+      console.log(req.query.userData.password);
+      console.log(userDataAll.userData.password);
+      if (req.query.userData.password !== userDataAll.userData.password) {
+        out.err = 'Password incorrect';
+        out.success = false;
+        res.send(out);
+        return;
+      }
       out.login = true;
       out.createdUser = false;
       currentUsers[userDataAll.userName] = userDataAll;
@@ -77,7 +86,6 @@ app.get('/api/loginOther',cors(),function(req,res){
       out.image.markerIndex = currentUsers[userDataAll.userName].markerIndex;
       res.send(out);
     } else {
-      console.log(err)
       var out = {};
       if (err.code === 'NoSuchKey'){
         out.err = 'That email/password combination does not exist';
@@ -91,48 +99,61 @@ app.get('/api/loginOther',cors(),function(req,res){
 });
 
 app.get('/api/registerOther',cors(),function(req,res){
-  users.createUser(req.query.userData, imServ, function(err, userDataAll){ //async callback
-    if (!err) {
-      currentUsers[userDataAll.userName] = userDataAll;
-      currentUsers[userDataAll.userName].userData = clone(req.query.userData);
-      if (req.query.userData.currentPhase) {
-        currentUsers[userDataAll.userName].currentPhase = req.query.userData.currentPhase;
-      }
+  users.loadUser(req.query.userData,function(err) {
+    if (!err){
       var out = {};
-      out.login = true;
-      out.createdUser = true;
-      out.userName = currentUsers[userDataAll.userName].name;
-      out.userData = req.query.userData;
-      out.success= true;
-      out.image = imServ.getImageData(currentUsers[userDataAll.userName], 0);
-      out.image.markerIndex = currentUsers[userDataAll.userName].markerIndex;
+      out.err = 'That email is already already taken';
+      out.success = false;
       res.send(out);
     } else {
-      var out = {};
-      out.image = {};
-      out.image.filename = 'http://i.imgur.com/xEv2LWQ.jpg';
-      out.userName = 'Invalid User *Slothmode Enabled*';
-      out.login = true;
-      out.sme = true;
-      out.success= true;
-      out.createdUser = false;
-      console.log(err);
-      res.send(out);
+      users.createUser(req.query.userData, imServ, function (err, userDataAll) { //async callback
+        if (!err) {
+          currentUsers[userDataAll.userName] = userDataAll;
+          currentUsers[userDataAll.userName].userData = clone(req.query.userData);
+          if (req.query.userData.currentPhase) {
+            currentUsers[userDataAll.userName].currentPhase = req.query.userData.currentPhase;
+          }
+          users.saveUser(currentUsers[userDataAll.userName]);
+
+          var out = {};
+          out.login = true;
+          out.createdUser = true;
+          out.userName = currentUsers[userDataAll.userName].name;
+          out.userData = req.query.userData;
+          out.success = true;
+          out.image = imServ.getImageData(currentUsers[userDataAll.userName], 0);
+          out.image.markerIndex = currentUsers[userDataAll.userName].markerIndex;
+          res.send(out);
+
+        } else {
+          var out = {};
+          out.image = {};
+          out.image.filename = 'http://i.imgur.com/xEv2LWQ.jpg';
+          out.userName = 'Invalid User *Slothmode Enabled*';
+          out.login = true;
+          out.sme = true;
+          out.success = true;
+          out.createdUser = false;
+          console.log(err);
+          res.send(out);
+        }
+      });
     }
   });
-}),
+});
 
 app.get('/api/loginMturker',cors(),function(req,res){
   users.loadUser(req.query.userData,function(err,userDataAll){ //async callback
     if (!err) { //load user
-      var out = {};
-      out.login = true;
-      out.createdUser = false;
       currentUsers[userDataAll.userName] = userDataAll;
       currentUsers[userDataAll.userName].userData = req.query.userData;
       if (req.query.userData.currentPhase) {
         currentUsers[userDataAll.userName].currentPhase = req.query.userData.currentPhase;
       }
+
+      var out = {};
+      out.login = true;
+      out.createdUser = false;
       out.userName = userDataAll.userName;
       out.userData = req.query.userData;
       out.success= true;
@@ -204,12 +225,6 @@ function nocache(req, res, next) {
 app.use('/', express.static(static_path, {
   maxage: 31557600
 }));
-
-//app.use(function(req, res, next) {
-//    res.header("Access-Control-Allow-Origin", "*");
-//    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//    next();
-//});
 
 var server = app.listen(process.env.PORT || 5000, function () {
   var host = server.address().address;

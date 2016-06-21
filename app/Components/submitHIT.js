@@ -92,13 +92,15 @@ module.exports = React.createClass({
             <rb.Modal.Title>Confirm Submission?</rb.Modal.Title>
           </rb.Modal.Header>
           <rb.Modal.Body>
-            {self.props.prac ?
-              (<p className='std-para'>You are in <b style={{color:'orange'}}>practice mode. &nbsp;</b>After clicking submit you will be
-                granted a qualification that lets you complete more MODA HITs. <br/><br/>The first of these HITs will be
-                automatically shown next and&nbsp;<b style={{color:'red'}}>must be completed before the current HIT is approved</b>.
-              After that hit is completed, find more HITs by searching with keywords like <i>"sleep", "MODA"</i> and <i>"spindles".</i></p>) :
-              (!self.state.confirmOk ? <p>Once this HIT is submitted you will not be able to edit spindle markers.</p> : <p><b style={{color:'red'}}>Click submit to post results to Mturk</b></p>)
-            }
+            {self.props.userType ?
+              [self.props.prac ?
+                (<p className='std-para'>You are in <b style={{color:'orange'}}>practice mode. &nbsp;</b>After clicking submit you will be
+                  granted a qualification that lets you complete more MODA HITs. <br/><br/>The first of these HITs will be
+                  automatically shown next and&nbsp;<b style={{color:'red'}}>must be completed before the current HIT is approved</b>.
+                After that hit is completed, find more HITs by searching with keywords like <i>"sleep", "MODA"</i> and <i>"spindles".</i></p>) :
+                (!self.state.confirmOk ? <p>Once this HIT is submitted you will not be able to edit spindle markers.</p> : <p><b style={{color:'red'}}>Click submit to post results to Mturk</b></p>)
+              ] :
+              [(!self.state.confirmOk ? <p>Once this Set is submitted you will not be able to edit spindle markers.</p> : <p><b style={{color:'red'}}>Click submit to post results to Mturk</b></p>)]}
           </rb.Modal.Body>
           <rb.Modal.Footer>
             {self.drawButtons()}

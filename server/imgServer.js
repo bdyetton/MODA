@@ -96,6 +96,9 @@ function imgServer(){
     "We think your awesome for helping us!",
     "If your questioning your quality, have a read of the instructions again",
     "Keep those eyes open for spindles!",
+    "Want to score faster? Try using the keyboard shortcuts. See page 10 of the instructions for details.",
+    "Want to score faster? Try using the keyboard shortcuts. See page 10 of the instructions for details.",
+    "Want to score faster? Try using the keyboard shortcuts. See page 10 of the instructions for details."
     ];
 
   self.initUser = function(user,cb) {
