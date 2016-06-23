@@ -3,6 +3,8 @@ import { ButtonInput } from 'react-bootstrap';
 import { Form, ValidatedInput } from 'react-bootstrap-validation';
 var URI = require('urijs');
 
+var Register = require('./Register');
+
 
 function get_browser(){
     var ua=navigator.userAgent,tem,M=ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
@@ -80,20 +82,8 @@ module.exports = React.createClass({
     });
   },
   
-  registerOtherUser: function(formData) {
+  registerOtherUser: function(userData) {
     var self = this;
-    self.setState({missingData:false});
-    var browserInfo = get_browser();
-    var userData = {
-      userName: formData.email,
-      password: formData.password,
-      userType: 'other',
-      browser: browserInfo.name,
-      version: browserInfo.version,
-      registerData: formData
-    };
-    var uriData = self.getURIData();
-    $.extend(userData, uriData);
     $.get('/api/registerOther',{userData:userData},function(data){
       if (data.success) {
         self.props.updatePage('score', data);
@@ -138,83 +128,6 @@ module.exports = React.createClass({
       </div>)
   },
 
-  otherUserRegister: function(){
-    var self = this;
-    return (
-      <Form
-        // Supply callbacks to both valid and invalid
-        // submit attempts
-        onValidSubmit={this.registerOtherUser}
-        onInvalidSubmit={this.handleInvalidSubmit}>
-        <div style={{position:'relative', left:'50%', width: '250px', transform: 'translateX(-50%)'}}>
-        <ValidatedInput
-          type='text'
-          label='Email'
-          name='email'
-          validate='required,isEmail'
-          errorHelp={{
-              required: 'Please enter your email',
-              isEmail: 'Email is invalid'
-          }}
-        />
-
-        <ValidatedInput
-          type='password'
-          name='password'
-          label='Password'
-          validate='required,isLength:6:60'
-          errorHelp={{
-              required: 'Please specify a password',
-              isLength: 'Password must be at least 6 characters'
-          }}
-        />
-
-        <ValidatedInput
-            type='password'
-            name='password-confirm'
-            label='Confirm Password'
-            validate={(val, context) => val === context.password}
-            errorHelp='Passwords do not match'
-        />
-        </div>
-        <div>
-        <p style={{fontSize:'14pt', clear:'both'}}><br/>Please provide some information about you experience sleep scoring:<br/></p>
-
-        <ValidatedInput
-            type='field'
-            name='yearsExp'
-            label='How many years have you been scoring sleep (etc etc):'
-            validate='required'
-            errorHelp={{
-                required: 'Please enter this information'
-            }}
-        />
-
-        <ValidatedInput
-            type='field'
-            name='hoursPerWeek'
-            label='How many hours do you spend scoring per week?'
-            validate='required'
-            errorHelp={{
-                required: 'Please enter this information'
-            }}
-        />
-        </div>
-        <rb.Button
-          type='submit'
-          ref='otherLogin'
-          value='Register'
-          style={{width:'200px'}}>
-          Register
-        </rb.Button>
-        {self.state.missingData ? <p style={{color:'red'}}>Missing data, see above</p> : []}
-      </Form>)
-  },
-
-  handleInvalidSubmit: function(errors, values) {
-    this.setState({missingData: true});
-  },
-
   render: function () {
     var self=this;
     console.log(window.location.href);
@@ -239,7 +152,7 @@ module.exports = React.createClass({
           Register
         </rb.Button>
       </rb.ButtonGroup>
-      {this.state.loginType==='login' ? this.otherUserLogin() : this.otherUserRegister()}
+      {this.state.loginType==='login' ? this.otherUserLogin() : <Register registerOtherUser={self.registerOtherUser}/>}
       {this.state.errorMsg ? <p style={{color:'red'}}><br/>{this.state.errorMsg}</p> : []}
       </div>)
   },
