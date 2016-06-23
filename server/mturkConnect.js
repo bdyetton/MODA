@@ -1,4 +1,4 @@
-var mturkApi = require('../node_modules/mturk-api');
+var mturkApi = require('./mturk-api-master/index');
 
 function mturk() {
   var self = this;
