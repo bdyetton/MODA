@@ -83,7 +83,7 @@ module.exports = React.createClass({
             type='text'
             name='other'
             validate='required'
-            label='What is your current/previous job position that qualifies you to score spindles?'
+            label='What experience do you have that qualifies you to score spindles?'
           />
           : []}
 
