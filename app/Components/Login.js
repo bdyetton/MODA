@@ -112,7 +112,7 @@ module.exports = React.createClass({
   otherUserLogin: function(){
     return (<div ref='login' className='form-inline' style={{margin:'5px'}}>
       <rb.Row style={{margin:'0 5px 0px 5px', 'padding':'0px'}}>
-        <label>Email:</label>
+        <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Email:</label>
         <rb.Input ref='loginUsername' type='text' autoFocus onKeyDown={this.handleKeypress}></rb.Input>
       </rb.Row>
       <rb.Row style={{margin:'5px 5px 5px 5px'}}>
@@ -132,7 +132,7 @@ module.exports = React.createClass({
     var self=this;
     console.log(window.location.href);
     return (<div className='bs-callout bs-callout-primary'
-                 style={{padding:'20px', 'textAlign':'center', position:'absolute', left:'50%', top: '50%',  transform: 'translateY(-50%) translateX(-50%)'}}>
+                 style={{padding:'20px', 'textAlign':'center', position:'relative', width:'50%', left:'50%',  transform: 'translateX(-50%)'}}>
         <h4>Welcome to MODA, please Login or Register</h4>
       <rb.ButtonGroup  style={{margin:'5px 10px 20px 10px'}} bsSize='medium' position='relative' width='100%'>
         <rb.Button bsClass='btn active-green'

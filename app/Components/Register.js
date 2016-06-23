@@ -59,7 +59,7 @@ module.exports = React.createClass({
             type='text'
             name='RPSGTNum'
             validate='required'
-            label='What is your RPSGT number/OTIMROEPMQ numero de permis (or equivalent)'
+            label='What is your RPSGT number (or equivalent e.g. OTIMROEPMQ numero de permis)'
             errorHelp='An RPSGT number or equivalent is required'
       />
 

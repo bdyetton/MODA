@@ -379,9 +379,10 @@ module.exports = React.createClass({
     });
   },
 
-  setNoMarkers: function(){
+  setNoMarkers: function(e){
+    e.stopPropagation()
     var self = this;
-    if(self.state.imgMeta.noMarkers){
+    if(JSON.parse(self.state.imgMeta.noMarkers)){
       self.setState({imgMeta:$.extend(self.state.imgMeta,{noMarkers: false})}, self.updateNoMakers);
     }
     else{
@@ -464,13 +465,19 @@ module.exports = React.createClass({
                 </rb.Button>
               </rb.ButtonGroup>
               <rb.ButtonGroup style={{textAlign:'center', position:'absolute', left:'50%', top: '50%',  transform: 'translateY(-50%) translateX(-50%)'}}>
-                <label>
+                <label for='noMarkers'>
                   <rb.Input type="checkbox" ref='noMarkers'
+                            id="noMarkers"
                           className='no-markers'
                           disabled={self.state.numMarkers!==0}
                           checked={JSON.parse(self.state.imgMeta.noMarkers)}
                           onClick={self.setNoMarkers}
-                          onChange={function(){}}/>
+                          //onChange={function(event){
+                          //  console.log('called')
+                          //  event.stopPropagation();
+                          //  event.preventDefault();}
+                          //  }
+                          />
                   <p className={JSON.parse(self.state.imgMeta.noMarkers) ? "no-markers" : "not-no-markers"}>
                     {(self.state.imgMeta.prac && self.state.numGSMarkers===0 && self.state.showGSMarkers) ? <u>No spindles in window</u> : 'No spindles in window'}
                   </p>
