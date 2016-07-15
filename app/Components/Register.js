@@ -102,7 +102,7 @@ module.exports = React.createClass({
             type='text'
             name='timeWorked'
             validate='required,isNumeric'
-            label='Estimate how many total hours you have scored spindles for over your lifetime:'
+            label='Estimate how many total hours you have scored spindles over your lifetime:'
             errorHelp={{
                 required: 'Please enter a number',
                 isNumeric: 'Please enter a number'
@@ -168,7 +168,7 @@ module.exports = React.createClass({
         <ValidatedInput
             type='text'
             name='comments'
-            label='Any other comments on you experience scoring sleep?'
+            label='Any other comments on your experience scoring sleep?'
         />
 
         </div>
