@@ -150,7 +150,7 @@ module.exports = React.createClass({
         />
         </div>
         <div>
-        <p style={{fontSize:'14pt', clear:'both'}}><br/>Please provide some information about you experience sleep scoring:<br/></p>
+        <p style={{fontSize:'14pt', clear:'both'}}><br/>Please provide some information about your experience sleep scoring:<br/></p>
 
 
         <rb.FormGroup style={{position:'relative', left:'50%', width: '250px', transform: 'translateX(-50%)'}} controlId="formControlsSelect">
