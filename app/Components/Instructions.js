@@ -310,7 +310,6 @@ module.exports = React.createClass({
         {this.props.showInst ?
         <rb.Modal show={false} className='myModal'
                   id='img/instructions'
-                  className='inst'
                   dataControlsModal="myModal"
                   dataBackdrop="static"
                   dataKeyboard={false}
