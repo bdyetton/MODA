@@ -97,7 +97,7 @@ module.exports = React.createClass({
   updateSize: function(dir,size){
     var self=this;
     if (!self.state.inited){
-      if (size.width>10){
+      if (size.width>5){ //Want it to be >0.2 seconds
         self.setState({inited:true});
       } else{
         self.removeMarker();

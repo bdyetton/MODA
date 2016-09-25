@@ -10,7 +10,7 @@ import datetime
 import csv
 import yaml
 import sys
-import math
+import datetime
 import pandas as pd
 from pprint import pprint
 
@@ -47,8 +47,11 @@ class MturkTools:
     """Tools for mturk"""
 
     def __init__(self):
-        self.phase = 'phase1trial2'
-        self.path = '/media/ben/Data1/Users/Ben/Google Drive/MODA/DownloadUserData/'
+        self.phase = 'phase1experts3'
+        self.expert_only = True
+        self.phase_to_save = {'phase1'}
+        self.date_str = datetime.date.today().isoformat()
+        self.path = '/media/ben/Data1/Users/Ben/GoogleDrive/MODA/DownloadUserData/'
         if not os.path.exists(self.path+self.phase):
             os.makedirs(self.path+self.phase)
         self.url = "https://shrouded-plains-8041.herokuapp.com/"
@@ -72,10 +75,14 @@ class MturkTools:
         bucket_list = bucket.list()
         i=0
         for l in bucket_list:
-            i += 1
             key_string = str(l.key)
-            if key_string.find('UserData') != -1:
+            if self.expert_only:
+                str2check = 'UserData_expert'
+            else:
+                str2check = 'UserData'
+            if key_string.find(str2check) != -1:
                 l.get_contents_to_filename(self.path+self.phase + '/' +key_string)
+                i += 1
         print "%i user data files downloaded" % i
 
     def parse_aws_to_csv(self):
@@ -84,8 +91,8 @@ class MturkTools:
         for (dirpath, dirnames, filenames) in walk(mypath):
             break
 
-        with open(mypath+'EventLocations.csv', 'wb') as eventLocCsvFile:
-            event_loc_csv_writer = csv.writer(eventLocCsvFile)
+        with open(mypath+'EventLocations' + self.date_str + '.csv', 'wb') as event_loc_csv_file:
+            event_loc_csv_writer = csv.writer(event_loc_csv_file)
             event_loc_csv_writer.writerow(['filename',
                                            'phase',
                                            'subID',
@@ -104,76 +111,142 @@ class MturkTools:
                                            'TimeMarkerLastModified',
                                            'turkHitId',
                                            'turkAssignmentId'])
-            with open(mypath+'EpochViews.csv', 'wb') as epochCsvFile:
-                epoch_csv_writer = csv.writer(epochCsvFile)
-                epoch_csv_writer.writerow(['filename', 'epochNum', 'blockNum', 'phase', 'annotatorID','hitId','assignmentId'])
-                for userFile in filenames:  # collate markers, and collate batches
-                    try:
-                        if not (userFile.find('UserData') > -1):
-                            continue
-                        with open(mypath + '/' + userFile) as userFileHandle:
-                            if userFile == "UserData_preview":
+            with open(mypath+'EpochViews' + self.date_str + '.csv', 'wb') as epoch_csv_file:
+                epoch_csv_writer = csv.writer(epoch_csv_file)
+                epoch_csv_writer.writerow(['filename',
+                                           'epochNum',
+                                           'blockNum',
+                                           'phase',
+                                           'annotatorID',
+                                           'hitId',
+                                           'assignmentId'])
+                with open(mypath+'UserStats' + self.date_str + '.csv', 'wb') as user_stats_csv_file:
+                    user_stats_csv_writer = csv.writer(user_stats_csv_file)
+                    user_stats_csv_writer.writerow(['userName',
+                                                    'email',
+                                                    'userType',
+                                                    'userSubType',
+                                                    'totalSetsScored',
+                                                    'totalEpochsScored',
+                                                    'totalMarkersScored',
+                                                    'RPSGT',
+                                                    'yearsExperience',
+                                                    'spindleHoursOverLifetime',
+                                                    'whyQualified',
+                                                    'otherComments'])
+                    for userFile in filenames:  # collate markers, and collate batches
+                        try:
+                            if not (userFile.find('UserData') > -1):
                                 continue
-                            user_data = yaml.safe_load(userFileHandle)
-                            try:
-                                if 'userName' not in user_data:
-                                    print userFile
+                            with open(mypath + '/' + userFile) as userFileHandle:
+                                if userFile == "UserData_preview":
                                     continue
-                                print "working on user %s" % user_data['userName']
-                                dataExists = False
-                            except:
-                                print userFile
-                            for phase in user_data['batches']:
-                                batch_comp = user_data['setsCompleted'][phase]
-                                print "   HITS completed in {0}: {1}".format(phase, batch_comp)
-                                for batch in user_data['batches'][phase]:
-                                    if batch == 'batchMeta':
+                                user_data = yaml.safe_load(userFileHandle)
+                                try:
+                                    if 'userName' not in user_data:
                                         continue
-                                    for img in user_data['batches'][phase][batch]['imgs']:
-                                        img_data = user_data['batches'][phase][batch]['imgs'][img]
-                                        if len(img_data['markers']) > 0 or img_data['noMarkers'] == 'true' or ('mturkInfo' in img_data):
-                                            dataExists = True
-                                            if user_data['userType'] == 'mturker':
-                                                assignment_id = img_data['mturkInfo']['assignmentId']
-                                                hit_id = img_data['mturkInfo']['hitId']
-                                            else:
-                                                hit_id = None
-                                                assignment_id = None
-                                            epoch_csv_writer.writerow([img_data['filename'],
-                                                                       img_data['epoch'],
-                                                                       img_data['batch'],phase,
-                                                                       user_data['userName'],
-                                                                       hit_id,
-                                                                       assignment_id])
-                                            for marker in img_data['markers']:
-                                                if marker['gs'] == 'true' or marker['deleted'] == 'true':
-                                                    continue
-                                                event_loc_csv_writer.writerow([img_data['filename'],
-                                                                               phase,
-                                                                               img_data['subID'],
-                                                                               img_data['epoch'],
-                                                                               img_data['batch'],
-                                                                               user_data['userName'],
-                                                                               batch,
-                                                                               marker['markerIndex'],
-                                                                               marker['xP'],
-                                                                               marker['wP'],
-                                                                               marker['xSecs'],
-                                                                               marker['wSecs'],
-                                                                               marker['conf'],
-                                                                               marker['imgFirstShown'],
-                                                                               marker['markerCreated'],
-                                                                               marker['timeStamp'],
-                                                                               hit_id,
-                                                                               assignment_id])
+                                    print "working on user %s" % user_data['userName']
+                                    dataExists = False
+                                    epochs_complete = 0
+                                    markers_complete = 0
+                                except:
+                                    print userFile
+                                for phase in user_data['batches']:
+                                    if phase not in self.phase_to_save:
+                                        continue
+                                    sets_comp = user_data['setsCompleted'][phase]
+                                    print "   Sets completed in {0}: {1}".format(phase, sets_comp)
+                                    for batch in user_data['batches'][phase]:
+                                        if batch == 'batchMeta':
+                                            continue
+                                        for img in user_data['batches'][phase][batch]['imgs']:
+                                            img_data = user_data['batches'][phase][batch]['imgs'][img]
+                                            if len(img_data['markers']) > 0 or img_data['noMarkers'] == 'true' or ('mturkInfo' in img_data):
+                                                dataExists = True
+                                                epochs_complete += 1
+                                                if user_data['userType'] == 'mturker':
+                                                    assignment_id = img_data['mturkInfo']['assignmentId']
+                                                    hit_id = img_data['mturkInfo']['hitId']
+                                                else:
+                                                    hit_id = None
+                                                    assignment_id = None
+                                                epoch_csv_writer.writerow([img_data['filename'],
+                                                                           img_data['epoch'],
+                                                                           img_data['batch'],phase,
+                                                                           user_data['userName'],
+                                                                           hit_id,
+                                                                           assignment_id])
+                                                for marker in img_data['markers']:
+                                                    if marker['gs'] == 'true' or marker['deleted'] == 'true':
+                                                        continue
+                                                    markers_complete += 1
+                                                    event_loc_csv_writer.writerow([img_data['filename'],
+                                                                                   phase,
+                                                                                   img_data['subID'],
+                                                                                   img_data['epoch'],
+                                                                                   img_data['batch'],
+                                                                                   user_data['userName'],
+                                                                                   batch,
+                                                                                   marker['markerIndex'],
+                                                                                   marker['xP'],
+                                                                                   marker['wP'],
+                                                                                   marker['xSecs'],
+                                                                                   marker['wSecs'],
+                                                                                   marker['conf'],
+                                                                                   marker['imgFirstShown'],
+                                                                                   marker['markerCreated'],
+                                                                                   marker['timeStamp'],
+                                                                                   hit_id,
+                                                                                   assignment_id])
 
-                            if not dataExists:
-                                print "ERROR, %s has a file but did not complete any images. " % user_data['userName']
-                    except:
-                        print "Massive Error somewhere with {0}".format(user_data['userName'])
-                    userFileHandle.close()
-        epochCsvFile.close()
-        eventLocCsvFile.close()
+                                if not dataExists:
+                                    print "ERROR, %s has a file but did not complete any images. " % user_data['userName']
+                        except:
+                            print "Massive Error somewhere with {0}".format(user_data['userName'])
+                        if user_data['userType'] == 'mturker':
+                            user_subtype = None
+                            rpsgt = None
+                            email = None
+                            years_experience = None
+                            spindle_hours_over_lifetime = None
+                            why_qualified = None
+                            other_comments = None
+                        else:
+                            email = user_data['registerData']['email']
+                            other_comments = user_data['registerData']['comments']
+                            if 'RPSGTNum' in user_data['registerData']:
+                                user_subtype = 'psgTech'
+                                rpsgt = user_data['registerData']['RPSGTNum']
+                                years_experience = user_data['registerData']['yearsExperience']
+                                spindle_hours_over_lifetime = None
+                                why_qualified = None
+                            elif 'other' in user_data['registerData']:
+                                user_subtype = 'other'
+                                why_qualified = user_data['registerData']['other']
+                                rpsgt = None
+                                years_experience = user_data['registerData']['yearsExperience']
+                                spindle_hours_over_lifetime = user_data['registerData']['timeWorked']
+                            else:
+                                user_subtype = 'researcher'
+                                spindle_hours_over_lifetime = user_data['registerData']['timeWorked']
+                                rpsgt = None
+                                years_experience = user_data['registerData']['yearsExperience']
+                                why_qualified = None
+                        user_stats_csv_writer.writerow([user_data['userName'],
+                                                        email,
+                                                        user_data['userType'],
+                                                        user_subtype,
+                                                        sets_comp,
+                                                        epochs_complete,
+                                                        markers_complete,
+                                                        rpsgt,
+                                                        years_experience,
+                                                        spindle_hours_over_lifetime,
+                                                        why_qualified,
+                                                        other_comments])
+        user_stats_csv_file.close()
+        epoch_csv_file.close()
+        event_loc_csv_file.close()
 
     def save_mturk_data(self):
         hits = self.get_all_reviewable_hits()
@@ -216,7 +289,6 @@ class MturkTools:
                                         workerResultData.loc[workerLoc, 'numViewed'] = currentNumViewed+len(viewedImg)
                                         workerResultData.loc[workerLoc, 'numHits'] = currentNumHits+1
         workerResultData.to_csv(self.path+self.phase + "/WorkerResultData.csv")
-
 
     def get_all_reviewable_hits(self):
         page_size = 50
@@ -374,9 +446,9 @@ mtt = MturkTools()
 
 # mtt.expire_remaining_hits()
 # mtt.save_mturk_data()
-# mtt.get_all_user_data_from_aws()
-# mtt.parse_aws_to_csv()
-mtt.approve_hits()
+mtt.get_all_user_data_from_aws()
+mtt.parse_aws_to_csv()
+#mtt.approve_hits()
 
 #mtt.remove_qualifications('practice')
 

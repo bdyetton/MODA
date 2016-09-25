@@ -66,11 +66,10 @@ module.exports = React.createClass({
       <ValidatedInput
           type='text'
           name='timeWorked'
-          validate='required,isNumeric'
+          validate='required'
           label='How many years have you worked as a polysomnographic technologist?'
           errorHelp={{
-              required: 'Please enter a number',
-              isNumeric: 'Please enter a number'
+              required: 'Please enter a number'
           }}
       /></div>
     )
@@ -90,22 +89,20 @@ module.exports = React.createClass({
         <ValidatedInput
             type='text'
             name='yearsExperience'
-            validate='required,isNumeric'
+            validate='required'
             label='How many years experience do you have in scoring sleep?'
             errorHelp={{
-                required: 'Please enter a number',
-                isNumeric: 'Please enter a number'
+                required: 'Please enter a number'
             }}
         />
 
         <ValidatedInput
             type='text'
             name='timeWorked'
-            validate='required,isNumeric'
+            validate='required'
             label='Estimate how many total hours you have scored spindles over your lifetime:'
             errorHelp={{
-                required: 'Please enter a number',
-                isNumeric: 'Please enter a number'
+                required: 'Please enter a number'
             }}
         />
       </div>)

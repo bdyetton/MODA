@@ -8,10 +8,6 @@ var listMargin = 15;
 module.exports = React.createClass({
   displayName: 'Scorer',
 
-  //TODO Sets and batches randomization
-  //Mturk response
-  //test if complete
-
   getInitialState: function() {
     var d = new Date();
     return {
