@@ -47,7 +47,7 @@ class MturkTools:
     """Tools for mturk"""
 
     def __init__(self):
-        self.phase = 'phase1experts3'
+        self.phase = 'phase1experts4'
         self.expert_only = True
         self.phase_to_save = {'phase1'}
         self.date_str = datetime.date.today().isoformat()
@@ -124,6 +124,8 @@ class MturkTools:
                     user_stats_csv_writer = csv.writer(user_stats_csv_file)
                     user_stats_csv_writer.writerow(['userName',
                                                     'email',
+                                                    'fname',
+                                                    'lname',
                                                     'userType',
                                                     'userSubType',
                                                     'totalSetsScored',
@@ -234,6 +236,8 @@ class MturkTools:
                                 why_qualified = None
                         user_stats_csv_writer.writerow([user_data['userName'],
                                                         email,
+                                                        user_data['fname'],
+                                                        user_data['lname'],
                                                         user_data['userType'],
                                                         user_subtype,
                                                         sets_comp,

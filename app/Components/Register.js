@@ -118,6 +118,26 @@ module.exports = React.createClass({
         <div style={{position:'relative', left:'50%', width: '250px', transform: 'translateX(-50%)'}}>
         <ValidatedInput
           type='text'
+          label='First Name'
+          name='fname'
+          validate='required'
+          errorHelp={{
+              required: 'Please enter your first name'
+          }}
+        />
+
+        <ValidatedInput
+          type='text'
+          label='Last Name'
+          name='lname'
+          validate='required'
+          errorHelp={{
+              required: 'Please enter your last name'
+          }}
+        />
+
+        <ValidatedInput
+          type='text'
           label='Email'
           name='email'
           validate='required,isEmail'
