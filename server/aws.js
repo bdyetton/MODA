@@ -6,6 +6,7 @@ function aws() {
   self.s3 = new AWS.S3();
   self.bucketName = 'moss-assets';
   self.s3bucket = new AWS.S3({params: {Bucket: self.bucketName}});
+  self.allKeys = [];
 
 
   this.postFile = function(key, body) {
@@ -21,8 +22,21 @@ function aws() {
     });
   };
 
+  this.getFileList = function(fileNameContainer, prefix, marker, cb){
+    params = {Bucket: self.bucketName, Prefix: prefix}
+    if (marker !== undefined){params['Marker'] = marker}
+    self.s3.listObjects(params, function(err, data){
+        if(err !== null){console.log('Error getting all files for status', err)}
+        fileNameContainer = fileNameContainer.concat(data.Contents);
+
+        if(data.IsTruncated)
+          getFileList(fileNameContainer, prefix, data.NextMarker, cb);
+        else
+          cb(fileNameContainer);
+      });
+  };
+
   this.getFile = function(key,cb) {
-    console.log(key);
     self.s3.getObject({Bucket: self.bucketName, Key:key}, function(err, data) {
       if (err) {
         cb(err, 'ERROR1');

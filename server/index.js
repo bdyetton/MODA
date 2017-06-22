@@ -64,8 +64,6 @@ app.get('/api/loginOther',cors(),function(req,res){
   users.loadUser(req.query.userData,function(err,userDataAll) { //async callback
     if (!err) { //load user
       var out = {};
-      console.log(req.query.userData.password);
-      console.log(userDataAll.userData.password);
       if (req.query.userData.password !== userDataAll.userData.password) {
         out.err = 'Password incorrect';
         out.success = false;

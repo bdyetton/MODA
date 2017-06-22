@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# coding=utf-8
 
 __author__ = 'ben'
 import os
@@ -12,6 +13,7 @@ import yaml
 import sys
 import datetime
 import pandas as pd
+import codecs
 from pprint import pprint
 
 sandbox_host = 'mechanicalturk.sandbox.amazonaws.com'
@@ -51,7 +53,7 @@ class MturkTools:
         self.expert_only = True
         self.phase_to_save = {'phase1'}
         self.date_str = datetime.date.today().isoformat()
-        self.path = '/media/ben/Data1/Users/Ben/GoogleDrive/MODA/DownloadUserData/'
+        self.path = '/mnt/c/Users/bdyet/GoogleDrive/MODA/DownloadUserData/'
         if not os.path.exists(self.path+self.phase):
             os.makedirs(self.path+self.phase)
         self.url = "https://shrouded-plains-8041.herokuapp.com/"
@@ -62,11 +64,11 @@ class MturkTools:
             debug=1  # debug = 2 prints out all requests.
         )
         self.titles_to_remove = ['Find patterns in sleeping brainwaves (Training HIT)', 'Find patterns in sleeping brainwaves']
-        print "Welcome to mturk tools, your balance is:"
+        print("Welcome to mturk tools, your balance is:")
         accountBal = self.mturk.get_account_balance()  # [$10,000.00]
-        print accountBal
+        print(accountBal)
         if self.phase=='sandbox' and accountBal[0] != '10,000.00':
-            print 'Error, your meant to be in sandbox but you are not!'
+            print('Error, your meant to be in sandbox but you are not!')
             sys.exit()
 
     def get_all_user_data_from_aws(self):
@@ -81,9 +83,10 @@ class MturkTools:
             else:
                 str2check = 'UserData'
             if key_string.find(str2check) != -1:
+                print('Downloading ' + key_string)
                 l.get_contents_to_filename(self.path+self.phase + '/' +key_string)
                 i += 1
-        print "%i user data files downloaded" % i
+        print("%i user data files downloaded" % i)
 
     def parse_aws_to_csv(self):
         mypath = self.path+self.phase + '/'
@@ -91,7 +94,7 @@ class MturkTools:
         for (dirpath, dirnames, filenames) in walk(mypath):
             break
 
-        with open(mypath+'EventLocations' + self.date_str + '.csv', 'wb') as event_loc_csv_file:
+        with open(mypath+'EventLocations' + self.date_str + '.csv', 'w') as event_loc_csv_file:
             event_loc_csv_writer = csv.writer(event_loc_csv_file)
             event_loc_csv_writer.writerow(['filename',
                                            'phase',
@@ -111,7 +114,7 @@ class MturkTools:
                                            'TimeMarkerLastModified',
                                            'turkHitId',
                                            'turkAssignmentId'])
-            with open(mypath+'EpochViews' + self.date_str + '.csv', 'wb') as epoch_csv_file:
+            with open(mypath+'EpochViews' + self.date_str + '.csv', 'w') as epoch_csv_file:
                 epoch_csv_writer = csv.writer(epoch_csv_file)
                 epoch_csv_writer.writerow(['filename',
                                            'epochNum',
@@ -120,7 +123,7 @@ class MturkTools:
                                            'annotatorID',
                                            'hitId',
                                            'assignmentId'])
-                with open(mypath+'UserStats' + self.date_str + '.csv', 'wb') as user_stats_csv_file:
+                with open(mypath+'UserStats' + self.date_str + '.csv', 'w') as user_stats_csv_file:
                     user_stats_csv_writer = csv.writer(user_stats_csv_file)
                     user_stats_csv_writer.writerow(['userName',
                                                     'email',
@@ -147,17 +150,17 @@ class MturkTools:
                                 try:
                                     if 'userName' not in user_data:
                                         continue
-                                    print "working on user %s" % user_data['userName']
+                                    print("working on user %s" % user_data['userName'])
                                     dataExists = False
                                     epochs_complete = 0
                                     markers_complete = 0
                                 except:
-                                    print userFile
+                                    print(userFile)
                                 for phase in user_data['batches']:
                                     if phase not in self.phase_to_save:
                                         continue
                                     sets_comp = user_data['setsCompleted'][phase]
-                                    print "   Sets completed in {0}: {1}".format(phase, sets_comp)
+                                    print("   Sets completed in {0}: {1}".format(phase, sets_comp))
                                     for batch in user_data['batches'][phase]:
                                         if batch == 'batchMeta':
                                             continue
@@ -202,9 +205,9 @@ class MturkTools:
                                                                                    assignment_id])
 
                                 if not dataExists:
-                                    print "ERROR, %s has a file but did not complete any images. " % user_data['userName']
+                                    print("ERROR, %s has a file but did not complete any images. " % user_data['userName'])
                         except:
-                            print "Massive Error somewhere with {0}".format(user_data['userName'])
+                            print("Massive Error somewhere with {0}".format(user_data['userName']))
                         if user_data['userType'] == 'mturker':
                             user_subtype = None
                             rpsgt = None
@@ -234,10 +237,36 @@ class MturkTools:
                                 rpsgt = None
                                 years_experience = user_data['registerData']['yearsExperience']
                                 why_qualified = None
+
+                        if spindle_hours_over_lifetime is not None:
+                            try:
+                                spindle_hours_over_lifetime = unicode(spindle_hours_over_lifetime.strip(codecs.BOM_UTF8),'utf-8')
+                            except:
+                                spindle_hours_over_lifetime = 'conversion error'
+                        if why_qualified is not None:
+                            try:
+                                why_qualified = unicode(why_qualified.strip(codecs.BOM_UTF8), 'utf-8')
+                            except:
+                                why_qualified = 'conversion error'
+                        if other_comments is not None:
+                            try:
+                                other_comments = unicode(other_comments.strip(codecs.BOM_UTF8), 'utf-8')
+                            except:
+                                other_comments = 'conversion error'
+
+                        if 'fname' in user_data:
+                            fname = user_data['fname']
+                        else:
+                            fname = 'missing'
+
+                        if 'lname' in user_data:
+                            lname = user_data['lname']
+                        else:
+                            lname = 'missing'
                         user_stats_csv_writer.writerow([user_data['userName'],
                                                         email,
-                                                        user_data['fname'],
-                                                        user_data['lname'],
+                                                        fname,
+                                                        lname,
                                                         user_data['userType'],
                                                         user_subtype,
                                                         sets_comp,
@@ -261,20 +290,20 @@ class MturkTools:
         for hit in hits:
             assignments = self.mturk.get_assignments(hit.HITId)
             for assignment in assignments:
-                print "Answers of the worker %s" % assignment.WorkerId
+                print("Answers of the worker %s" % assignment.WorkerId)
                 for answer in assignment.answers:
                     for idx, ans in enumerate(answer):
                         if idx == 2:
                             for viewedImg in ans.fields:
                                 browser = viewedImg
-                                print browser
+                                print(browser)
                         elif idx == 3:
                             for viewedImg in ans.fields:
-                                print viewedImg
+                                print(viewedImg)
                                 viewedImg = viewedImg.split(',')
                                 if len(viewedImg)<1 or viewedImg==None:
-                                    print "Missing DATA for {0}".format(assignment.WorkerId)
-                                    print viewedImg
+                                    print("Missing DATA for {0}".format(assignment.WorkerId))
+                                    print(viewedImg)
                                     continue
                                 if assignment.WorkerId not in workerResultData['workerId'].values:
                                     ser = pd.Series([assignment.WorkerId, viewedImg, len(viewedImg), 1, browser], index=['workerId','viewedImgs','numViewed','numHits','browser'])
@@ -297,8 +326,8 @@ class MturkTools:
     def get_all_reviewable_hits(self):
         page_size = 50
         hits = self.mturk.get_reviewable_hits(page_size=page_size)
-        print "Total results to fetch %s " % hits.TotalNumResults
-        print "Request hits page %i" % 1
+        print("Total results to fetch %s " % hits.TotalNumResults)
+        print("Request hits page %i" % 1)
         total_pages = float(hits.TotalNumResults)/page_size
         int_total = int(total_pages)
         if total_pages - int_total > 0:
@@ -308,7 +337,7 @@ class MturkTools:
         pn = 1
         while pn < total_pages:
             pn += 1
-            print "Request hits page %i" % pn
+            print("Request hits page %i" % pn)
             temp_hits = self.mturk.get_reviewable_hits(page_size=page_size,page_number=pn)
             hits.extend(temp_hits)
         return hits
@@ -321,33 +350,33 @@ class MturkTools:
         for hit in reviewable_hits:
             assignments = self.mturk.get_assignments(hit.HITId)
             for assignment in assignments:
-                print "Worker %s" % assignment.WorkerId
+                print("Worker %s" % assignment.WorkerId)
                 try:
                     self.mturk.approve_assignment(assignment.AssignmentId)
                 except:
-                    print "already approved"
-                print "--------------------"
+                    print("already approved")
+                print("--------------------")
             self.mturk.disable_hit(hit.HITId)
 
     def disable_all_hits(self):
         allHits = self.mturk.get_all_hits()
         for hit in allHits:
             if hit.Title in self.titles_to_remove:
-                print 'deleting'
+                print('deleting')
                 self.mturk.disable_hit(hit.HITId)
 
     def dispose_reviewed_hits(self):
         allHits = self.mturk.get_all_hits()
         for hit in allHits:
             if hit.Title in self.titles_to_remove:
-                print 'disposing'
+                print('disposing')
                 self.mturk.dispose_hit(hit.HITId)
 
     def expire_remaining_hits(self):
         allHits = self.mturk.get_all_hits()
         for hit in allHits:
             if hit.Title in self.titles_to_remove:
-                print 'expiring {0}'.format(hit.Title)
+                print('expiring {0}'.format(hit.Title))
                 self.mturk.expire_hit(hit.HITId)
 
     def remove_qualifications(self, phase_type, workers_to_remove='me'):
@@ -363,7 +392,7 @@ class MturkTools:
             try:
                 self.mturk.revoke_qualification(workerID, phasesQualID[host][phase_type], reason='Granted in error')
             except:
-                print 'worker %s does not have qual' % workerID
+                print('worker %s does not have qual' % workerID)
 
     def post_prac_hits(self, num_hits, amount, testing=False):
         title = "Find patterns in sleeping brainwaves (Training HIT)"
@@ -401,7 +430,7 @@ class MturkTools:
                 qualifications=quals,
                 response_groups=('Minimal', 'HITDetail'),  # I don't know what response groups are
             )
-        print 'Posted ' + str(i) + ' practice HITS @ $' + str(amount)
+        print('Posted ' + str(i) + ' practice HITS @ $' + str(amount))
 
     def post_futher_hits(self, num_hits, amount, testing=False):
         url = "https://shrouded-plains-8041.herokuapp.com/"
@@ -441,7 +470,7 @@ class MturkTools:
                 qualifications=quals,
                 response_groups=('Minimal', 'HITDetail'),  # I don't know what response groups are
             )
-        print 'Posted ' + str(i) + ' further HITS @ $' + str(amount)
+        print('Posted ' + str(i) + ' further HITS @ $' + str(amount))
 
 mtt = MturkTools()
 

@@ -2,8 +2,10 @@ var path = require('path');
 var fs = require('fs');
 var mturk = require('./mturkConnect');
 var mturk= new mturk;
-var phases = ['practice','phase1'];
+var Status = require('./status');
+var status = new Status;
 
+var phases = ['practice','phase1'];
 
 // Returns a random integer between min (included) and max (excluded)
 // Using Math.round() will give you a non-uniform distribution!
@@ -23,7 +25,7 @@ function split(a, n) {
   return images;
 }
 
-var imgConfig = { //THIS DATA NEEDS TO BE UPDATED! //TODO break out into a file
+var imgConfig = { //THIS DATA NEEDS TO BE UPDATED! //TODO break out into a file //Don't think this is used anymore...
   secs:25,
   sampleRate:256,
   margins:{
@@ -74,18 +76,20 @@ function clone(a) {
 
 function imgServer(){
   var self = this;
+  self.status = status;
+  self.status.initStatusCheck();
   self.batchSize = 5;
   self.folderLengthMap = {};
   self.batches = {};
+  self.currentBatchStatus
   phases.forEach(function(phase) {
     var metaDataFileHandle = fs.readFileSync('./app/Assets/metaData' + phase + '.json');
-    self.batches[phase] = JSON.parse(metaDataFileHandle.toString('utf8'));
+    self.batches[phase] = JSON.parse(metaDataFileHandle.toString('utf8')); //batches (5 images) are indexed by number strings, and are NOT grouped into sets
   });
 
   self.motMesg=['Keep up the good work!',
-  'Thanks for you help so far, we realy aprriciated it!',
-    'Your doing well. Thanks for helping science!',
-    'Keep making that $$',
+  'Thanks for you help so far, we really appreciate it!',
+    "You're doing well. Thanks for helping science!",
     "Don't watch the clock; do what it does. Keep going.",
     "Pat yourself on the back, your doing a great job.",
     "Your a sleep scientist in the making",
@@ -111,11 +115,11 @@ function imgServer(){
     user.currentPhase = user.currentPhase || phases[user.phaseIdx];
     user.batchesCompleted = {};
     phases.forEach(function(phase){ //Init that shit
-        user.batchesIdxs[phase] = Array.apply(null, {length: user.batches[phase].batchMeta.numBatches}).map(Number.call, Number);
+        user.batchesIdxs[phase] = Array.apply(null, {length: user.batches[phase].batchMeta.numBatches}).map(Number.call, Number); //fancy way to do pythons range()
         if (phase != 'practice'){
-          user.batchesIdxs[phase] = shuffleArray(user.batchesIdxs[phase])
+          user.batchesIdxs[phase] = shuffleArray(user.batchesIdxs[phase]) //Shuffle idxs for each sub
         }
-        user.currentSet[phase] = [0,1];
+        user.currentSet[phase] = [0,1]; //set idx is 0 or 1
         user.setsCompleted[phase] = 0;
         user.batchesCompleted[phase] = [];
         user.idx[phase] = 0; //incs to 0-9
@@ -124,7 +128,7 @@ function imgServer(){
     cb(false,user);
   };
 
-  self.loadImageMeta = function(img,folder){
+  self.loadImageMeta = function(img,folder){ //Dont think this is used. TODO delete
     var fileData = fs.readFileSync('./server/Data/User/' + userName + '.txt');
   };
 
@@ -260,11 +264,10 @@ function imgServer(){
     }
   };
 
-
   self.incrementSet = function(user){
     var maxSets = user.batches[user.currentPhase].batchMeta.numBatches / user.batches[user.currentPhase].batchMeta.batchPerSet;
     user.setsCompleted[user.currentPhase] += 1;
-      if (user.setsCompleted[user.currentPhase] >= maxSets) {
+      if (user.setsCompleted[user.currentPhase] >= maxSets) { //Change phase if we have completed all sets
         user.setsCompleted[user.currentPhase] = maxSets;
         if (user.userType === 'mturker') {
           mturk.markPhaseComplete(user, user.currentPhase);
@@ -278,23 +281,31 @@ function imgServer(){
         }
         user.idx[user.currentPhase] = 0
       } else {
-        user.batchesCompleted[user.currentPhase].push(user.batchesIdxs[user.currentPhase][user.currentSet[user.currentPhase][0]]);
+        user.batchesCompleted[user.currentPhase].push(user.batchesIdxs[user.currentPhase][user.currentSet[user.currentPhase][0]]); //add completed batches to completed var
         user.batchesCompleted[user.currentPhase].push(user.batchesIdxs[user.currentPhase][user.currentSet[user.currentPhase][1]]);
-        user.currentSet[user.currentPhase] = user.currentSet[user.currentPhase].map(function (val) {
+        console.log('currentPhase', user.currentSet[user.currentPhase]);
+        user.currentSet[user.currentPhase] = user.currentSet[user.currentPhase].map(function (val) { //set contains 2 idx's to the batch number
           return val + user.batches[user.currentPhase].batchMeta.batchPerSet
         });
         user.idx[user.currentPhase] = 0;
       }
   };
 
+  self.getNewBatchsForSet = function(user){
+    var currentStatus = self.status.getCurrentBatchStatus()
+    //compare user to current batch and return new sets...
+  };
+
   self.getImageData = function(user,inc,cleanUpdate) {
     user.idx[user.currentPhase] += inc;
     var maxSets = user.batches[user.currentPhase].batchMeta.numBatches / user.batches[user.currentPhase].batchMeta.batchPerSet;
-    if (user.idx[user.currentPhase] >= user.batches[user.currentPhase].batchMeta.imgPerSet) { //10 images per set
+    if (user.idx[user.currentPhase] >= user.batches[user.currentPhase].batchMeta.imgPerSet) { //10 images per set, after that increment set
       self.incrementSet(user)
     }
-    var setIdx = Math.floor((user.idx[user.currentPhase]) / user.batches[user.currentPhase].batchMeta.imgPerBatch);
-    var batchIdx = Math.floor((user.idx[user.currentPhase]) % user.batches[user.currentPhase].batchMeta.imgPerBatch);
+    var setIdx = Math.floor((user.idx[user.currentPhase]) / user.batches[user.currentPhase].batchMeta.imgPerBatch); //set index ticks through users batches
+    var batchIdx = Math.floor((user.idx[user.currentPhase]) % user.batches[user.currentPhase].batchMeta.imgPerBatch); //batch index ticks through images?
+    console.log('Set idx:', setIdx);
+    console.log('batch idx:', batchIdx);
 
     var dataOut = user.batches[user.currentPhase]
       [user.batchesIdxs[user.currentPhase]
@@ -307,7 +318,7 @@ function imgServer(){
         if (user.batches[user.currentPhase]
             [user.batchesIdxs[user.currentPhase]
             [user.currentSet[user.currentPhase][setIdx]]].imgs[batchIdx].mturkInfo.assignmentId !== user.userData.assignmentId) {
-          console.log('Warning!!!! THIS SET HAS ALREADY BEEN DONE WITH DIFFERENT HIT ID!!!!!');
+          console.log('Warning... THIS SET HAS ALREADY BEEN DONE WITH DIFFERENT HIT ID!');
           if (user.currentPhase !== 'practice') {
             self.incrementSet(user)
           }
