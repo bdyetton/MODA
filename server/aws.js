@@ -23,7 +23,7 @@ function aws() {
   };
 
   this.getFileList = function(fileNameContainer, prefix, marker, cb){
-    params = {Bucket: self.bucketName, Prefix: prefix}
+    params = {Bucket: self.bucketName, Prefix: prefix};
     if (marker !== undefined){params['Marker'] = marker}
     self.s3.listObjects(params, function(err, data){
         if(err !== null){console.log('Error getting all files for status', err)}

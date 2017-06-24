@@ -60,9 +60,10 @@ app.get('/api/updateNoMakers',cors(),function(req,res){
 });
 
 app.get('/api/loginOther',cors(),function(req,res){
-  console.log(req.query.userData)
+  console.log('Requesting login for:', req.query.userData);
   users.loadUser(req.query.userData,function(err,userDataAll) { //async callback
     if (!err) { //load user
+      console.log('server returned correctly')
       var out = {};
       if (req.query.userData.password !== userDataAll.userData.password) {
         out.err = 'Password incorrect';
@@ -84,11 +85,14 @@ app.get('/api/loginOther',cors(),function(req,res){
       out.image.markerIndex = currentUsers[userDataAll.userName].markerIndex;
       res.send(out);
     } else {
+      console.log('Error occured', err)
       var out = {};
       if (err.code === 'NoSuchKey'){
         out.err = 'That email/password combination does not exist';
+
       } else {
         out.err = 'Some unknown error occurred: 2335';
+        console.log('Unknown Error: 2335')
       }
       out.success = false;
       res.send(out)
