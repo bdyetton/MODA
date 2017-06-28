@@ -16,12 +16,11 @@
   "author": "Ben Yetton",
   "license": "MIT",
   "dependencies": {
-    "aws-sdk": "*",
     "body-parser": "*",
-    "compression": "^1.5.0",
-    "cors": "^2.7.1",
+    "cors": "^2.8.3",
     "ejs": "*",
-    "express": "^4.12.4"
+    "html-webpack-plugin": "^2.29.0",
+    "tapable": "^0.2.6"
   },
   "engines": {
     "node": "5.0.0",
@@ -43,12 +42,14 @@
     "babel-runtime": "^5.5.8",
     "bootstrap": "^3.3.6",
     "bootstrap-webpack": "0.0.5",
+    "compression": "^1.6.2",
     "css-loader": "^0.14.5",
     "expect": "^1.6.0",
     "exports-loader": "^0.6.3",
+    "expres": "0.0.5",
+    "express": "^4.15.3",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.4",
-    "html-webpack-plugin": "^1.5.2",
     "image-webpack-loader": "^1.6.1",
     "imports-loader": "^0.6.5",
     "jquery": "^2.1.4",
@@ -66,7 +67,7 @@
     "mturk-api": "^2.2.2",
     "node-libs-browser": "^0.5.2",
     "node-sass": "^3.2.0",
-    "nodemon": "~1.11.0",
+    "nodemon": "^1.11.0",
     "react": "^0.14.7",
     "react-bootstrap": "^0.29.0",
     "react-bootstrap-validation": "^0.1.11",
@@ -79,7 +80,7 @@
     "style-loader": "^0.12.4",
     "urijs": "^1.17.1",
     "url-loader": "^0.5.7",
-    "webpack": "^1.9.11",
+    "webpack": "^1.15.0",
     "webpack-dev-server": "^1.14.1"
   }
 }

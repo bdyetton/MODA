@@ -51,8 +51,7 @@ function status() {
   self.phases = ['phase1','phase2'];
   self.userTypes = ['psgTech','researcherOrOther'];
   self.numBatchesNeededPerUserType = {'psgTech':5,'researcherOrOther':5};
-  self.incompleteBatchesPerPhase = undefined //undefined until we have gone to aws to update
-
+  self.incompleteBatchesPerPhase = undefined; //undefined until we have gone to aws to update
 
   self.updateStatusPeriodically = function(){
       var currentFiles = [];
