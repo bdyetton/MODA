@@ -16,11 +16,11 @@
   "author": "Ben Yetton",
   "license": "MIT",
   "dependencies": {
-    "body-parser": "*",
+    "body-parser": "^1.17.2",
     "cors": "^2.8.3",
-    "ejs": "*",
+    "ejs": "^2.5.6",
     "html-webpack-plugin": "^2.29.0",
-    "tapable": "^0.2.6"
+    "react-draggable": "^2.2.6"
   },
   "engines": {
     "node": "5.0.0",
@@ -34,10 +34,13 @@
     "react-dom": "ReactDOM"
   },
   "devDependencies": {
+    "@bokuweb/react-draggable-custom": "^1.4.2",
+    "async": "^2.5.0",
     "autoprefixer-loader": "^2.0.0",
+    "aws-sdk": "^2.78.0",
     "babel": "^6.5.2",
     "babel-core": "^5.8.38",
-    "babel-loader": "^5.1.4",
+    "babel-loader": "^5.4.2",
     "babel-plugin-object-assign": "^1.2.1",
     "babel-runtime": "^5.5.8",
     "bootstrap": "^3.3.6",
@@ -73,11 +76,13 @@
     "react-bootstrap-validation": "^0.1.11",
     "react-dom": "^0.14.7",
     "react-hot-loader": "^1.2.7",
-    "react-resizable-and-movable": "^0.5.3",
+    "react-resizable-and-movable": "0.5.3",
     "react-resizable-box": "^1.2.1",
+    "react-rnd": "^5.0.8",
     "sass-loader": "^1.0.2",
     "sinon": "^1.15.3",
     "style-loader": "^0.12.4",
+    "tapable": "^0.2.6",
     "urijs": "^1.17.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.15.0",

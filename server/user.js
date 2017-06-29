@@ -50,7 +50,7 @@ function user(){
 
   this.loadUser = function(user,cb,loc) {
     loc = loc || 's3';
-
+    console.log(user)
     //Get from s3
     if (loc == 's3') {
       if (user.userType == 'mturker') {

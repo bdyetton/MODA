@@ -73,17 +73,12 @@ module.exports = React.createClass({
     var uriData = self.getURIData();
     $.extend(userData, uriData);
 
-    $.ajax({
-        url:'/api/loginOther',
-        userData:userData,
-        success:function(data){
-          if (data.success) {
-            self.props.updatePage('score', data);
-          } else {
-            self.setState({errorMsg: data.err})
-          }
-        },
-        timeout:3000
+    $.get('/api/loginOther',{userData:userData},function(data){
+      if (data.success) {
+        self.props.updatePage('score', data);
+      } else {
+        self.setState({errorMsg: data.err})
+      }
     });
   },
   
