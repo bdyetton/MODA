@@ -24,7 +24,7 @@
   },
   "engines": {
     "node": "5.0.0",
-    "npm": "2.14.9"
+    "npm": "^2.14.9"
   },
   "peerDependencies": {
     "react": "^0.14.7"
@@ -37,7 +37,7 @@
     "@bokuweb/react-draggable-custom": "^1.4.2",
     "async": "^2.5.0",
     "autoprefixer-loader": "^2.0.0",
-    "aws-sdk": "^2.78.0",
+    "aws-sdk": "^2.79.0",
     "babel": "^6.5.2",
     "babel-core": "^5.8.38",
     "babel-loader": "^5.4.2",
