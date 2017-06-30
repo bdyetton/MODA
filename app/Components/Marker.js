@@ -1,4 +1,5 @@
-import ResizableAndMovable from '../../node_modules/react-resizable-and-movable';
+import ResizableAndMovable from './ResizableAndMovable';
+//var ResizableAndMovable = require('./ResizableAndMovable')
 var ConfidenceBox = require('./ConfidenceBox');
 var MatchBox = require('./MatchBox');
 var rb = require('react-bootstrap');

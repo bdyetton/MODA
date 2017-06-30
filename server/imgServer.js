@@ -321,6 +321,11 @@ function imgServer() {
         });
 
         if (incompleteBatches.length === 0) {return false}//no more batches in phase, phase complete
+        if (user.currentPercentDone === undefined){
+            user.currentPercentDone = {practice:0, phase1:0, phase2:0}
+        }
+        user.currentPercentDone[user.currentPhase] = 100*user.batchesCompleted[user.currentPhase].length/(incompleteBatches.length+user.batchesCompleted[user.currentPhase].length);
+        console.log(user.userName,'has',incompleteBatches.length,'more batches in',user.currentPhase,'(',user.currentPercentDone[user.currentPhase],')% done');
 
         var shuffledBatches = shuffleArray(incompleteBatches);
         var chosenBatchIdxs = shuffledBatches.slice(0, 2);
