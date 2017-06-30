@@ -9,7 +9,7 @@
     "dev": "nodemon server/index.js --watch server & webpack-dev-server --config ./webpack-dev.config.js --hot --progress --colors --content-base build",
     "build": "rm build/*; webpack --config ./webpack-prod.config.js --progress --colors",
     "start": "node server/index.js",
-    "postinstall": "npm run-script build",
+    "postinstall": "cp -r -f app/Components/@bokuweb node_modules/; npm run-script build;",
     "test": "karma start",
     "testing": "karma start --single-run=false"
   },
