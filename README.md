@@ -1,4 +1,4 @@
-MODA - Massive Online Sleep Scoring
+#MODA - Massive Online Sleep Scoring
 
 A web app to faciliate the crowdsourcing of sleep spindles or any other timeseris signal phenomena. Users can draw boxes around spindles and mark them as high, medium or low confidence. The app is built with javascript, with a node.js backend and react.js front end.
 See https://osf.io/8bma7/ for more information.
